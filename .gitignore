@@ -1,0 +1,50 @@
+# This file tells git to ignore certain files or directories when committing changes.
+
+# python virtual environment
+.venv/
+
+# compiled Python files
+*.pyc
+
+# temporary files
+*.tmp
+
+# data files
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+__pycache__/
+
+# backend virtual environment
+
+backend/.venv/  
+
+
+# pdm virtual environment
+
+backend/pdm.lock
+backend/.pdm.pycache/
+backend/.pdm-python
+
+# logs
+backend/logs/
+
+*.log
+
+frontend/node_modules/
+frontend/dist/
+
+# compiled JavaScript files
+
+frontend/build/
+frontend/.vscode/
+
+
+backend/build/
+backend/.vscode/
+backend/dist/
+
+backend/hub_model/briaai/

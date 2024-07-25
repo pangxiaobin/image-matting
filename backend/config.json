@@ -1,0 +1,13 @@
+{
+    "language": "zh-CN",
+    "save_dir": "./data",
+    "theme": "light",
+    "window": {
+        "width": 1035,
+        "height": 767,
+        "x": 107,
+        "y": 25,
+        "fullscreen": false,
+        "on_top": false
+    }
+}

@@ -1,0 +1,186 @@
+:root {
+    --background-color: #222;
+    --foreground-color: #fff;
+    --primary-color: #1e90ff;
+    --secondary-color: #ff6347;
+    --accent-color: #4caf50;
+    --error-color: #ff4c4c;
+    --warning-color: #ffa500;
+    --info-color: #17a2b8;
+    --success-color: #28a745;
+    --border-color: #444;
+    --hover-background-color: #333;
+    --hover-border-color: #555;
+    --focus-border-color: #666;
+  }
+  
+  .dark body {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+  }
+  
+  .dark a {
+    color: var(--primary-color);
+  }
+  
+  .dark a:hover {
+    color: var(--secondary-color);
+  }
+  
+  .dark button {
+    background-color: var(--primary-color);
+    color: var(--foreground-color);
+    border: 1px solid var(--border-color);
+  }
+  
+  .dark button:hover {
+    background-color: var(--hover-background-color);
+    border-color: var(--hover-border-color);
+  }
+  
+  .dark button:focus {
+    outline: none;
+    border-color: var(--focus-border-color);
+  }
+  
+  .dark input,
+  .dark textarea {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    border: 1px solid var(--border-color);
+  }
+  
+  .dark input:focus,
+  .dark textarea:focus {
+    border-color: var(--focus-border-color);
+  }
+  
+  .dark select {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    border: 1px solid var(--border-color);
+  }
+  
+  .dark select:focus {
+    border-color: var(--focus-border-color);
+  }
+  
+  .dark header,
+  .dark footer,
+  .dark nav,
+  .dark section,
+  .dark article {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+  }
+  
+  .dark table {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    border: 1px solid var(--border-color);
+  }
+  
+  .dark table th,
+  .dark table td {
+    border: 1px solid var(--border-color);
+  }
+  
+  .dark table th {
+    background-color: var(--hover-background-color);
+  }
+  
+  .dark table tr:hover {
+    background-color: var(--hover-background-color);
+  }
+  
+  .dark .alert {
+    color: var(--foreground-color);
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+  
+  .dark .alert-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .dark .alert-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+  }
+  
+  .dark .alert-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+  }
+  
+  .dark .alert-error {
+    background-color: var(--error-color);
+    border-color: var(--error-color);
+  }
+  
+  .dark .alert-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+  }
+  
+  .dark .alert-info {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+  }
+  
+  .dark .card {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0;
+  }
+  
+  .dark .card .card-header {
+    background-color: var(--hover-background-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px;
+    font-size: 1.25em;
+  }
+  
+  .dark .card .card-body {
+    padding: 20px;
+  }
+  
+  .dark .card .card-footer {
+    background-color: var(--hover-background-color);
+    border-top: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: right;
+  }
+  
+  .dark .modal {
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    border: 1px solid var(--border-color);
+  }
+  
+  .dark .tooltip {
+    background-color: var(--hover-background-color);
+    color: var(--foreground-color);
+    border: 1px solid var(--border-color);
+  }
+  
+  .dark .badge {
+    background-color: var(--accent-color);
+    color: var(--foreground-color);
+  }
+  
+  .dark .progress {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+  }
+  
+  .dark .progress-bar {
+    background-color: var(--primary-color);
+  }
+  

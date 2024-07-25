@@ -1,0 +1,33 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "xiaobin", email = "2274858959@qq.com"},
+]
+dependencies = [
+    "pywebview>=5.1",
+    "loguru>=0.7.2",
+    "transformers>=4.42.4",
+    "pydantic-settings>=2.3.4",
+    "scikit-image>=0.24.0",
+    "torch==2.2.2",
+    "torchvision==0.17.2",
+    "pyinstaller>=6.9.0",
+    "numpy==1.26.4"
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+dev = { cmd = "python main.py", env = {DEBUG = "True"} }
+build-front = "python build.py -t f"
+start = "python main.py"
+build-debug = "pyinstaller --noconfirm --clean main.spec --distpath dist/debug -- --debug"
+build-release = "pyinstaller --noconfirm --clean main.spec --distpath dist/release"
+build-mac-release = "pyinstaller --noconfirm --clean mac_main.spec --distpath dist/mac-release"
