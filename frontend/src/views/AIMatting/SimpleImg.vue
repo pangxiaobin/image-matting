@@ -6,16 +6,16 @@
       </div>
       <div class="flex justify-center space-x-4 mt-4">
         <button @click="goBack()" class="bg-green-500 text-white px-4 py-2 rounded-full">
-          {{ t('ai_matting.btn_back') }}
+          {{ t('common.btn_back') }}
         </button>
         <button @click="reselectImage()" class="bg-green-500 text-white px-4 py-2 rounded-full">
-          {{ t('ai_matting.btn_reselect') }}
+          {{ t('common.btn_reselect') }}
         </button>
         <button @click="copyImage()" class="bg-green-500 text-white px-4 py-2 rounded-full">
-          {{ t('ai_matting.btn_copy') }}
+          {{ t('common.btn_copy') }}
         </button>
         <button @click="downloadImage()" class="bg-green-500 text-white px-4 py-2 rounded-full">
-          {{ t('ai_matting.btn_download') }}
+          {{ t('common.btn_download') }}
         </button>
       </div>
     </div>
@@ -120,9 +120,9 @@ async function copyImage() {
     const blob = base64ToBlob(img2.value);
     const item = new ClipboardItem({ 'image/png': blob });
     await navigator.clipboard.write([item]);
-    message.info(t('ai_matting.copy_success'));
+    message.info(t('common.copy_success'));
   } catch (error) {
-    message.error(t('ai_matting.copy_error'), error);
+    message.error(t('common.copy_error'), error);
   }
 }
 
@@ -130,9 +130,9 @@ async function copyImage() {
 async function downloadImage() {
   const response = await baseAPI('save_png_dialog', img2.value)
   if (response.code === 200) {
-    message.info(t('ai_matting.download_success'));
+    message.info(t('common.download_success'));
   } else {
-    message.error(t('ai_matting.download_error'));
+    message.error(t('common.download_error'));
   }
 }
 

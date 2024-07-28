@@ -45,7 +45,7 @@
             </div>
             <div v-else class="mt-6 text-center">
                 <button @click="goBack()" class="bg-green-500 text-white px-4 py-2 rounded-full">{{
-                    t('ai_matting.btn_back') }}</button>
+                    t('common.btn_back') }}</button>
             </div>
         </div>
     </div>

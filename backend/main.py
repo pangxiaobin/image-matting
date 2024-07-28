@@ -1,7 +1,7 @@
 import webview
 from utilities.log import logger, init_logging
 from utilities.response import res200, res500
-from utilities.utils import base64_to_png
+from utilities.utils import base64_to_png, save_bs64_image_add_bg
 from conf.setting import settings
 from conf.config import config
 import os
@@ -61,6 +61,28 @@ def main():
             return res500(f"save_png_dialog error: {e}")
         return res200({"file_path": result})
 
+    def save_png_add_bg_dialog(
+        self,
+        playload,
+        initial_directory="",
+    ):
+
+        base64_data = playload.get("base64_data")
+        hex_color = playload.get("hex_color")
+
+        filename = f"[{settings.TOOL_NAME}]-{int(time.time()*1000)}.png"
+        result = window.create_file_dialog(
+            webview.SAVE_DIALOG, directory=initial_directory, save_filename=filename
+        )
+        if not result:
+            return
+        try:
+            save_bs64_image_add_bg(base64_data, hex_color, result)
+        except Exception as e:
+            logger.error(f"save_png_add_bg_dialog error: {e}")
+            return res500(f"save_png_add_bg_dialog error: {e}")
+        return res200({"file_path": result})
+
     def open_and_select_file(self, file_path):
         system = platform.system()
 
@@ -82,6 +104,7 @@ def main():
     API.open_folder_dialog = open_folder_dialog
     API.save_png_dialog = save_png_dialog
     API.open_and_select_file = open_and_select_file
+    API.save_png_add_bg_dialog = save_png_add_bg_dialog
 
     api = API()
 

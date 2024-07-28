@@ -2,7 +2,7 @@
 import { createApp, h } from 'vue';
 import Message from '@/views/components/MessageComponent.vue';
 
-const createMessage = (content, type = 'info', duration = 3000) => {
+const createMessage = (content, type = 'info', duration = 1000) => {
   const container = document.createElement('div');
   document.body.appendChild(container);
 
@@ -17,7 +17,7 @@ const createMessage = (content, type = 'info', duration = 3000) => {
   setTimeout(() => {
     app.unmount();
     document.body.removeChild(container);
-  }, duration + 1000);
+  }, duration + 500);
 };
 
 const message = {

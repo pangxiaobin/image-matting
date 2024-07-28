@@ -26,6 +26,21 @@ const routes = [{
         component: () => import('@/views/AIMatting/MulatingImg.vue')
       },
       {
+        path: 'ai-photo',
+        name: 'AIPhotoHome',
+        component: () => import('@/views/AIPhoto/AIPhotoHome.vue')
+        
+      },{
+        path: 'image-editor',
+        name: 'ImageEditor',
+        component: () => import('@/views/AIPhoto/ImageEditor.vue')
+      },
+      {
+        path: 'ai-photo-result',
+        name: 'AIPhotoResult',
+        component: () => import('@/views/AIPhoto/AIPhotoResult.vue')
+      },
+      {
         path: 'setting',
         name: 'Setting',
         component: () => import('@/views/Setting.vue')

@@ -24,7 +24,7 @@ HF_ENDPOINT=https://hf-mirror.com python hub_model/download.py
 # 运行前端
 cd frontend && npm run dev
 # 运行后端
-cd frontend && pmd dev
+cd backend && pmd dev
 ```
 
 ### 打包

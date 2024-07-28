@@ -9,7 +9,8 @@
 > 本地模型算法进行抠图，支持单张和批量抠图
 > 支持单张抠图和批量抠图
 > 支持拖拽和粘贴
->
+> AI证件照抠图功能
+
 ## 打包后的运行文件
 
 链接: <https://pan.baidu.com/s/1XM37FOKZkLwafbsl5Y9xvw?pwd=hukj> 提取码: hukj
@@ -22,4 +23,5 @@
 ![运行截图](./imgs/4.png)
 ![运行截图](./imgs/5.png)
 ![运行截图](./imgs/6.png)
+![运行截图](./imgs/8.png)
 ![运行截图](./imgs/7.GIF)
