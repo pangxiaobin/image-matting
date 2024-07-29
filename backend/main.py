@@ -31,7 +31,7 @@ def main():
         # jpg/png/gif/webp/bmp
         file_types = ("Image Files (*.bmp;*.jpg;*.gif;*.png;*.webp;*.jpeg)",)
         result = window.create_file_dialog(
-            webview.OPEN_DIALOG, allow_multiple=multiple, file_types=file_types
+            webview.OPEN_DIALOG, allow_multiple=bool(multiple), file_types=file_types
         )
         print(result)
         return res200({"file_path": result[0] if result else ""})
