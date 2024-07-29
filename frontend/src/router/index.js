@@ -33,7 +33,7 @@ const routes = [{
       },{
         path: 'image-editor',
         name: 'ImageEditor',
-        component: () => import('@/views/AIPhoto/ImageEditor.vue')
+        component: () => import('@/views/AIPhoto/AIPhotoEditor.vue')
       },
       {
         path: 'ai-photo-result',
