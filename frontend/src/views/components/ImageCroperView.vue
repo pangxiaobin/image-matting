@@ -3,7 +3,7 @@
         <div class="canvas relative w-full h-96" @dblclick="dblclick">
             <img :src="imageUrl" ref="image" @load="onImageLoad" class="object-contain w-full h-full" />
         </div>
-        <div v-if="cropper" class="toolbar flex mt-4" @click="handleClick">
+        <div v-if="cropper" class="toolbar flex mt-4 flex-wrap justify-center" @click="handleClick">
 
             <button v-if="toolbarOptions.play" class="toolbar__button" data-action="play" title="Play (S)">
                 <i class="fa-solid fa-circle-play"></i>
@@ -49,6 +49,12 @@
                 title="Flip Vertical (V)">
                 <span class="fa fa-arrows-v"></span>
             </button>
+            <!-- 展示图片类型 图片尺寸 -->
+
+            <span class="toolbar__text">
+                <span class="toolbar__text-item ml-2">{{ imageType }}</span>
+                <span class="toolbar__text-item ml-2 mr-2">{{ imageWidth }}x{{ imageHeight }}</span>
+            </span>
         </div>
     </div>
 </template>
@@ -95,9 +101,22 @@ const croppedData = ref(null);
 const canvasData = ref(null);
 const cropBoxData = ref(null);
 
+const imageWidth = ref(0);
+const imageHeight = ref(0);
+const imageType = ref('');
 function onImageLoad() {
     if (!isCropping.value) {
         initializeCropper();
+
+    }
+    imageWidth.value = image.value.naturalWidth;
+    imageHeight.value = image.value.naturalHeight;
+    // 图片scr 判断是base64还是url，然后获取图片类型
+    const src = image.value.src;
+    if (src.startsWith('data:image/')) {
+        imageType.value = src.split(';')[0].split('/')[1];
+    } else {
+        imageType.value = src.split('.').pop();
     }
 }
 
@@ -246,7 +265,9 @@ function crop() {
 
 // 确认按钮点击事件
 const confirm = () => {
-    emit('confirm', cropper.value.getCroppedCanvas().toDataURL());
+    emit('confirm', cropper.value.getCroppedCanvas(imageType.value.toLowerCase === 'png' ? {} : {
+            fillColor: '#fff',
+          }).toDataURL("image/" + imageType.value));
     crop();
 };
 
@@ -344,15 +365,15 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
 }
-
 .toolbar {
     background-color: rgba(0, 0, 0, 0.5);
     height: 2rem;
-    width: 16rem;
+    width: auto;
     color: #fff;
     display: flex;
     justify-content: center;
     gap: 0.5rem;
+    align-items: center; /* 确保工具栏内的元素垂直居中 */
 }
 
 .toolbar__button {
@@ -366,6 +387,15 @@ onBeforeUnmount(() => {
     font-size: 0.875rem;
     width: 2rem;
     height: 2rem;
+    line-height: 1; /* 确保文字垂直居中 */
+}
+
+.toolbar__text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: #fff;
 }
 
 .toolbar__button:hover {
