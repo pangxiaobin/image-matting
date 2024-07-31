@@ -64,13 +64,6 @@ class AIMattingAPI:
             logger.error(f"Error in get_folder_images: {e} {folder_path}")
             return res500("Error in get_folder_images")
 
-    def get_local_file_base64(self, file):
-        try:
-            img = img_to_base64(file)
-            return res200(data={"base64_image": img})
-        except Exception as e:
-            return res500(f"Error in get_local_file_base64: {e}")
-
     def predict_from_folder_img(self, playload: dict) -> dict:
         """
         Predict the no-background image of the input image.

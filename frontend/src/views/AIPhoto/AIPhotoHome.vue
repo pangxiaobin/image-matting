@@ -3,7 +3,7 @@
       <div class="text-center">
         <h1 class="text-3xl font-bold mb-4">{{t('ai_photo.ai_photo_home.title')}}</h1>
         <p class="mb-8">{{t('ai_photo.ai_photo_home.desc')}}</p>
-        <button class="bg-green-500 text-white px-4 py-2 rounded-full btn-md" @click="openFileDialog">
+        <button class="bg-green-500 btn text-white px-4 py-2 rounded-full btn-md" @click="openFileDialog">
           <i class="fa-solid fa-image mr-2"></i>
           {{t('ai_photo.ai_photo_home.upload_btn')}}
         </button>
@@ -31,7 +31,7 @@ const router = useRouter()
 
 // 打开file dialog
 const openFileDialog = async () => {
-  const res = await baseAPI('open_file_dialog', '')
+  const res = await baseAPI('open_file_dialog', false)
   console.log(res)
   if (res.data['file_path']) {
     // 上传文件

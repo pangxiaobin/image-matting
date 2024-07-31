@@ -1,6 +1,6 @@
 <template>
     <div :class="{
-        'w-44': isSidebarOpen,
+        'w-50': isSidebarOpen,
         'w-16': !isSidebarOpen,
     }" class="sidebar transition-all duration-300 relative">
         <div v-if="isSidebarOpen" class="p-4">
@@ -14,12 +14,17 @@
             <ul class="mt-4">
                 <li class="py-2">
                     <router-link to="/aimatting" class="hover:underline flex items-center">
-                        <i class="fa-brands fa-airbnb text-2xl mr-2"></i> {{ t('menu.ai_matting_name') }}
+                        <i class="fa-regular fa-arrows-to-eye text-2xl mr-2"></i> {{ t('menu.ai_matting_name') }}
                     </router-link>
                 </li>
                 <li class="py-2">
                     <router-link to="/ai-photo" class="hover:underline flex items-center">
                         <i class="fa-solid fa-id-card text-2xl mr-2"></i>{{ t('menu.ai_photo_name') }}
+                    </router-link>
+                </li>
+                <li class="py-2">
+                    <router-link to="/convert-home" class="hover:underline flex items-center">
+                        <i class="fa-solid fa-money-bill-transfer text-2xl mr-2"></i> {{ t('menu.convert_name') }}
                     </router-link>
                 </li>
                 <li class="py-2">
@@ -38,11 +43,15 @@
             <div class="mt-4">
                 <router-link to="/" :data-tip="t('menu.ai_matting_name')"
                     class="tooltip tooltip-right hover:underline flex items-center mb-4">
-                    <i class="fa-brands fa-airbnb text-2xl "></i>
+                    <i class="fa-regular fa-arrows-to-eye text-2xl "></i>
                 </router-link>
                 <router-link to="/ai-photo" :data-tip="t('menu.ai_photo_name')"
                     class="tooltip tooltip-right hover:underline flex items-center mb-4">
                     <i class="fa-solid fa-id-card text-2xl"></i>
+                </router-link>
+                <router-link to="/convert-home" :data-tip="t('menu.convert_name')"
+                    class="tooltip tooltip-right hover:underline flex items-center mb-4">
+                    <i class="fa-solid fa-money-bill-transfer text-2xl"></i>
                 </router-link>
                 <router-link to="/setting" :data-tip="t('menu.setting')"
                     class="tooltip tooltip-right hover:underline flex items-center">

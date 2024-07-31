@@ -122,7 +122,7 @@ const imgType = ref(route.params.imgType || '');
 
 // 根据图片路径获取base64数据
 const getFileLocalBase64 = async (filePath) => {
-  const result = await aiMattingAPI('get_local_file_base64', filePath);
+  const result = await baseAPI('get_local_file_base64', filePath);
   if (result.code === 200) {
     return result.data.base64_image;
   } else {
@@ -144,7 +144,7 @@ const initImage = async () => {
 
 // 重新选择图片
 const reselectImage = async () => {
-  const res = await baseAPI('open_file_dialog', '');
+  const res = await baseAPI('open_file_dialog', false);
   imgType.value = 'local';
   if (res.data.file_path) {
     filePath.value = res.data.file_path;
@@ -219,26 +219,5 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-}
-
-.loader {
-  border: 8px solid #e1dfdf;
-  /* Light grey */
-  border-top: 8px solid #3498db;
-  /* Blue */
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
 }
 </style>

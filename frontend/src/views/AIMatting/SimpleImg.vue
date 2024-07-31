@@ -46,7 +46,7 @@ const img2 = ref('');
 
 async function initImage1() {
   if (imgType.value === 'local') {
-    const result = await aiMattingAPI('get_local_file_base64', filePath.value);
+    const result = await baseAPI('get_local_file_base64', filePath.value);
     console.log(result);
     if (result.code === 200) {
       img1.value = result.data.base64_image;
@@ -69,7 +69,7 @@ const goBack = () => {
 
 // 重新选择图片
 const reselectImage = async () => {
-  const res = await baseAPI('open_file_dialog', '');
+  const res = await baseAPI('open_file_dialog', false);
   loading.value = true;
   imgType.value = 'local';
   if (res.data.file_path) {
@@ -153,27 +153,6 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.loader {
-  border: 8px solid #e1dfdf;
-  /* Light grey */
-  border-top: 8px solid #3498db;
-  /* Blue */
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 .img-transparent-bg {

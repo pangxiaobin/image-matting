@@ -3,10 +3,21 @@ export default {
     title: '图像抠图',
     description: '基于AI的图像抠图工具',
   },
+  common: {
+    btn_back: '返回',
+    btn_reselect: '重新选择',
+    btn_copy: '复制到剪贴板',
+    btn_download: '保存结果',
+    copy_success: '复制成功',
+    copy_error: '复制失败',
+    download_success: '保存成功',
+    download_error: '保存失败',
+  },
   menu: {
     setting: '设置',
     ai_matting_name: 'AI抠图',
     ai_photo_name: '证件照',
+    convert_name: "图片转换"
   },
   setting: {
     title: '系统设置',
@@ -70,14 +81,17 @@ export default {
     }
 
   },
-  common: {
-    btn_back: '返回',
-    btn_reselect: '重新选择',
-    btn_copy: '复制到剪贴板',
-    btn_download: '保存结果',
-    copy_success: '复制成功',
-    copy_error: '复制失败',
-    download_success: '保存成功',
-    download_error: '保存失败',
+  convert: {
+    convert_home: {
+      title: '图片转换工具',
+      desc: '将图片转换为其他格式，简单易用、快速转换、本地转换、数据安全。',
+      btn_label: '快速开始',
+      tips: '支持 PNG, JPEG, GIF, BMP, WEBP, ICO, ICNS, TIFF, PDF',
+
+    },
+    convert_image: {
+      select_btn: '选择图片',
+      convert_btn: '转换',
+    }
   }
 };

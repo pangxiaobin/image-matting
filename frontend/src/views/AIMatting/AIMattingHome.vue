@@ -2,11 +2,11 @@
   <div class="h-full flex flex-col items-center justify-center p-4">
 
     <div class="text-center mb-4">
-      <button class="bg-green-500 text-white px-4 py-2 rounded-full btn-md" @click="openFileDialog">
+      <button class="bg-green-500 btn text-white px-4 py-2 rounded-full btn-md" @click="openFileDialog">
         <i class="fa-solid fa-image mr-2"></i>
         {{ $t('ai_matting.matting_home.simple_btn') }}
       </button>
-      <button class="bg-green-500 text-white px-4 py-2 rounded-full btn-md ml-4 " @click="openFolderDialog">
+      <button class="bg-green-500 btn text-white px-4 py-2 rounded-full btn-md ml-4 " @click="openFolderDialog">
         <i class="fa-regular fa-folder-open mr-2"></i>
         {{ t('ai_matting.matting_home.mult_btn') }}
       </button>
@@ -41,7 +41,7 @@ const router = useRouter()
 
 // 打开file dialog
 const openFileDialog = async () => {
-  const res = await baseAPI('open_file_dialog', '')
+  const res = await baseAPI('open_file_dialog', false)
   console.log(res)
   if (res.data['file_path']) {
     // 上传文件

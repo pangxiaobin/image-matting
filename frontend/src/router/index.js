@@ -6,11 +6,10 @@ import {
 const routes = [{
     path: '/',
     component: () => import('@/views/Layout/Layout.vue'),
-    children: [
-      {
+    children: [{
         path: '',
         component: () => import('@/views/AIMatting/AIMattingHome.vue')
-      },{
+      }, {
         path: 'aimatting',
         name: 'AIMattingHome',
         component: () => import('@/views/AIMatting/AIMattingHome.vue')
@@ -29,8 +28,8 @@ const routes = [{
         path: 'ai-photo',
         name: 'AIPhotoHome',
         component: () => import('@/views/AIPhoto/AIPhotoHome.vue')
-        
-      },{
+
+      }, {
         path: 'image-editor',
         name: 'ImageEditor',
         component: () => import('@/views/AIPhoto/AIPhotoEditor.vue')
@@ -41,18 +40,29 @@ const routes = [{
         component: () => import('@/views/AIPhoto/AIPhotoResult.vue')
       },
       {
+        path: 'convert-home',
+        name: 'convertImageHome',
+
+        component: () => import('@/views/ConvertImage/ConvertHome.vue')
+      },
+      {
+        path: 'convert-image-editor',
+        name: 'ConvertImageEditor',
+        component: () => import('@/views/ConvertImage/ConvertImageEditor.vue')
+      },
+      {
         path: 'setting',
         name: 'Setting',
         component: () => import('@/views/Setting.vue')
       },
-      
+
     ]
   }
 
 ]
 
 const router = createRouter({
-  history:createWebHashHistory(),
+  history: createWebHashHistory(),
   routes,
 })
 

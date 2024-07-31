@@ -9,7 +9,7 @@
                 <i class="fa-solid fa-circle-play"></i>
             </button>
             <!-- 删除 -->
-            <button v-if="toolbarOptions.delete" class="toolbar__button" data-action="delete" title="Delete (Delete)">
+            <button v-if="toolbarOptions.delete" class="toolbar__button" data-action="delete" title="Delete (D)">
                 <span class="fa fa-trash"></span>
             </button>
 
@@ -335,6 +335,12 @@ const keydown = (e) => {
             break;
         case 'v':
             cropper.value.scaleY(-cropper.value.getData().scaleY || -1);
+            break;
+        case 's':
+            play();
+            break;
+        case 'd':
+            delelte();
             break;
     }
 };

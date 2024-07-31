@@ -10,9 +10,11 @@ import mimetypes
 import time
 from api.user_api import SettingAPI
 from api.ai_matting import AIMattingAPI
+from api.convert_image_api import ConvertImageAPI
 import platform
 import subprocess
 import os
+import traceback
 
 
 def main():
@@ -61,6 +63,13 @@ def main():
             return res500(f"save_png_dialog error: {e}")
         return res200({"file_path": result})
 
+    def open_save_dialog(self, save_filename):
+        result = window.create_file_dialog(
+            webview.SAVE_DIALOG,
+            save_filename=save_filename,
+        )
+        return result
+
     def save_png_add_bg_dialog(
         self,
         playload,
@@ -105,10 +114,11 @@ def main():
     API.save_png_dialog = save_png_dialog
     API.open_and_select_file = open_and_select_file
     API.save_png_add_bg_dialog = save_png_add_bg_dialog
+    API.open_save_dialog = open_save_dialog
 
     api = API()
 
-    api_class_list = [SettingAPI, AIMattingAPI]
+    api_class_list = [SettingAPI, AIMattingAPI, ConvertImageAPI]
     for api_class in api_class_list:
         api.add_apis(api_class)
     try:
@@ -124,8 +134,6 @@ def main():
             confirm_close=True,
         )
     except Exception as e:
-        import traceback
-
         traceback.print_exc()
 
     logger.info(f"Debug: {settings.DEBUG}")
@@ -153,8 +161,6 @@ def main():
     try:
         webview.start(bind, window, debug=settings.DEBUG, http_server=True)
     except:
-        import traceback
-
         traceback.print_exc()
         logger.error("Error: webview.start() failed")
 

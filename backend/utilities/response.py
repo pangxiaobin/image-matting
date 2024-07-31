@@ -5,7 +5,7 @@ def JsonResponse(data):
     return json.dumps(data)
 
 
-def res200(data, msg="success"):
+def res200(data=None, msg="success"):
     return JsonResponse({"code": 200, "msg": msg, "data": data})
 
 
