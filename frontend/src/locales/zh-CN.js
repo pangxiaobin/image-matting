@@ -31,6 +31,8 @@ export default {
   },
   ai_matting: {
     matting_home: {
+      title: 'AI 抠图',
+      desc: '基于 AI 抠图技术、本地运行、数据安全、简单易用、支持单张/批量抠图。',
       simple_btn: '单张抠图',
       mult_btn: '批量抠图',
       des: '可拖放，粘贴图片或其链接，支持 jpg/png/gif/webp/bmp',
@@ -85,13 +87,19 @@ export default {
     convert_home: {
       title: '图片转换工具',
       desc: '将图片转换为其他格式，简单易用、快速转换、本地转换、数据安全。',
-      btn_label: '快速开始',
+      simple_convert_btn: '单张转换',
+      mult_convert_btn: '批量转换',
       tips: '支持 PNG, JPEG, GIF, BMP, WEBP, ICO, ICNS, TIFF, PDF',
 
     },
     convert_image: {
       select_btn: '选择图片',
       convert_btn: '转换',
+    },
+    mult_convert_image: {
+      select_folder_btn: '选择文件夹',
+      start_convert_btn: '开始转换',
+      finish: '结束处理', 
     }
   }
 };

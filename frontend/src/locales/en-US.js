@@ -31,16 +31,18 @@ export default {
   },
   ai_matting: {
     matting_home: {
+      title: 'AI Matting',
+      desc: 'Based on AI matting technology, locally run, data secure, easy to use, supports single/batch matting.',
       simple_btn: 'Single Matting',
       mult_btn: 'Batch Matting',
-      des: 'Drag and drop, paste images or their links, support jpg/png/gif/webp/bmp',
+      des: 'Drag and drop, paste image or its link, supports jpg/png/gif/webp/bmp',
       tips: 'Try it out',
     },
     mult_matting: {
       title: 'Batch Matting',
       processing: 'Progress',
       finish: 'Finish Processing',
-    },
+    }
   },
   ai_photo: {
     ai_photo_home: {
@@ -83,13 +85,20 @@ export default {
   convert: {
     convert_home: {
       title: 'Image Conversion Tool',
-      desc: 'Convert images to other formats, simple and easy to use, fast conversion, local conversion, data security.',
-      btn_label: 'Get Started',
+      desc: 'Convert images to other formats, simple and easy to use, fast conversion, local conversion, data secure.',
+      simple_convert_btn: 'Single Conversion',
+      mult_convert_btn: 'Batch Conversion',
       tips: 'Supports PNG, JPEG, GIF, BMP, WEBP, ICO, ICNS, TIFF, PDF',
+
     },
     convert_image: {
       select_btn: 'Select Image',
       convert_btn: 'Convert',
     },
-  },
+    mult_convert_image: {
+      select_folder_btn: 'Select Folder',
+      start_convert_btn: 'Start Conversion',
+      finish: 'Finish Processing', 
+    }
+  }
 };

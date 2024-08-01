@@ -1,7 +1,9 @@
 <template>
-  <div class="h-full flex flex-col items-center justify-center p-4">
+    <div class="h-full flex flex-col items-center justify-center p-4">
 
     <div class="text-center mb-4">
+      <h1 class="text-3xl font-bold mb-4">{{t('ai_matting.matting_home.title')}}</h1>
+      <p class="mb-8">{{t('ai_matting.matting_home.desc')}}</p>
       <button class="bg-green-500 btn text-white px-4 py-2 rounded-full btn-md" @click="openFileDialog">
         <i class="fa-solid fa-image mr-2"></i>
         {{ $t('ai_matting.matting_home.simple_btn') }}
@@ -19,9 +21,9 @@
       <span class="mx-2">{{ t('ai_matting.matting_home.tips') }}</span>
       <span class="mx-2">———</span>
     </div>
-    <div class="flex justify-center items-center mt-4">
+    <div class="flex justify-center items-center mt-8 h-50">
 
-      <img v-for="(item, index) in imageList" @click="tryItNow(item)" :key="index" class="w-24 h-24 object-cover mx-2"
+      <img v-for="(item, index) in imageList" @click="tryItNow(item)" :key="index" class="w-40 h-40 rounded-lg object-cover mx-2"
         :src="item" alt="demo image">
     </div>
   </div>

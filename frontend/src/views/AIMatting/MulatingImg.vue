@@ -39,20 +39,24 @@
                     </span>
                 </li>
             </ul>
-            <div v-if="working" class="mt-6 text-center">
-                <button @click="stopDealImage()"
-                    class="bg-green-500 text-white px-4 py-2 rounded-full">{{ t('ai_matting.mult_matting.finish') }}</button>
+            <div v-if="working && !loading" class="mt-6 text-center">
+                <button @click="stopDealImage()" class="bg-green-500 text-white px-4 py-2 rounded-full">{{
+                    t('ai_matting.mult_matting.finish') }}</button>
             </div>
             <div v-else class="mt-6 text-center">
                 <button @click="goBack()" class="bg-green-500 text-white px-4 py-2 rounded-full">{{
                     t('common.btn_back') }}</button>
             </div>
+            <div v-if="loading" class="flex justify-center items-center mt-4">
+                <div class="loader"></div>
+            </div>
+
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { aiMattingAPI } from '@/api/ai_matting'
 import { useI18n } from 'vue-i18n'
@@ -73,6 +77,20 @@ const working = ref(true)
 const processed_count = computed(() => {
     return image_list.value.filter(item => item.status === 'processed').length
 })
+
+// 异步获取图像的base64编码
+const updateImageListToBase64 = async () => {
+    for (let i = 0; i < image_list.value.length; i++) {
+        const image = image_list.value[i]
+        const result = await baseAPI('get_local_file_base64', image.image_path);
+        console.log(result, 'base64')
+        if (result.code === 200) {
+            image.base64_image = result.data.base64_image
+        }
+    }
+}
+
+
 
 // 处理图片
 const dealImage = async () => {
@@ -104,13 +122,17 @@ const stopDealImage = () => {
 
 // 获取文件夹内图片
 const getFolderImages = async () => {
+    loading.value = true
     const result = await aiMattingAPI('get_folder_images', foldersPath.value)
     if (result.code === 200) {
         image_list.value = result.data.image_list
     } else {
         message.error(result.error_msg)
     }
+    loading.value = false
 }
+
+
 // 返回
 const goBack = () => {
     window.history.back();
@@ -125,7 +147,7 @@ onMounted(async () => {
     foldersPath.value = route.params.folderPath
     console.log(foldersPath.value, 'foldersPath')
     await getFolderImages()
-    await dealImage()
+    await Promise.all([updateImageListToBase64(), dealImage()])
 
 })
 

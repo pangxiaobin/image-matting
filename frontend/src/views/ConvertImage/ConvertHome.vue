@@ -5,8 +5,14 @@
             <p class="mb-8">{{ t('convert.convert_home.desc') }}</p>
             <button class="bg-green-500 btn text-white px-4 py-2 rounded-full btn-md" @click="goToConvertPage">
                 <i class="fa-solid fa-image mr-2"></i>
-                {{ t('convert.convert_home.btn_label') }}
+                {{ t('convert.convert_home.simple_convert_btn') }}
             </button>
+
+            <button class="bg-green-500 btn text-white px-4 py-2 rounded-full btn-md ml-4" @click="goMultConvertPage">
+                <i class="fa-regular fa-folder-open mr-2"></i>
+                {{ t('convert.convert_home.mult_convert_btn') }}
+            </button>
+
 
             <p class="text-gray-500 mb-4 mt-8">
                 {{ t('convert.convert_home.tips') }}
@@ -33,12 +39,15 @@ function goToConvertPage() {
     router.push('/convert-image-editor')
 }
 
+function goMultConvertPage() {
+    router.push('/multi-convert-image')
+}
 
 
 </script>
 .demo {
-    margin-top:10px;
-    margin-bottom:10px;
+margin-top:10px;
+margin-bottom:10px;
 }
 
 <style scoped></style>

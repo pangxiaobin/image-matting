@@ -51,6 +51,11 @@ const routes = [{
         component: () => import('@/views/ConvertImage/ConvertImageEditor.vue')
       },
       {
+        path: 'multi-convert-image',
+        name: 'MultiConvertImage',
+        component: () => import('@/views/ConvertImage/MultiConvertImage.vue')
+      },
+      {
         path: 'setting',
         name: 'Setting',
         component: () => import('@/views/Setting.vue')

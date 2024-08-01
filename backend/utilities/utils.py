@@ -9,6 +9,27 @@ def is_image(filename):
     )
 
 
+def can_convert_file(filename):
+    """
+    ["PNG", "JPEG", "GIF", "BMP", "WEBP", "ICO", "ICNS", "TIFF", "PDF"]
+    """
+    return any(
+        filename.lower().endswith(ext)
+        for ext in [
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".gif",
+            ".bmp",
+            ".webp",
+            ".ico",
+            ".icns",
+            ".tiff",
+            ".pdf",
+        ]
+    )
+
+
 # Image 转base64
 def image_obj_to_base64(image_obj: Image):
     buffered = BytesIO()

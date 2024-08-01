@@ -1,5 +1,5 @@
 import time
-from utilities.utils import is_image, image_obj_to_base64, base64_to_png, img_to_base64
+from utilities.utils import is_image, image_obj_to_base64
 from hub_model import segmentation
 from utilities.log import logger
 from utilities.response import res200, res400, res500
@@ -54,7 +54,7 @@ class AIMattingAPI:
                         tem = {
                             "image_name": os.path.basename(image_path),
                             "image_path": image_path,
-                            "base64_image": img_to_base64(image_path),
+                            "base64_image": "",
                             "status": "waiting",
                             "no_bg_image": "",
                         }
