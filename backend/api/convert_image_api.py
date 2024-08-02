@@ -64,7 +64,7 @@ class ConvertImageAPI:
             image_path = playload.get("image_path")
             folder_path = playload.get("folder_path")
             output_format = playload["output_format"]
-            img_name = os.path.basename(image_path)
+            img_name = os.path.basename(image_path).split(".")[0]
             save_folder = os.path.join(folder_path, f"[{settings.TOOL_NAME}]-output")
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder, exist_ok=True)

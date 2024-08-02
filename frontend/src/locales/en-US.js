@@ -12,6 +12,8 @@ export default {
     copy_error: 'Copy failed',
     download_success: 'Saved successfully',
     download_error: 'Save failed',
+    processing: 'Progress',
+
   },
   menu: {
     setting: 'Settings',
@@ -40,7 +42,6 @@ export default {
     },
     mult_matting: {
       title: 'Batch Matting',
-      processing: 'Progress',
       finish: 'Finish Processing',
     }
   },

@@ -16,8 +16,15 @@
             </button>
         </div>
 
+        <div v-if="convertImageList.length !== 0" class="mt-4 flex justify-center items-center">
+            <span class="badge badge-info">{{ t('common.processing') }} {{ processed_count }} / {{
+                convertImageList.length }}
+            </span>
+        </div>
+
         <div class="mt-4 flex justify-center items-center">
-            <ul class="space-y-2 max-h-96 max-w-3xl overflow-y-auto ">
+
+            <ul class="space-y-2  max-w-3xl min-w-96 overflow-y-auto" style="max-height: 60vh;">
                 <li v-for="(image, index) in convertImageList" :key="index" class="flex  p-2 rounded-lg">
                     <div class="grow ml-4 flex flex-col truncate">
                         <p class="truncate" :title="image.image_name">{{ image.image_name }}</p>
@@ -54,7 +61,7 @@
             <button @click="stopConvertImage()" class="bg-green-500 text-white px-4 py-2 rounded-full">{{
                 t('convert.mult_convert_image.finish') }}</button>
         </div>
-        
+
         <div v-if="loading" class="flex justify-center items-center">
             <div class="loader"></div>
         </div>
@@ -64,7 +71,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted } from "vue"
+import { ref, watch, onUnmounted, computed } from "vue"
 import baseAPI from "@/api/base";
 import message from "@/utils/message";
 import { convertImageAPI } from "@/api/convert_image"
@@ -99,6 +106,12 @@ const stopConvertImage = () => {
         }
     }
 }
+
+//  已处理图片数量
+const processed_count = computed(() => {
+    return convertImageList.value.filter(item => item.status === 'processed').length
+})
+
 
 // 获取转换的文件列表
 const getConvertFileList = async () => {

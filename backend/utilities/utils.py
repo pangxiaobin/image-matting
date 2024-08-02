@@ -11,7 +11,7 @@ def is_image(filename):
 
 def can_convert_file(filename):
     """
-    ["PNG", "JPEG", "GIF", "BMP", "WEBP", "ICO", "ICNS", "TIFF", "PDF"]
+    ["PNG", "JPEG", "GIF", "BMP", "WEBP", "ICO", "ICNS", "TIFF"]
     """
     return any(
         filename.lower().endswith(ext)
@@ -25,7 +25,6 @@ def can_convert_file(filename):
             ".ico",
             ".icns",
             ".tiff",
-            ".pdf",
         ]
     )
 

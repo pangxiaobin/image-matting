@@ -3,7 +3,7 @@
         <div class="w-3/4 max-w-2xl	 rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-lg font-bold">{{ t('ai_matting.mult_matting.title') }}</h2>
-                <span class="badge badge-info">{{ t('ai_matting.mult_matting.processing') }} {{ processed_count }} / {{
+                <span class="badge badge-info">{{ t('common.processing') }} {{ processed_count }} / {{
                     image_list.length }}</span>
             </div>
             <!-- 图片列表,最高显示5个，超出显示滚动条 -->
@@ -72,6 +72,7 @@ const image_list = ref([])
 const loading = ref(true)
 
 const working = ref(true)
+const updateImageList = ref(true)
 
 //  已处理图片数量
 const processed_count = computed(() => {
@@ -80,12 +81,19 @@ const processed_count = computed(() => {
 
 // 异步获取图像的base64编码
 const updateImageListToBase64 = async () => {
+
     for (let i = 0; i < image_list.value.length; i++) {
-        const image = image_list.value[i]
-        const result = await baseAPI('get_local_file_base64', image.image_path);
-        console.log(result, 'base64')
-        if (result.code === 200) {
-            image.base64_image = result.data.base64_image
+        if (updateImageList.value === true) {
+            const image = image_list.value[i]
+            if (image.base64_image === '') {
+                const result = await baseAPI('get_local_file_base64', image.image_path);
+                if (result.code === 200) {
+                    image.base64_image = result.data.base64_image
+                }
+
+            }
+        } else {
+            break
         }
     }
 }
@@ -154,6 +162,8 @@ onMounted(async () => {
 onUnmounted(() => {
     console.log('unmounted')
     stopDealImage()
+    updateImageList.value = false
+    image_list.value = []
 })
 </script>
 

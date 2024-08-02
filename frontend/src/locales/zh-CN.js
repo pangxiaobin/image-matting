@@ -12,6 +12,8 @@ export default {
     copy_error: '复制失败',
     download_success: '保存成功',
     download_error: '保存失败',
+    processing: '进度',
+
   },
   menu: {
     setting: '设置',
@@ -40,7 +42,6 @@ export default {
     },
     mult_matting: {
       title: '批量抠图',
-      processing: '进度',
       finish: '结束处理',
     }
   },
