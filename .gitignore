@@ -48,3 +48,5 @@ backend/.vscode/
 backend/dist/
 
 backend/hub_model/briaai/
+
+backend/web/

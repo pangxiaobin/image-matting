@@ -15,6 +15,10 @@ export default {
     processing: '进度',
 
   },
+  basicHeader: {
+    'pin_window': '窗口始终置顶',
+    'unpin_window': '取消窗口置顶',
+  },
   menu: {
     setting: '设置',
     ai_matting_name: 'AI抠图',

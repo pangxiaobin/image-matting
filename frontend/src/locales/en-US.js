@@ -15,6 +15,11 @@ export default {
     processing: 'Progress',
 
   },
+  basicHeader: {
+    'pin_window': 'Keep Window Always on Top',
+    'unpin_window': 'Unpin Window',
+
+  },
   menu: {
     setting: 'Settings',
     ai_matting_name: 'AI Matting',
@@ -99,7 +104,7 @@ export default {
     mult_convert_image: {
       select_folder_btn: 'Select Folder',
       start_convert_btn: 'Start Conversion',
-      finish: 'Finish Processing', 
+      finish: 'Finish Processing',
     }
   }
 };

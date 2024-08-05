@@ -3,10 +3,10 @@
     "save_dir": "./data",
     "theme": "light",
     "window": {
-        "width": 1035,
+        "width": 1055,
         "height": 767,
-        "x": 86,
-        "y": 23,
+        "x": 107,
+        "y": 27,
         "fullscreen": false,
         "on_top": false
     }

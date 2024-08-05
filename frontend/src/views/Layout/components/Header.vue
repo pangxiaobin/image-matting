@@ -14,19 +14,36 @@
             </svg>
         </label>
 
+        <div class="tooltip tooltip-bottom ml-4 text-xl	" :data-tip="!windowPinned ? t('basicHeader.pin_window') : t('basicHeader.unpin_window')">
+            <i v-if="!windowPinned" class="fa-solid fa-arrow-up" @click="toggleWindowPin"></i>
+
+            <i v-else class="fa-solid fa-arrow-down" @click="toggleWindowPin"></i>
+        </div>
+
     </header>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { settingAPI } from '@/api/user';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const isDarkTheme = ref(false)
 
 const theme = ref('light')
 
+const windowPinned = ref(false)
+const toggleWindowPin = async () => {
+  windowPinned.value = !windowPinned.value
+  const resp = await settingAPI('update_window_setting', { pin_window: windowPinned.value })
+  if (resp.code !== 200) {
+    windowPinned.value = !windowPinned.value
+  }
+}
+
 // 获取设置信息
-const getTheme = async () => {
+const getSettingInfo = async () => {
     const res = await settingAPI('get', '')
     theme.value = res.data.theme
     if (res.data.theme === 'dark') {
@@ -34,6 +51,7 @@ const getTheme = async () => {
     } else {
         isDarkTheme.value = false
     }
+    windowPinned.value = res.data.window.on_top
 }
 
 // 保存设置
@@ -57,7 +75,7 @@ const toggleTheme = async () => {
 }
 
 onMounted(async () => {
-    await getTheme()
+    await getSettingInfo()
     if (theme.value === 'dark') {
         isDarkTheme.value = true
         document.documentElement.classList.add('dark')

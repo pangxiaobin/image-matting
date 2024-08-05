@@ -2,6 +2,8 @@ from utilities.response import res200, res400, res500
 from conf.config import config
 from typing import Union
 import json
+import webview
+import time
 
 
 class SettingAPI:
@@ -15,3 +17,12 @@ class SettingAPI:
             if key in config:
                 config.save(key, value)
         return res200(dict(config))
+
+    def update_window_setting(self, payload):
+        window = webview.windows[0]
+        time.sleep(0.1)  # If we don't sleep, the window will get frozen. Have no idea.
+        pin_window = payload.get("pin_window")
+        if pin_window is not None:
+            window.on_top = pin_window
+            config.save("window.on_top", pin_window)
+        return res200()
