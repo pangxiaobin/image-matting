@@ -153,10 +153,17 @@ def main():
         config.save("window.width", int(width))
         config.save("window.height", int(height))
 
+    def on_closing():
+        # 防止窗口置顶,确认退出框不展示在最前面
+        time.sleep(0.01)
+        if window.on_top:
+            window.on_top = False
+
     def bind(window):
         window.events.closed += on_close
         window.events.resized += on_resized
         window.events.moved += on_moved
+        window.events.closing += on_closing
 
     try:
         webview.start(bind, window, debug=settings.DEBUG, http_server=True)

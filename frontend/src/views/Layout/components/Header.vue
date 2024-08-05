@@ -14,7 +14,7 @@
             </svg>
         </label>
 
-        <div class="tooltip tooltip-bottom ml-4 text-xl	" :data-tip="!windowPinned ? t('basicHeader.pin_window') : t('basicHeader.unpin_window')">
+        <div class="tooltip tooltip-left ml-4 text-xl	" :data-tip="!windowPinned ? t('basicHeader.pin_window') : t('basicHeader.unpin_window')">
             <i v-if="!windowPinned" class="fa-solid fa-arrow-up" @click="toggleWindowPin"></i>
 
             <i v-else class="fa-solid fa-arrow-down" @click="toggleWindowPin"></i>
