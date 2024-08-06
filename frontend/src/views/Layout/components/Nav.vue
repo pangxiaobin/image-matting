@@ -14,7 +14,7 @@
             <ul class="mt-4">
                 <li class="py-2">
                     <router-link to="/aimatting" class="hover:underline flex items-center">
-                        <i class="fa-regular fa-arrows-to-eye text-2xl mr-2"></i> {{ t('menu.ai_matting_name') }}
+                        <i class="fa-solid fa-photo-film text-2xl mr-2"></i> {{ t('menu.ai_matting_name') }}
                     </router-link>
                 </li>
                 <li class="py-2">
@@ -43,7 +43,7 @@
             <div class="mt-4">
                 <router-link to="/" :data-tip="t('menu.ai_matting_name')"
                     class="tooltip tooltip-right hover:underline flex items-center mb-4">
-                    <i class="fa-regular fa-arrows-to-eye text-2xl "></i>
+                    <i class="fa-solid fa-photo-film text-2xl "></i>
                 </router-link>
                 <router-link to="/ai-photo" :data-tip="t('menu.ai_photo_name')"
                     class="tooltip tooltip-right hover:underline flex items-center mb-4">
