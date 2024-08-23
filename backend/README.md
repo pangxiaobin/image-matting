@@ -43,5 +43,5 @@ pdm build-front
 pdm build-release
 
 # 构建mac 应用
-build-mac-release
+pdm build-mac-release
 ```
