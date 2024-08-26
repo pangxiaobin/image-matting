@@ -43,3 +43,7 @@
 ![运行截图](./imgs/5.png)
 ![运行截图](./imgs/6.png)
 ![运行截图](./imgs/7.GIF)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=pangxiaobin/image-matting&type=Date)](https://star-history.com/#pangxiaobin/image-matting&Date)
