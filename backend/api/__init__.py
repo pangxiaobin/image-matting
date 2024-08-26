@@ -45,6 +45,8 @@ class API:
                 "version": settings.VERSION,
                 "author": settings.AUTHOR,
                 "email": settings.EMAIL,
+                "github": settings.GITHUB,
+                "website": settings.WEBSITE,
             }
         )
 

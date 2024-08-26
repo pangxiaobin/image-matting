@@ -20,6 +20,12 @@ class Settings(BaseSettings):
     TOOL_NAME: str = Field(default="IT-XIAOBIN", description="工具名")
     EMAIL: str = Field(default="2274858959@qq.com", description="邮箱")
     AUTHOR: str = Field(default="XIAO BIN", description="作者")
+    GITHUB: str = Field(
+        default="https://github.com/pangxiaobin/image-matting", description="github地址"
+    )
+    WEBSITE: str = Field(
+        default="https://matting.20133075.xyz/", description="网站地址"
+    )
 
     BASE_DIR: Path = Field(default=BASE_DIR, description="项目基础路径")
 

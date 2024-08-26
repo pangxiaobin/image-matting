@@ -18,10 +18,12 @@
       <button @click="saveSettings" class="btn btn-primary w-full">{{ t('setting.save_btn') }}</button>
     </div>
 
-    <div class="w-full max-w-lg p-6 rounded-lg shadow-md mb-6">
+    <div class="w-full max-w-lg p-6 rounded-lg shadow-md mb-6  select-text">
       <h3 class="text-xl font-semibold mb-2">{{ t('setting.system_info') }}</h3>
       <p class=" mb-2">{{ t('setting.author') }}: {{ systemInfo.author }}</p>
       <p class=" mb-2">{{ t('setting.email') }}: {{ systemInfo.email }}</p>
+      <p class="mb-2">Github: {{ systemInfo.github }}</p>
+      <p class="mb-2">Website: {{ systemInfo.website }}</p>
       <p class=" mb-2">{{ t('setting.version') }}: {{systemInfo.version }}</p>
       <div class="flex justify-center">
         <img src="/wx_qr.png" alt="WeChat QR Code" class="w-full h-32 object-cover rounded-md" />
@@ -47,7 +49,9 @@ const settingInfo = ref({
 const systemInfo = ref({
   'author': '',
   'email': '',
-  'version': ''
+  'version': '',
+  'github': '',
+  'website': '',
 })
 
 // 获取设置信息
