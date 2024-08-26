@@ -19,6 +19,16 @@
 
 链接: <https://pan.baidu.com/s/1XM37FOKZkLwafbsl5Y9xvw?pwd=hukj> 提取码: hukj
 
+## 常见问题
+
+### 1.  windows系统下，如果出现无法启动客户端的情况，请尝试以下操作
+  
+>本项目使用pywebview开发，在windows系统下会查找edgechromium ，edgehtml， mshtml 的客户端引擎依次检索。如果本地电脑 edge 浏览器支持这些引擎，则客户端可以正常启动。否则，需要安装对应的 [EdgeWebView2Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH) 浏览器引擎。
+
+### 2. 问题反馈交流qq群
+
+> QQ群号：779191959
+
 ### 运行截图
 
 ![运行截图](./imgs/1.png)
