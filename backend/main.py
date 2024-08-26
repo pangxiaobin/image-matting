@@ -135,6 +135,7 @@ def main():
         )
     except Exception as e:
         traceback.print_exc()
+        logger.error(f"Start window error: {traceback.format_exc()}")
 
     logger.info(f"Debug: {settings.DEBUG}")
     logger.info(f"Version: {VERSION}")
@@ -169,7 +170,7 @@ def main():
         webview.start(bind, window, debug=settings.DEBUG, http_server=True)
     except:
         traceback.print_exc()
-        logger.error("Error: webview.start() failed")
+        logger.error(f"Webview.start() error: {traceback.format_exc()}")
 
 
 if __name__ == "__main__":
