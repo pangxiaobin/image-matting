@@ -11,21 +11,34 @@
   - pnpm 安装 参考 <https://pnpm.io/zh/installation>
 
 - 开发模式下运行
+  - 安装后端依赖
 
-- 下载模型
+    ```shell
+    cd backend
+    pdm install
+    ```
 
-```shell
-HF_ENDPOINT=https://hf-mirror.com python hub_model/download.py
-```
+  - 安装前端依赖
 
-- 启动服务
+    ```shell
+    cd frontend
+    pnpm install
+    ```
 
-```shell
-# 运行前端
-cd frontend && npm run dev
-# 运行后端
-cd backend && pmd dev
-```
+  - 下载模型
+
+    ```shell
+    HF_ENDPOINT=https://hf-mirror.com python hub_model/download.py
+    ```
+
+  - 启动服务
+
+    ```shell
+    # 运行前端
+    cd frontend && npm run dev
+    # 运行后端
+    cd backend && pmd dev
+    ```
 
 ### 打包
 
