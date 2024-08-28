@@ -28,6 +28,12 @@
   - 下载模型
 
     ```shell
+    cd backend
+    # 激活虚拟环境 mac
+    source .venv/bin/activate
+    # 激活虚拟环境 windows
+    .venv\Scripts\activate
+    # 下载模型
     HF_ENDPOINT=https://hf-mirror.com python hub_model/download.py
     ```
 
