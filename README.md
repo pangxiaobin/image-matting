@@ -29,6 +29,10 @@
 
 > QQ群号：779191959
 
+### 3. windows系统如果运行时提示STATUS_ILLEGAL_INSTRUCTION，页面崩溃
+
+> 请尝试更新Microsoft Edge到最新版本
+
 ### 运行截图
 
 ![运行截图](./imgs/1.png)
