@@ -1,5 +1,5 @@
 <template>
-  <div class="relative overflow-x-auto mx-auto h-full flex flex-col items-center justify-center">
+  <div class="relative overflow-x-auto mx-auto flex flex-col items-center justify-center">
     <div v-if="!loading" class="w-full max-w-3xl p-4">
       <div class="flex items-center justify-center h-full">
         <VueCompareImage :left-image="img1" :right-image="img2" class="img-container img-transparent-bg" />
@@ -149,7 +149,6 @@ onMounted(async () => {
 <style scoped>
 .img-container {
   max-width: 80%;
-  max-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
