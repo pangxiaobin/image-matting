@@ -1,3 +1,4 @@
+
 # AI抠图项目
 
 >使用开源模型 [briaai/RMBG-1.4](https://huggingface.co/briaai/RMBG-1.4)实现图像抠图。
@@ -32,6 +33,12 @@
 ### 3. windows系统如果运行时提示STATUS_ILLEGAL_INSTRUCTION，页面崩溃
 
 > 请尝试更新Microsoft Edge到最新版本
+
+### 赞助支持
+
+> 如果您觉得项目对您有帮助，欢迎赞助支持。
+
+<img src= "./imgs/wx_sponsor.png" width='50%' alt='赞助支持' />
 
 ### 运行截图
 
