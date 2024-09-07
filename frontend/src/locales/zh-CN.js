@@ -21,15 +21,26 @@ export default {
   },
   menu: {
     setting: '设置',
+    about: '关于',
     ai_matting_name: 'AI抠图',
     ai_photo_name: '证件照',
-    convert_name: "图片转换"
+    convert_name: "图片转换",
+    compress_name: "图片压缩",
   },
   setting: {
     title: '系统设置',
     language: '语言',
     save_dir: '保存路径',
     save_btn: '保存',
+    tinify_key: 'TINIFY 秘钥',
+    tinify_used_count: '已使用次数/free 500次/月',
+    tinify_preserving: 'TINIFY 保存元数据',
+    tinify_preserve_placeholder: '选择保留的元数据',
+    
+  },
+  about: {
+    title: '关于',
+    desc: '基于 AI 抠图技术、本地运行、数据安全、简单易用、支持单张/批量抠图。',
     system_info: '系统信息',
     author: '作者',
     version: '版本',
@@ -106,5 +117,32 @@ export default {
       start_convert_btn: '开始转换',
       finish: '结束处理', 
     }
+  },
+  compress: {
+    compress_home: {
+      title: '图片压缩工具',
+      desc: '压缩图片大小, 降低图片质量, 提高加载速度, 使用 tinypng.com AIP 压缩, 需要设置API KEY',
+      simple_compress_btn: '单张压缩',
+      mult_compress_btn: '批量压缩',
+      tips: '支持 PNG, JPEG, WEBP, 其他格式可以使用转换工具转换后压缩',
+    },
+    compress_single: {
+      select_btn: '选择图片',
+      compress_btn: '压缩图片',
+      original_title: '原始图片信息',
+      compressed_title: '压缩图片信息',
+      size: '尺寸',
+      format: '格式',
+      color_mode: '色彩模式',
+      file_size: '文件大小',
+      compress_rate: '压缩率',
+      path: '路径',
+    },
+    mult_compress_image: {
+      select_folder_btn: '选择文件夹',
+      start_compress_btn: '开始压缩',
+      
+    }
   }
+
 };

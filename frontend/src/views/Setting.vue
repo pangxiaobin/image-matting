@@ -10,31 +10,37 @@
         </select>
       </div>
 
-      <!-- <div class="mb-4">
-        <label class="block text-md font-medium mb-2" for="storagePath">{{ t('setting.save_dir') }}</label>
-        <input type="text" id="storagePath" v-model="settingInfo.save_dir" class="input input-bordered w-full" />
-      </div> -->
+      <div class="mb-4">
+        <label class="block text-md font-medium mb-2" for="api_key">{{ t('setting.tinify_key') }}          
+          <span class="cursor-pointer text-blue-500" @click="openLink('https://tinypng.com/developers')" target="_blank">GET KEY</span>
+        </label>
+        <input ref="apiKeyInput" id="api_key" v-on:mouseenter="handleMouseEnter" v-on:mouseleave="handleMouseLeave" type="password"
+          v-model="settingInfo.tinify.tinify_key" class="input input-bordered w-full" />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-md font-medium mb-2" for="tinify_used_count">{{ t('setting.tinify_used_count') }}          
+        </label>
+        <input id="tinify_used_count" disabled type="text" v-model="settingInfo.tinify.compression_count" class="input input-bordered w-full" />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-md font-medium mb-2" for="preserve">{{ t('setting.tinify_preserving') }} 
+        </label>
+        <MultiSelect id="preserve" v-model="settingInfo.tinify.preserve" :options="['copyright', 'creation', 'location']"
+          placeholder="{{ t('setting.tinify_preserve_placeholder') }}" />
+      </div>
 
       <button @click="saveSettings" class="btn btn-primary w-full">{{ t('setting.save_btn') }}</button>
-    </div>
-
-    <div class="w-full max-w-lg p-6 rounded-lg shadow-md mb-6  select-text">
-      <h3 class="text-xl font-semibold mb-2">{{ t('setting.system_info') }}</h3>
-      <p class=" mb-2">{{ t('setting.author') }}: {{ systemInfo.author }}</p>
-      <p class=" mb-2">{{ t('setting.email') }}: {{ systemInfo.email }}</p>
-      <p class="mb-2">Github: {{ systemInfo.github }}</p>
-      <p class="mb-2">Website: {{ systemInfo.website }}</p>
-      <p class=" mb-2">{{ t('setting.version') }}: {{systemInfo.version }}</p>
-      <div class="flex justify-center">
-        <img src="/wx_qr.png" alt="WeChat QR Code" class="w-full h-32 object-cover rounded-md" />
-      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { settingAPI } from '@/api/user';
+import MultiSelect from '@/views/components/MultiSelect.vue';
+
 import baseAPI from '@/api/base';
 import { languageList } from '@/locales/index'
 import { useI18n } from 'vue-i18n'
@@ -43,16 +49,33 @@ import message from '@/utils/message.js'
 const { t } = useI18n()
 const settingInfo = ref({
   'language': '',
-  // 'save_dir': '',
+  'tinify': {
+    'tinify_key': '',
+    'preserve': [],
+    'compression_count': 0,
+  }
 })
 
-const systemInfo = ref({
-  'author': '',
-  'email': '',
-  'version': '',
-  'github': '',
-  'website': '',
+const formData = ref({
+  'language': '',
+  'tinify.tinify_key': '',
+  'tinify.preserve': []
 })
+
+const openLink = async (url) => {
+   await baseAPI('open_link', url)
+}
+
+const apiKeyInput = ref(null)
+
+// 鼠标移出隐藏API密钥
+const handleMouseLeave = () => {
+  apiKeyInput.value.type = 'password'
+}
+// 鼠标移入显示API密钥
+const handleMouseEnter = () => {
+  apiKeyInput.value.type = 'text'
+}
 
 // 获取设置信息
 const getSettingInfo = async () => {
@@ -68,7 +91,11 @@ const changeLanguage = (lang) => {
 
 // 保存设置
 const saveSettings = async () => {
-  const res = await settingAPI('put', settingInfo.value)
+  console.log(settingInfo.value)
+  formData.value.language = settingInfo.value.language
+  formData.value['tinify.tinify_key'] = settingInfo.value.tinify.tinify_key
+  formData.value['tinify.preserve'] = settingInfo.value.tinify.preserve
+  const res = await settingAPI('put', formData.value)
   if (res.code === 200) {
     message.info(res.msg);
     changeLanguage(settingInfo.value.language)
@@ -76,17 +103,10 @@ const saveSettings = async () => {
     message.error(res.err_msg);
   }
 }
-// 获取系统信息
-const getSystemInfo = async () => {
-  const res = await baseAPI('get_system_info')
-  if (res.code === 200) { 
-    systemInfo.value = res.data
-  }
-}
+
 
 onMounted(async () => {
   await getSettingInfo();
-  await getSystemInfo();
 })
 
 </script>

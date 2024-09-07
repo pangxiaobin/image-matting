@@ -54,12 +54,32 @@ const routes = [{
         path: 'multi-convert-image',
         name: 'MultiConvertImage',
         component: () => import('@/views/ConvertImage/MultiConvertImage.vue')
+      }, 
+      {
+        path: 'compress-home',
+        name: 'CompressHome',
+        component: () => import('@/views/CompressImage/CompressHome.vue')
+      }, 
+      {
+        path: 'comporess-single',
+        name: 'CompressSingle',
+        component: () => import('@/views/CompressImage/CompressSingle.vue')
+      }, 
+      {
+        path: 'compress-multi',
+        name: 'CompressMulti',
+        component: () => import('@/views/CompressImage/CompressMulti.vue')
       },
       {
         path: 'setting',
         name: 'Setting',
         component: () => import('@/views/Setting.vue')
       },
+      {
+        path: 'about',
+        name: 'About',
+        component: () => import('@/views/About.vue')
+      }
 
     ]
   }

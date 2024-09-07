@@ -10,13 +10,14 @@ DEFAULT_CONFIG = {
     "save_dir": "./data",
     "theme": "light",
     "window": {
-        "width": 800,
+        "width": 1037,
         "height": 800,
-        "x": 0,
-        "y": 0,
+        "x": 249,
+        "y": 23,
         "fullscreen": False,
         "on_top": False,
     },
+    "tinify": {"tinify_key": "", "preserve": [], "compression_count": 0},
 }
 
 

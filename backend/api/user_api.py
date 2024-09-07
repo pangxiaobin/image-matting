@@ -1,7 +1,7 @@
 from utilities.response import res200, res400, res500
+from utilities.tinify_client import tinify_client
 from conf.config import config
 from typing import Union
-import json
 import webview
 import time
 
@@ -16,6 +16,8 @@ class SettingAPI:
         for key, value in playload.items():
             if key in config:
                 config.save(key, value)
+            if key == "tinify.tinify_key":
+                tinify_client.update_key(value)
         return res200(dict(config))
 
     def update_window_setting(self, payload):

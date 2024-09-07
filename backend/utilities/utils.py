@@ -1,6 +1,8 @@
 import base64
 from PIL import Image
 from io import BytesIO
+import os
+import traceback
 
 
 def is_image(filename):
@@ -138,3 +140,52 @@ def convert_image_format(input_path, output_format, output_path=None):
 
         print(traceback.format_exc())
         return False
+
+
+def get_img_info(img_path):
+    # 获取图片信息，包括尺寸、格式 、 色彩空间、文件大小
+    try:
+        with Image.open(img_path) as img:
+            width, height = img.size
+            format = img.format
+            mode = img.mode
+            file_size = os.path.getsize(img_path)
+            return {
+                "size": f"{width}x{height}",
+                "format": format,
+                "colorMode": mode,
+                "fileSize": file_size,
+                "formatSize": format_size(file_size),
+                "path": img_path,
+            }
+    except Exception as e:
+        return None
+
+
+def get_base64_img_info(base64_data):
+    # 获取 base64 图片信息，包括尺寸、格式、色彩模式、分辨率、色彩空间、文件大小
+    img_data = base64.b64decode(base64_data.split(",")[1])
+    with Image.open(BytesIO(img_data)) as img:
+        width, height = img.size
+        format = img.format
+        mode = img.mode
+        file_size = len(img_data)
+        return {
+            "size": f"{width}x{height}",
+            "format": format,
+            "colorMode": mode,
+            "fileSize": file_size,
+            "formatSize": format_size(file_size),
+        }
+
+
+def format_size(size):
+    # 格式化文件大小
+    if size < 1024:
+        return f"{size}B"
+    elif size < 1024 * 1024:
+        return f"{size / 1024:.2f}KB"
+    elif size < 1024 * 1024 * 1024:
+        return f"{size / 1024 / 1024:.2f}MB"
+    else:
+        return f"{size / 1024 / 1024 / 1024:.2f}GB"

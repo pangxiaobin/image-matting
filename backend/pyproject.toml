@@ -14,7 +14,8 @@ dependencies = [
     "torch==2.2.2",
     "torchvision==0.17.2",
     "pyinstaller>=6.9.0",
-    "numpy==1.26.4"
+    "numpy==1.26.4",
+    "tinify>=1.6.0",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"

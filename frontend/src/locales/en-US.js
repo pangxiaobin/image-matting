@@ -22,15 +22,26 @@ export default {
   },
   menu: {
     setting: 'Settings',
+    about: 'About',
     ai_matting_name: 'AI Matting',
     ai_photo_name: 'ID Photo',
     convert_name: 'Image Conversion',
+    compress_name: 'Image Compress',
   },
   setting: {
     title: 'System Settings',
     language: 'Language',
     save_dir: 'Save Path',
     save_btn: 'Save',
+    tinify_key: 'TINIFY API Key',
+    tinify_used_count: 'Used Count/free 500 per/month',
+    tinify_preserving: 'TINIFY Preserving Metadata',
+    tinify_preserve_placeholder: 'Select Preserving Metadata',
+    
+  },
+  about: {
+    title: 'About',
+    desc: 'This is a image matting tool based on deep learning. It can automatically remove the background of images and generate a transparent mask. The tool is powered by PyTorch and OpenCV. The source code is available on GitHub.',
     system_info: 'System Information',
     author: 'Author',
     version: 'Version',
@@ -106,5 +117,32 @@ export default {
       start_convert_btn: 'Start Conversion',
       finish: 'Finish Processing',
     }
+  },
+  compress: {
+    compress_home: {
+      title: 'Image Compression Tool',
+      desc: 'Compress image size, reduce image quality, and improve loading speed. Uses TinyPNG.com API for compression. API KEY required.',
+      simple_compress_btn: 'Single Image Compression',
+      mult_compress_btn: 'Batch Compression',
+      tips: 'Supports PNG, JPEG, WEBP. Other formats can be converted using a conversion tool before compression.',
+    },
+    compress_single: {
+      select_btn: 'Select Image',
+      compress_btn: 'Compress Image',
+      original_title: 'Original Image Information',
+      compressed_title: 'Compressed Image Information',
+      size: 'Size',
+      format: 'Format',
+      color_mode: 'Color Mode',
+      file_size: 'File Size',
+      compress_rate: 'Compression Rate',
+      path: 'Path',
+    },
+    mult_compress_image: {
+      select_folder_btn: 'Select Folder',
+      start_compress_btn: 'Start Compression',
+      
+    }
   }
+  
 };

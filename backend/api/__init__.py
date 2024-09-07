@@ -1,10 +1,10 @@
-import os
 from utilities.utils import base64_to_png
 from pathlib import Path
 from utilities.log import logger
 from utilities.response import res200, res400, res500
 from conf.setting import settings
 from utilities.utils import img_to_base64
+import webbrowser
 
 
 class API:
@@ -56,3 +56,6 @@ class API:
             return res200(data={"base64_image": img})
         except Exception as e:
             return res500(f"Error in get_local_file_base64: {e}")
+
+    def open_link(self, link):
+        webbrowser.open(link)

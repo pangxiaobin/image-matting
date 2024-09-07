@@ -11,6 +11,7 @@ import time
 from api.user_api import SettingAPI
 from api.ai_matting import AIMattingAPI
 from api.convert_image_api import ConvertImageAPI
+from api.compress_image_api import CompressImageAPI
 import platform
 import subprocess
 import os
@@ -118,7 +119,7 @@ def main():
 
     api = API()
 
-    api_class_list = [SettingAPI, AIMattingAPI, ConvertImageAPI]
+    api_class_list = [SettingAPI, AIMattingAPI, ConvertImageAPI, CompressImageAPI]
     for api_class in api_class_list:
         api.add_apis(api_class)
     try:
