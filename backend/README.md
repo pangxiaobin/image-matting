@@ -69,6 +69,9 @@ pdm build-front
 - 构建后端
 
 ```shell
+# 如果你构建pdm环境时，没有选择python版本，需要修改main.spec中的内容，根据自己情况找到虚拟环境中的tinify路径
+('./.venv/lib/python3.12/site-packages/tinify', 'tinify')  --》 ('./.venv/lib/site-packages/tinify', 'tinify')
+
 # 打包后端,可执行文件
 pdm build-release
 
