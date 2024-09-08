@@ -5,14 +5,14 @@
     "window": {
         "width": 1037,
         "height": 800,
-        "x": 249,
+        "x": 203,
         "y": 23,
         "fullscreen": false,
         "on_top": false
     },
     "tinify": {
-        "tinify_key": "KBbkL5PBzmFp7Bv2f9LJv55sQdMcmZyz",
+        "tinify_key": "",
         "preserve": [],
-        "compression_count": 4
+        "compression_count": 0
     }
 }

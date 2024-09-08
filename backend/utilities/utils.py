@@ -189,3 +189,19 @@ def format_size(size):
         return f"{size / 1024 / 1024:.2f}MB"
     else:
         return f"{size / 1024 / 1024 / 1024:.2f}GB"
+
+
+def get_file_size_info(file_path):
+    # 获取文件大小信息
+    file_size = os.path.getsize(file_path)
+    return {"fileSize": file_size, "formatSize": format_size(file_size)}
+
+def can_compress_image(file_name):
+    if not file_name:
+        return False
+    if any(
+        file_name.lower().endswith(ext)
+        for ext in [".png", ".jpg", ".jpeg", ".webp"]
+    ):
+        return True
+    return False

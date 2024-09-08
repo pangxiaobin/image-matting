@@ -45,6 +45,8 @@ export default {
     author: '作者',
     version: '版本',
     email: '邮箱',
+    sponsor: '赞助',
+    wx_info: '微信公众号',
   },
   ai_matting: {
     matting_home: {
@@ -141,7 +143,8 @@ export default {
     mult_compress_image: {
       select_folder_btn: '选择文件夹',
       start_compress_btn: '开始压缩',
-      
+      retry_btn:'失败重试',
+      finish: '结束处理', 
     }
   }
 

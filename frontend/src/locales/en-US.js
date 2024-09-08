@@ -46,6 +46,8 @@ export default {
     author: 'Author',
     version: 'Version',
     email: 'Email',
+    sponsor: 'Sponsor',
+    wx_info: 'WeChat Official Account'
   },
   ai_matting: {
     matting_home: {
@@ -141,7 +143,8 @@ export default {
     mult_compress_image: {
       select_folder_btn: 'Select Folder',
       start_compress_btn: 'Start Compression',
-      
+      retry_btn:'Retry Compress',
+      finish: 'Finish Processing',
     }
   }
   
