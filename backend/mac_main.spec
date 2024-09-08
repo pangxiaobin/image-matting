@@ -1,4 +1,4 @@
-block_cipher = None
+lblock_cipher = None
 
 # 分析步骤，收集所需的文件和依赖项
 a = Analysis(
@@ -9,7 +9,9 @@ a = Analysis(
         ('./web', 'web'),  # 收集 web 目录
         ('./hub_model', 'hub_model'),
         ('./assets', 'assets'),
-        ('config.json', '.')
+        ('config.json', '.'),
+        ('./.venv/lib/python3.12/site-packages/tinify', 'tinify')
+
     ],
     hiddenimports=['api', 'conf', 'hub_model', 'utilities', 'loguru'],
     hookspath=[],
