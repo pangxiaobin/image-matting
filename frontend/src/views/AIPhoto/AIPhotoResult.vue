@@ -51,7 +51,7 @@ import message from '@/utils/message.js'
 
 const { t } = useI18n()
 const route = useRoute();
-const imageSrc = ref(route.params.imgUrl);
+const imageSrc = ref(route.query.imgUrl);
 const backgroundColor = ref('transparent');
 const selectedColor = ref('transparent');
 

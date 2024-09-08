@@ -152,7 +152,7 @@ const openFile = async (path) => {
 }
 
 onMounted(async () => {
-    foldersPath.value = route.params.folderPath
+    foldersPath.value = route.query.folderPath
     console.log(foldersPath.value, 'foldersPath')
     await getFolderImages()
     await Promise.all([updateImageListToBase64(), dealImage()])

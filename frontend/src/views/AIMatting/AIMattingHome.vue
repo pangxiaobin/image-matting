@@ -49,7 +49,7 @@ const openFileDialog = async () => {
     // 上传文件
     // 路由跳转到simpe-img
     console.log(res['file_path'])
-    router.push({ name: 'SimpleImg', params: { filePath: res.data['file_path'], imgType: 'local' } })
+    router.push({ name: 'SimpleImg', query: { filePath: res.data['file_path'], imgType: 'local' } })
   }
 }
 
@@ -61,13 +61,13 @@ const openFolderDialog = async () => {
     // 上传文件夹
     // 路由跳转到批量抠图 
     console.log(res.data.folder_path, 'folder_path in openFolderDialog')
-    router.push({ name: 'MultiImg', params: { folderPath: res.data.folder_path } })
+    router.push({ name: 'MultiImg', query: { folderPath: res.data.folder_path } })
   }
 }
 
 // 试试看
 const tryItNow = (base64Img) => {
-  router.push({ name: 'SimpleImg', params: { filePath: base64Img, imgType: 'base64' } })
+  router.push({ name: 'SimpleImg', query: { filePath: base64Img, imgType: 'base64' } })
 }
 
 const handlePaste = (event) => {
@@ -85,7 +85,7 @@ const handlePaste = (event) => {
       item.getAsString((text) => {
         if (isValidUrl(text)) {
           console.log('粘贴的是URL:', text);
-          router.push({ name: 'SimpleImg', params: { filePath: text, imgType: 'url' } })
+          router.push({ name: 'SimpleImg', query: { filePath: text, imgType: 'url' } })
         } else {
           message.error('请粘贴图片链接或图片文件');
           return;
@@ -104,7 +104,7 @@ const handlePaste = (event) => {
       reader.onload = (e) => {
         // base64编码的图片数据
         console.log('粘贴的是图片:', e.target.result);
-        router.push({ name: 'SimpleImg', params: { filePath: e.target.result, imgType: 'base64' } })
+        router.push({ name: 'SimpleImg', query: { filePath: e.target.result, imgType: 'base64' } })
       };
       reader.readAsDataURL(file);
     }
@@ -129,7 +129,7 @@ function handleDrop(event) {
     if (file.type.match('image.*')) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        router.push({ name: 'SimpleImg', params: { filePath: e.target.result, imgType: 'base64' } })
+        router.push({ name: 'SimpleImg', query: { filePath: e.target.result, imgType: 'base64' } })
       };
       reader.readAsDataURL(file);
     }

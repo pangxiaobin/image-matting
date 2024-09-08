@@ -117,8 +117,8 @@ const coppedToolbarOptions = ref({
 });
 
 // 获取路由参数中的图片数据
-const filePath = ref(route.params.filePath || '');
-const imgType = ref(route.params.imgType || '');
+const filePath = ref(route.query.filePath || '');
+const imgType = ref(route.query.imgType || '');
 
 // 根据图片路径获取base64数据
 const getFileLocalBase64 = async (filePath) => {
@@ -166,7 +166,7 @@ const onCropPlay = async () => {
       // imageUrl.value = res.data.no_bg_image;
       router.push({
         name: 'AIPhotoResult',
-        params: {
+        query: {
           imgUrl: res.data.no_bg_image,
         },
       });

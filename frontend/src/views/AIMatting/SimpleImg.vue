@@ -36,10 +36,10 @@ const { t } = useI18n()
 const loading = ref(true);
 const route = useRoute();
 const filePath = ref('');
-filePath.value = route.params.filePath;
+filePath.value = route.query.filePath;
 
 const imgType = ref('');
-imgType.value = route.params.imgType;
+imgType.value = route.query.imgType;
 
 const img1 = ref('');
 const img2 = ref('');

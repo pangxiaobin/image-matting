@@ -37,7 +37,7 @@ const openFileDialog = async () => {
     // 上传文件
     // 路由跳转到simpe-img
     console.log(res['file_path'])
-    router.push({ name: 'ImageEditor', params: { filePath: res.data['file_path'], imgType: 'local' } })
+    router.push({ name: 'ImageEditor', query: { filePath: res.data['file_path'], imgType: 'local' } })
   }
 }
 
@@ -56,7 +56,7 @@ const handlePaste = (event) => {
       item.getAsString((text) => {
         if (isValidUrl(text)) {
           console.log('粘贴的是URL:', text);
-          router.push({ name: 'ImageEditor', params: { filePath: text, imgType: 'url' } })
+          router.push({ name: 'ImageEditor', query: { filePath: text, imgType: 'url' } })
         } else {
           message.error('请粘贴图片链接或图片文件');
           return;
@@ -75,7 +75,7 @@ const handlePaste = (event) => {
       reader.onload = (e) => {
         // base64编码的图片数据
         console.log('粘贴的是图片:', e.target.result);
-        router.push({ name: 'ImageEditor', params: { filePath: e.target.result, imgType: 'base64' } })
+        router.push({ name: 'ImageEditor', query: { filePath: e.target.result, imgType: 'base64' } })
       };
       reader.readAsDataURL(file);
     }
@@ -100,7 +100,7 @@ function handleDrop(event) {
     if (file.type.match('image.*')) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        router.push({ name: 'ImageEditor', params: { filePath: e.target.result, imgType: 'base64' } })
+        router.push({ name: 'ImageEditor', query: { filePath: e.target.result, imgType: 'base64' } })
       };
       reader.readAsDataURL(file);
     }
