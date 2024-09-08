@@ -1,4 +1,4 @@
-lblock_cipher = None
+block_cipher = None
 
 # 分析步骤，收集所需的文件和依赖项
 a = Analysis(
