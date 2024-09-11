@@ -43,8 +43,14 @@ def main():
         result = window.create_file_dialog(
             webview.FOLDER_DIALOG, directory=initial_directory
         )
-        print(result)
-        return res200({"folder_path": result[0] if result else ""})
+        # 兼容pywebview 5.2版本，windows下返回的结果为str,mac下返回的结果为tuple的bug
+        if isinstance(result, tuple):
+            folder_path = result[0]
+        elif isinstance(result, str):
+            folder_path = result
+        else:
+            folder_path = ""
+        return res200({"folder_path": folder_path})
 
     def save_png_dialog(
         self,
