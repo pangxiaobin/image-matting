@@ -43,6 +43,8 @@
 
 > 如果您觉得项目对您有帮助，欢迎赞助支持。
 
+[捐赠列表](https://github.com/pangxiaobin/image-matting/wiki/Sponsor-Page)
+
 <img src= "./imgs/wx_sponsor.png" width='50%' alt='赞助支持' />
 
 ### 运行截图
