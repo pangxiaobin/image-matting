@@ -47,6 +47,10 @@
 
 <img src= "./imgs/wx_sponsor.png" width='50%' alt='赞助支持' />
 
+### 鸣谢
+
+感谢[nzls1795724370](https://github.com/nzls1795724370) 提供的图标设计
+
 ### 运行截图
 
 ![运行截图](./imgs/1.png)
