@@ -17,11 +17,20 @@
         <button @click="downloadImage()" class="bg-green-500 text-white px-4 py-2 rounded-full">
           {{ t('common.btn_download') }}
         </button>
+        <button @click="showPopup = true" class="bg-green-500 text-white px-4 py-2 rounded-full">
+                {{ t('common.btn_edit') }}
+            </button>
       </div>
     </div>
     <div v-else class="flex justify-center items-center h-full">
       <div class="loader"></div>
     </div>
+
+     <!-- 调用弹窗组件，并传递 showModal 属性和标题 -->
+     <ModalPopup v-model="showPopup" :title="t('common.btn_edit')"  :showCancelButton="true" :showConfirmButton="false">
+            <!-- 在弹窗插槽中放入图片编辑器内容 -->
+            <ImageEditor :initialBase64="img2" @exportImage="handleExportImage" />
+        </ModalPopup>
   </div>
 </template>
 <script setup>
@@ -32,6 +41,16 @@ import { aiMattingAPI } from '@/api/ai_matting'
 import baseAPI from '@/api/base'
 import { useI18n } from 'vue-i18n'
 import message from '@/utils/message.js'
+import ImageEditor from '@/views/components/ImageEditor.vue';
+import ModalPopup from '@/views/components/ModalPopup.vue';
+
+const showPopup = ref(false)
+// 导出编辑后的图片
+const handleExportImage = (base64_data) => {
+   showPopup.value = false;
+   img2.value = base64_data;
+}
+
 const { t } = useI18n()
 const loading = ref(true);
 const route = useRoute();

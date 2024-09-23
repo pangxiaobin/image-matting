@@ -13,6 +13,10 @@ export default {
     download_success: 'Saved successfully',
     download_error: 'Save failed',
     processing: 'Progress',
+    btn_confirm: 'Confirm',
+    btn_cancel: 'Cancel',
+    btn_edit: 'Edit',
+
 
   },
   basicHeader: {

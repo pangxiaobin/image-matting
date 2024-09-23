@@ -2,7 +2,8 @@
     <div class="relative overflow-x-auto w-full h-full flex flex-col items-center justify-center">
         <div class="flex items-center justify-center" style="height: 60vh; width: auto;">
             <img :src="imageSrc" :class="{ 'img-transparent-bg': selectedColor === 'transparent' }"
-                class="relative z-10 border border-indigo-600 object-contain" :style="containerStyle" style="max-width: 100%;max-height: 100%; width: auto; height: auto;" />
+                class="relative z-10 border border-indigo-600 object-contain" :style="containerStyle"
+                style="max-width: 100%;max-height: 100%; width: auto; height: auto;" />
         </div>
         <div class="flex space-x-2 mb-4 mt-4 ">
             <button @click="selectColor('transparent')"
@@ -37,17 +38,30 @@
             <button @click="downloadImage()" class="bg-green-500 text-white px-4 py-2 rounded-full">
                 {{ t('common.btn_download') }}
             </button>
+            <button @click="showPopup = true" class="bg-green-500 text-white px-4 py-2 rounded-full">
+                {{ t('common.btn_edit') }}
+            </button>
         </div>
-
+        <!-- 调用弹窗组件，并传递 showModal 属性和标题 -->
+        <ModalPopup v-model="showPopup" :title="t('common.btn_edit')" :showCancelButton="true" :showConfirmButton="false">
+            <!-- 在弹窗插槽中放入图片编辑器内容 -->
+            <ImageEditor :initialBase64="imageSrc" @exportImage="handleExportImage" />
+        </ModalPopup>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n'
 import baseAPI from '@/api/base'
 import message from '@/utils/message.js'
+
+import ImageEditor from '@/views/components/ImageEditor.vue';
+import ModalPopup from '@/views/components/ModalPopup.vue';
+
+const showPopup = ref(false)
+
 
 const { t } = useI18n()
 const route = useRoute();
@@ -58,6 +72,12 @@ const selectedColor = ref('transparent');
 const containerStyle = computed(() => ({
     backgroundColor: backgroundColor.value,
 }));
+
+// 导出编辑后的图片
+const handleExportImage = (base64_data) => {
+   showPopup.value = false;
+   imageSrc.value = base64_data;
+}
 
 // const isTransparent = computed(() => backgroundColor.value === 'transparent');
 

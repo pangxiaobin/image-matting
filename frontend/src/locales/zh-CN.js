@@ -13,6 +13,9 @@ export default {
     download_success: '保存成功',
     download_error: '保存失败',
     processing: '进度',
+    btn_confirm: '确定',
+    btn_cancel: '取消',
+    btn_edit: '编辑',
 
   },
   basicHeader: {

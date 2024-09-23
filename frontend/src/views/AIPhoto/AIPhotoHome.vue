@@ -36,7 +36,6 @@ const openFileDialog = async () => {
   if (res.data['file_path']) {
     // 上传文件
     // 路由跳转到simpe-img
-    console.log(res['file_path'])
     router.push({ name: 'ImageEditor', query: { filePath: res.data['file_path'], imgType: 'local' } })
   }
 }
