@@ -9,6 +9,7 @@
 
 - 本地模型算法进行抠图，支持单张和批量抠图
 - 支持单张抠图和批量抠图
+- 支持二次编辑
 - 支持拖拽和粘贴
 - AI证件照抠图功能
 - 支持图片格式转换、批量转换
@@ -23,7 +24,9 @@
 
 ## 打包后的运行文件
 
-链接: <https://pan.baidu.com/s/1XM37FOKZkLwafbsl5Y9xvw?pwd=hukj> 提取码: hukj
+- 百度网盘: <https://pan.baidu.com/s/1XM37FOKZkLwafbsl5Y9xvw?pwd=hukj>
+- 夸克网盘: <https://pan.quark.cn/s/6b9ac495349c>
+- UC网盘： <https://drive.uc.cn/s/7bbd0011e9f24?public=1>
 
 ## 常见问题
 
@@ -50,6 +53,37 @@
 ### 鸣谢
 
 感谢[nzls1795724370](https://github.com/nzls1795724370) 提供的图标设计
+
+### 历史版本记录
+
+#### v0.1.4
+
+- 新增图片压缩和批量压缩
+- 优化windows 界面展示
+- 新增about页面
+- 新增tinypng key 设置页面
+- 更新前端依赖，修复vue router not support params
+
+#### v0.1.3
+
+- 新增图片格式批量转换
+- 新增窗口置顶
+- 修复win图标不展示问题
+
+#### v0.1.2
+
+- 新增图片格式转换
+- 增加图片展示组件
+
+#### v0.1.1
+
+- 新增证件照抠图功能；
+- 解决windows 打开文件异常；
+- 已更新win 打包确少模型依赖文件；
+
+#### v0.1.0
+
+- 项目初始化版本,基础AI抠图功能
 
 ### 运行截图
 
