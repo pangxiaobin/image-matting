@@ -89,19 +89,21 @@
 
 ![运行截图](./imgs/1.png)
 ![运行截图](./imgs/2.png)
+![运行截图](./imgs/3.png)
 ![运行截图](./imgs/4.png)
+![运行截图](./imgs/5.png)
+![运行截图](./imgs/6.png)
 ![运行截图](./imgs/8.png)
 ![运行截图](./imgs/9.png)
 ![运行截图](./imgs/10.png)
 ![运行截图](./imgs/11.png)
 ![运行截图](./imgs/12.png)
-![运行截图](./imgs/3.png)
-![运行截图](./imgs/5.png)
-![运行截图](./imgs/6.png)
-![运行截图](./imgs/7.GIF)
 ![运行截图](./imgs/13.png)
 ![运行截图](./imgs/14.png)
 ![运行截图](./imgs/15.png)
+![运行截图](./imgs/7.gif)
+
+
 
 ## Star History
 

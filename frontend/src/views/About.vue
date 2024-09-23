@@ -16,7 +16,7 @@
       </div>
       <p class=" mb-2">{{ t('about.wx_info') }}:</p>
       <div class="flex justify-center">
-        <img src="/wx_qr.png" alt="WeChat QR Code" class="w-full h-32 object-cover rounded-md" />
+        <img src="/wx_qr.png" alt="WeChat QR Code" class="h-32 w-full rounded-md" />
       </div>
     </div>
   </div>
