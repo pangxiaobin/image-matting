@@ -9,6 +9,7 @@ DEFAULT_CONFIG = {
     "language": "zh-CN",
     "save_dir": "./data",
     "theme": "light",
+    "export_format": "png",
     "window": {
         "width": 1037,
         "height": 800,

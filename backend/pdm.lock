@@ -5,10 +5,25 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:da9461c4f21e585023dbbddb1f8e8a84ab99f1c0e964a09a3e0d0c9e1c68c801"
+content_hash = "sha256:1e4c8ba35a2e9943acfd262e3f6aa7aebac6d4a48fee7380a5c521ba32aa2052"
 
 [[metadata.targets]]
 requires_python = "==3.12.*"
+
+[[package]]
+name = "aggdraw"
+version = "1.3.19"
+requires_python = ">=3.9"
+summary = "High quality drawing interface for PIL."
+groups = ["default"]
+files = [
+    {file = "aggdraw-1.3.19-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:e68afe82d0bbd111b2d6d7f41ac8cf13a010cd65ad095117c2e9fd8252710a73"},
+    {file = "aggdraw-1.3.19-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:4f3ff2595490b3760658a28afdca5111ed787bd1fccdab5c81d0ea57e0fe5a8c"},
+    {file = "aggdraw-1.3.19-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:56bbcc8d4f64e60ed815419837b9d2ba579169d92c4fe19e4caa3679aaedb6aa"},
+    {file = "aggdraw-1.3.19-cp312-cp312-win_amd64.whl", hash = "sha256:6a39bdf2f1043ca4148a926e35feaa1d4d592c25c8b225d8d0ad945415bab7cc"},
+    {file = "aggdraw-1.3.19-cp312-cp312-win_arm64.whl", hash = "sha256:21f951129b3014b3cf678b250ba5e4345d93243602b4062804e6111319d0eaf3"},
+    {file = "aggdraw-1.3.19.tar.gz", hash = "sha256:e78a23b29fb66a079832bae5604f082bfa4ff9d5d469c77506a67253d7fee7db"},
+]
 
 [[package]]
 name = "altgraph"
@@ -32,6 +47,20 @@ dependencies = [
 files = [
     {file = "annotated_types-0.7.0-py3-none-any.whl", hash = "sha256:1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"},
     {file = "annotated_types-0.7.0.tar.gz", hash = "sha256:aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89"},
+]
+
+[[package]]
+name = "attrs"
+version = "24.2.0"
+requires_python = ">=3.7"
+summary = "Classes Without Boilerplate"
+groups = ["default"]
+dependencies = [
+    "importlib-metadata; python_version < \"3.8\"",
+]
+files = [
+    {file = "attrs-24.2.0-py3-none-any.whl", hash = "sha256:81921eb96de3191c8258c199618104dd27ac608d9366f5e35d011eae1867ede2"},
+    {file = "attrs-24.2.0.tar.gz", hash = "sha256:5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346"},
 ]
 
 [[package]]
@@ -131,6 +160,15 @@ marker = "sys_platform == \"win32\" or platform_system == \"Windows\""
 files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
+]
+
+[[package]]
+name = "docopt"
+version = "0.6.2"
+summary = "Pythonic argument parser, that will make you smile"
+groups = ["default"]
+files = [
+    {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
 ]
 
 [[package]]
@@ -527,6 +565,33 @@ files = [
 ]
 
 [[package]]
+name = "psd-tools"
+version = "1.10.0"
+summary = "Python package for working with Adobe Photoshop PSD files"
+groups = ["default"]
+dependencies = [
+    "Pillow>=10.0.0",
+    "aggdraw",
+    "attrs>=23.0.0",
+    "docopt>=0.6.0",
+    "numpy",
+    "scikit-image",
+    "scipy",
+]
+files = [
+    {file = "psd_tools-1.10.0-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:ee2547743b7b41506fd9c7e084917a89439f30bb8e82981b3e73e93c61623b5c"},
+    {file = "psd_tools-1.10.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1571f9e96a461bf863116df22b4cb12f8fd3d1033673832346793dd4d99e7124"},
+    {file = "psd_tools-1.10.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bd61e7c65f8dae39ad5fbce3d8408398689e5ff42dcf6ed371b5f2e46ed0bf26"},
+    {file = "psd_tools-1.10.0-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d87ad7eab38660538d14b7c1ce87232779846bd5144669f273bcb808e4faf41e"},
+    {file = "psd_tools-1.10.0-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:f2112b076e5d68d1d4d6b87c5f00bc2c4de227a0f90fbeb7f6e7d021c8f9aa09"},
+    {file = "psd_tools-1.10.0-cp312-cp312-musllinux_1_2_i686.whl", hash = "sha256:82e0704fea4ae2953eab5a35e84f662185b1b4b0d908bb1d596d103f6611cfd9"},
+    {file = "psd_tools-1.10.0-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:041c66b62a6c79b32719abc30d490030a66f35fcb8744ef4964c72d5e817e888"},
+    {file = "psd_tools-1.10.0-cp312-cp312-win32.whl", hash = "sha256:57154c64d3a02205db2bc4df444641e4794a0bd5ceefa791867006a7136efa1c"},
+    {file = "psd_tools-1.10.0-cp312-cp312-win_amd64.whl", hash = "sha256:fa939ccb4f5f8da8eac5bb945efd89b18e07f0e5774c706fa5cfd12bcb319232"},
+    {file = "psd_tools-1.10.0.tar.gz", hash = "sha256:e3402c057639cb462324e62c101458fff51d770a99513325803b1204db02ff7a"},
+]
+
+[[package]]
 name = "pycparser"
 version = "2.22"
 requires_python = ">=3.8"
@@ -582,7 +647,7 @@ files = [
 
 [[package]]
 name = "pydantic-settings"
-version = "2.5.0"
+version = "2.3.4"
 requires_python = ">=3.8"
 summary = "Settings management using Pydantic"
 groups = ["default"]
@@ -591,14 +656,14 @@ dependencies = [
     "python-dotenv>=0.21.0",
 ]
 files = [
-    {file = "pydantic_settings-2.5.0-py3-none-any.whl", hash = "sha256:eae04a3dd9adf521a4c959dcefb984e0f3b1d841999daf02f961dcc4d31d2f7f"},
-    {file = "pydantic_settings-2.5.0.tar.gz", hash = "sha256:204828c02481a2e7135466b26a7d65d9e15a17d52d1d8f59cacdf9ad625e1140"},
+    {file = "pydantic_settings-2.3.4-py3-none-any.whl", hash = "sha256:11ad8bacb68a045f00e4f862c7a718c8a9ec766aa8fd4c32e39a0594b207b53a"},
+    {file = "pydantic_settings-2.3.4.tar.gz", hash = "sha256:c5802e3d62b78e82522319bbc9b8f8ffb28ad1c988a99311d04f2a6051fca0a7"},
 ]
 
 [[package]]
 name = "pyinstaller"
-version = "6.10.0"
-requires_python = "<3.14,>=3.8"
+version = "6.9.0"
+requires_python = "<3.13,>=3.8"
 summary = "PyInstaller bundles a Python application and all its dependencies into a single package."
 groups = ["default"]
 dependencies = [
@@ -607,23 +672,23 @@ dependencies = [
     "macholib>=1.8; sys_platform == \"darwin\"",
     "packaging>=22.0",
     "pefile>=2022.5.30; sys_platform == \"win32\"",
-    "pyinstaller-hooks-contrib>=2024.8",
+    "pyinstaller-hooks-contrib>=2024.7",
     "pywin32-ctypes>=0.2.1; sys_platform == \"win32\"",
     "setuptools>=42.0.0",
 ]
 files = [
-    {file = "pyinstaller-6.10.0-py3-none-macosx_10_13_universal2.whl", hash = "sha256:d60fb22859e11483af735aec115fdde09467cdbb29edd9844839f2c920b748c0"},
-    {file = "pyinstaller-6.10.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:46d75359668993ddd98630a3669dc5249f3c446e35239b43bc7f4155bc574748"},
-    {file = "pyinstaller-6.10.0-py3-none-manylinux2014_i686.whl", hash = "sha256:3398a98fa17d47ccb31f8779ecbdacec025f7adb2f22757a54b706ac8b4fe906"},
-    {file = "pyinstaller-6.10.0-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:e9989f354ae4ed8a3bec7bdb37ae0d170751d6520e500f049c7cd0632d31d5c3"},
-    {file = "pyinstaller-6.10.0-py3-none-manylinux2014_s390x.whl", hash = "sha256:b7c90c91921b3749083115b28f30f40abf2bb481ceff196d2b2ce0eaa2b3d429"},
-    {file = "pyinstaller-6.10.0-py3-none-manylinux2014_x86_64.whl", hash = "sha256:6cf876d7d93b8b4f28d1ad57fa24645cf43119c79e985dd5e5f7a801245e6f53"},
-    {file = "pyinstaller-6.10.0-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:db05e3f2f10f9f78c56f1fb163d9cb453433429fe4281218ebaf1ebfd39ba942"},
-    {file = "pyinstaller-6.10.0-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:28eca3817f176fdc19747e1afcf434f13bb9f17a644f611be2c5a61b1f498ed7"},
-    {file = "pyinstaller-6.10.0-py3-none-win32.whl", hash = "sha256:703e041718987e46ba0568a2c71ecf2459fddef57cf9edf3efeed4a53e3dae3f"},
-    {file = "pyinstaller-6.10.0-py3-none-win_amd64.whl", hash = "sha256:95b55966e563e8b8f31a43882aea10169e9a11fdf38e626d86a2907b640c0701"},
-    {file = "pyinstaller-6.10.0-py3-none-win_arm64.whl", hash = "sha256:308e0a8670c9c9ac0cebbf1bbb492e71b6675606f2ec78bc4adfc830d209e087"},
-    {file = "pyinstaller-6.10.0.tar.gz", hash = "sha256:143840f8056ff7b910bf8f16f6cd92cc10a6c2680bb76d0a25d558d543d21270"},
+    {file = "pyinstaller-6.9.0-py3-none-macosx_10_13_universal2.whl", hash = "sha256:5ced2e83acf222b936ea94abc5a5cc96588705654b39138af8fb321d9cf2b954"},
+    {file = "pyinstaller-6.9.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:f18a3d551834ef8fb7830d48d4cc1527004d0e6b51ded7181e78374ad6111846"},
+    {file = "pyinstaller-6.9.0-py3-none-manylinux2014_i686.whl", hash = "sha256:f2fc568de3d6d2a176716a3fc9f20da06d351e8bea5ddd10ecb5659fce3a05b0"},
+    {file = "pyinstaller-6.9.0-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:a0f378f64ad0655d11ade9fde7877e7573fd3d5066231608ce7dfa9040faecdd"},
+    {file = "pyinstaller-6.9.0-py3-none-manylinux2014_s390x.whl", hash = "sha256:7bf0c13c5a8560c89540746ae742f4f4b82290e95a6b478374d9f34959fe25d6"},
+    {file = "pyinstaller-6.9.0-py3-none-manylinux2014_x86_64.whl", hash = "sha256:da994aba14c5686db88796684de265a8665733b4df09b939f7ebdf097d18df72"},
+    {file = "pyinstaller-6.9.0-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:4e3e50743c091a06e6d01c59bdd6d03967b453ee5384a9e790759be4129db4a4"},
+    {file = "pyinstaller-6.9.0-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:b041be2fe78da47a269604d62c940d68c62f9a3913bdf64af4123f7689d47099"},
+    {file = "pyinstaller-6.9.0-py3-none-win32.whl", hash = "sha256:2bf4de17a1c63c0b797b38e13bfb4d03b5ee7c0a68e28b915a7eaacf6b76087f"},
+    {file = "pyinstaller-6.9.0-py3-none-win_amd64.whl", hash = "sha256:43709c70b1da8441a730327a8ed362bfcfdc3d42c1bf89f3e2b0a163cc4e7d33"},
+    {file = "pyinstaller-6.9.0-py3-none-win_arm64.whl", hash = "sha256:f15c1ef11ed5ceb32447dfbdab687017d6adbef7fc32aa359d584369bfe56eda"},
+    {file = "pyinstaller-6.9.0.tar.gz", hash = "sha256:f4a75c552facc2e2a370f1e422b971b5e5cdb4058ff38cea0235aa21fc0b378f"},
 ]
 
 [[package]]
@@ -1072,14 +1137,14 @@ files = [
 
 [[package]]
 name = "transformers"
-version = "4.44.2"
+version = "4.42.4"
 requires_python = ">=3.8.0"
 summary = "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow"
 groups = ["default"]
 dependencies = [
     "filelock",
     "huggingface-hub<1.0,>=0.23.2",
-    "numpy>=1.17",
+    "numpy<2.0,>=1.17",
     "packaging>=20.0",
     "pyyaml>=5.1",
     "regex!=2019.12.17",
@@ -1089,8 +1154,8 @@ dependencies = [
     "tqdm>=4.27",
 ]
 files = [
-    {file = "transformers-4.44.2-py3-none-any.whl", hash = "sha256:1c02c65e7bfa5e52a634aff3da52138b583fc6f263c1f28d547dc144ba3d412d"},
-    {file = "transformers-4.44.2.tar.gz", hash = "sha256:36aa17cc92ee154058e426d951684a2dab48751b35b49437896f898931270826"},
+    {file = "transformers-4.42.4-py3-none-any.whl", hash = "sha256:6d59061392d0f1da312af29c962df9017ff3c0108c681a56d1bc981004d16d24"},
+    {file = "transformers-4.42.4.tar.gz", hash = "sha256:f956e25e24df851f650cb2c158b6f4352dfae9d702f04c113ed24fc36ce7ae2d"},
 ]
 
 [[package]]

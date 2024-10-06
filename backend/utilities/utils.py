@@ -3,6 +3,10 @@ from PIL import Image
 from io import BytesIO
 import os
 import traceback
+from psd_tools import PSDImage
+from psd_tools.api.layers import PixelLayer
+
+import numpy as np
 
 
 def is_image(filename):
@@ -71,10 +75,15 @@ def img_to_base64(image_path: str):
 
 
 # base64 转 png
-def base64_to_png(base64_data, save_path: str):
-    base64_data = base64_data.split(",")[1]
-    with open(save_path, "wb") as f:
-        f.write(base64.b64decode(base64_data))
+def base64_to_image(base64_data, save_path: str):
+    image_data = base64.b64decode(base64_data.split(",")[1])
+    image_obj = Image.open(BytesIO(image_data))
+    _, extension = os.path.splitext(save_path)
+    if extension.lower() == ".jpg" or extension.lower() == ".jpeg":
+        image_obj = image_obj.convert("RGB")
+        image_obj.save(save_path, "JPEG")
+    else:
+        image_obj.save(save_path, extension[1:].upper())
     return save_path
 
 
@@ -87,7 +96,7 @@ def hex_to_rgb(hex_color):
 
 def save_bs64_image_add_bg(base64_data, hex_color, save_path):
     if hex_color == "transparent":
-        base64_to_png(base64_data, save_path)
+        base64_to_image(base64_data, save_path)
         return save_path
     # 读取图片
     image_data = base64.b64decode(base64_data.split(",")[1])
@@ -196,12 +205,32 @@ def get_file_size_info(file_path):
     file_size = os.path.getsize(file_path)
     return {"fileSize": file_size, "formatSize": format_size(file_size)}
 
+
 def can_compress_image(file_name):
     if not file_name:
         return False
     if any(
-        file_name.lower().endswith(ext)
-        for ext in [".png", ".jpg", ".jpeg", ".webp"]
+        file_name.lower().endswith(ext) for ext in [".png", ".jpg", ".jpeg", ".webp"]
     ):
         return True
     return False
+
+
+def base64_to_psd(base64_data, save_path):
+    image_data = base64.b64decode(base64_data.split(",")[1])
+    image_obj = Image.open(BytesIO(image_data)).convert("RGBA")
+    image_to_psd(image_obj, save_path)
+
+
+def image_to_psd(image_obj: Image, save_path):
+    if image_obj.mode != "RGBA":
+        image_obj = image_obj.convert("RGBA")
+    psd = PSDImage.frompil(image_obj)
+    # Create a new layer for the image
+    pixel_layer = PixelLayer.frompil(image_obj, psd)
+    # Set the pixel layer to be visible
+    pixel_layer.visible = True
+
+    psd.append(pixel_layer)
+
+    psd.save(save_path)

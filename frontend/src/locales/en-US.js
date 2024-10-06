@@ -41,6 +41,7 @@ export default {
     tinify_used_count: 'Used Count/free 500 per/month',
     tinify_preserving: 'TINIFY Preserving Metadata',
     tinify_preserve_placeholder: 'Select Preserving Metadata',
+    export_format: 'Export Format',
     
   },
   about: {
