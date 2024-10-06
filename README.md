@@ -20,7 +20,7 @@
 
 ## TODO
 
-- [ ] 优化图片编辑功能，~~~支持放大缩小，canvas实现有问题，不在支持~~
+- [ ] 优化图片编辑功能，~~支持放大缩小，canvas实现有问题，不在支持~~
 - [x] 增加AI抠图结果页的背景颜色切换功能
 
 - [ ] ~~图片转换支持 AVIF 格式， 参考[issues/10](https://github.com/pangxiaobin/image-matting/issues/10)~~
