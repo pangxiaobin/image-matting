@@ -1,10 +1,11 @@
 import time
-from utilities.utils import is_image, image_obj_to_base64
+from utilities.utils import is_image, image_obj_to_base64, image_to_psd
 from hub_model import segmentation
 from utilities.log import logger
 from utilities.response import res200, res400, res500
 import os
 from conf.setting import settings
+from conf.config import config
 
 
 class AIMattingAPI:
@@ -79,11 +80,17 @@ class AIMattingAPI:
             save_folder = os.path.join(folder_path, f"[{settings.TOOL_NAME}]抠图结果")
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder, exist_ok=True)
-            new_image_name = f"[{settings.TOOL_NAME}]-{img_name.split('.')[0]}_{int(time.time() * 1000)}.png"
+            export_format = config.get("export_format", "png")
+            new_image_name = f"[{settings.TOOL_NAME}]-{img_name.split('.')[0]}_{int(time.time() * 1000)}.{export_format}"
             save_path = os.path.join(save_folder, new_image_name)
-            no_bg_image.save(save_path)
-            return res200(data={"no_bg_image": save_path})
 
+            if export_format == "psd":
+                image_to_psd(no_bg_image, save_path)
+            elif export_format == "jpg":
+                no_bg_image.convert("RGB").save(save_path, "JPEG")
+            else:
+                no_bg_image.save(save_path)
+            return res200(data={"no_bg_image": save_path})
         except Exception as e:
             logger.error(f"Error in predict_from_folder_img: {e} {image_path}")
             return res500("Error in predict_from_folder_img")

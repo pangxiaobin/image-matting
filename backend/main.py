@@ -1,7 +1,7 @@
 import webview
 from utilities.log import logger, init_logging
 from utilities.response import res200, res500
-from utilities.utils import base64_to_png, save_bs64_image_add_bg
+from utilities.utils import base64_to_image, save_bs64_image_add_bg, base64_to_psd
 from conf.setting import settings
 from conf.config import config
 import os
@@ -57,14 +57,18 @@ def main():
         png_data,
         initial_directory="",
     ):
-        filename = f"[{settings.TOOL_NAME}]-{int(time.time()*1000)}.png"
+        export_format = config.get("export_format", "png")
+        filename = f"[{settings.TOOL_NAME}]-{int(time.time()*1000)}.{export_format}"
         result = window.create_file_dialog(
             webview.SAVE_DIALOG, directory=initial_directory, save_filename=filename
         )
         if not result:
             return
         try:
-            base64_to_png(png_data, result)
+            if export_format == "psd":
+                base64_to_psd(png_data, result)
+            else:
+                base64_to_image(png_data, result)
         except Exception as e:
             logger.error(f"save_png_dialog error: {e}")
             return res500(f"save_png_dialog error: {e}")

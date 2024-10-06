@@ -11,6 +11,15 @@
       </div>
 
       <div class="mb-4">
+        <label class="block text-md font-medium mb-2" for="language">{{ t('setting.export_format') }}</label>
+        <select id="language" v-model="settingInfo.export_format" class="select select-bordered w-full">
+          <option value="png" selected>PNG</option>
+          <option value="psd">PSD</option>
+          <option value="jpg">JPG</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
         <label class="block text-md font-medium mb-2" for="api_key">{{ t('setting.tinify_key') }}          
           <span class="cursor-pointer text-blue-500" @click="openLink('https://tinypng.com/developers')" target="_blank">GET KEY</span>
         </label>
@@ -49,6 +58,7 @@ import message from '@/utils/message.js'
 const { t } = useI18n()
 const settingInfo = ref({
   'language': '',
+  'export_format': '',
   'tinify': {
     'tinify_key': '',
     'preserve': [],
@@ -58,6 +68,7 @@ const settingInfo = ref({
 
 const formData = ref({
   'language': '',
+  'export_format': '',
   'tinify.tinify_key': '',
   'tinify.preserve': []
 })
@@ -93,6 +104,7 @@ const changeLanguage = (lang) => {
 const saveSettings = async () => {
   console.log(settingInfo.value)
   formData.value.language = settingInfo.value.language
+  formData.value.export_format = settingInfo.value.export_format
   formData.value['tinify.tinify_key'] = settingInfo.value.tinify.tinify_key
   formData.value['tinify.preserve'] = settingInfo.value.tinify.preserve
   const res = await settingAPI('put', formData.value)

@@ -2,7 +2,8 @@
   <div class="relative overflow-x-auto mx-auto flex flex-col items-center justify-center">
     <div v-if="!loading" class="w-full max-w-3xl p-4">
       <div class="flex items-center justify-center h-full">
-        <VueCompareImage :left-image="img1" :right-image="img2" class="img-container img-transparent-bg" />
+        <VueCompareImage :left-image="img1" :right-image="img2" :style="containerStyle" class="img-container"
+          :class="{ 'img-transparent-bg': selectedColor === 'transparent' }" />
       </div>
       <div class="flex justify-center space-x-4 mt-4">
         <button @click="goBack()" class="bg-green-500 text-white px-4 py-2 rounded-full">
@@ -18,23 +19,39 @@
           {{ t('common.btn_download') }}
         </button>
         <button @click="showPopup = true" class="bg-green-500 text-white px-4 py-2 rounded-full">
-                {{ t('common.btn_edit') }}
-            </button>
+          {{ t('common.btn_edit') }}
+        </button>
+        <div class="relative inline-block">
+          <div @click="toggleColorPicker" class="relative w-10 h-10 border stacked-linear">
+          </div>
+          <!-- 颜色选择弹窗 -->
+          <div v-if="showColorPicker"
+            class="absolute left-0 bottom-full mb-2 bg-white p-2 shadow-lg rounded-lg border z-10 w-24">
+            <div class="grid grid-cols-2 gap-1">
+              <!-- 颜色选项 -->
+              <div v-for="color in colors" :key="color" :style="{ backgroundColor: color }"
+                @click="handleColorChange(color)" class="w-10 h-10 cursor-pointer border"
+                :class="{ 'border-black': selectedColor === color, 'img-transparent-bg': color === 'transparent' }">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
     <div v-else class="flex justify-center items-center h-full">
       <div class="loader"></div>
     </div>
 
-     <!-- 调用弹窗组件，并传递 showModal 属性和标题 -->
-     <ModalPopup v-model="showPopup" :title="t('common.btn_edit')"  :showCancelButton="true" :showConfirmButton="false">
-            <!-- 在弹窗插槽中放入图片编辑器内容 -->
-            <ImageEditor :initialBase64="img2" @exportImage="handleExportImage" />
-        </ModalPopup>
+    <!-- 调用弹窗组件，并传递 showModal 属性和标题 -->
+    <ModalPopup v-model="showPopup" :title="t('common.btn_edit')" :showCancelButton="true" :showConfirmButton="false">
+      <!-- 在弹窗插槽中放入图片编辑器内容 -->
+      <ImageEditor :initialBase64="img2" @exportImage="handleExportImage" />
+    </ModalPopup>
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeMount } from 'vue'
+import { ref, onMounted, onBeforeMount, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { VueCompareImage } from 'vue3-compare-image'
 import { aiMattingAPI } from '@/api/ai_matting'
@@ -47,8 +64,8 @@ import ModalPopup from '@/views/components/ModalPopup.vue';
 const showPopup = ref(false)
 // 导出编辑后的图片
 const handleExportImage = (base64_data) => {
-   showPopup.value = false;
-   img2.value = base64_data;
+  showPopup.value = false;
+  img2.value = base64_data;
 }
 
 const { t } = useI18n()
@@ -62,6 +79,34 @@ imgType.value = route.query.imgType;
 
 const img1 = ref('');
 const img2 = ref('');
+
+const showColorPicker = ref(false);
+
+const backgroundColor = ref('transparent');
+const selectedColor = ref('transparent');
+
+const containerStyle = computed(() => ({
+  backgroundColor: backgroundColor.value,
+}));
+
+const selectColor = (color) => {
+  backgroundColor.value = color;
+  selectedColor.value = color;
+};
+
+// 颜色选项
+const colors = ['transparent', '#FFFFFF', '#000000', '#FF0000', '#00FF00', '#FFFF00', '#0000FF', '#FF00FF', '#00FFFF', '#C0C0C0' ];
+
+// Toggles the color picker modal
+const toggleColorPicker = () => {
+  showColorPicker.value = !showColorPicker.value;
+};
+
+// Updates the selected color
+const handleColorChange = (color) => {
+  selectColor(color);
+  // toggleColorPicker();
+};
 
 async function initImage1() {
   if (imgType.value === 'local') {
@@ -182,5 +227,13 @@ onMounted(async () => {
       transparent 75%,
       #eee 0,
       #eee), linear-gradient(45deg, #eee 25%, #fff 0, #fff 75%, #eee 0, #eee);
+}
+
+.stacked-linear {
+  background: linear-gradient(217deg,
+      rgba(255, 0, 0, 0.8),
+      rgba(255, 0, 0, 0) 70.71%),
+    linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
 }
 </style>

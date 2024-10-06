@@ -1,4 +1,4 @@
-from utilities.utils import base64_to_png
+from utilities.utils import base64_to_image
 from pathlib import Path
 from utilities.log import logger
 from utilities.response import res200, res400, res500
@@ -28,7 +28,7 @@ class API:
         """
         try:
             save_path = Path(save_folder) / f"{image_name}.png"
-            base64_to_png(base64_image, str(save_path.absolute))
+            base64_to_image(base64_image, str(save_path.absolute))
             return res200(data={"image_path": str(save_path.absolute)})
         except Exception as e:
             logger.error(f"Error in save_image: {e} {image_name}")

@@ -39,6 +39,7 @@ export default {
     tinify_used_count: '已使用次数/free 500次/月',
     tinify_preserving: 'TINIFY 保存元数据',
     tinify_preserve_placeholder: '选择保留的元数据',
+    export_format: '导出格式',
     
   },
   about: {
