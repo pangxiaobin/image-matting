@@ -18,7 +18,7 @@ a = Analysis(
        ('./hub_model', 'hub_model'),  
        ('./assets', 'assets'),
        ('config.json', '.'),
-       ('./.venv/lib/python3.12/site-packages/tinify', 'tinify')
+       ('./.venv/lib/python3.11/site-packages/tinify', 'tinify')
     ],
     hiddenimports=['api', 'conf', 'hub_model', 'utilities', 'loguru'],
     hookspath=[],

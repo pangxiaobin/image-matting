@@ -8,17 +8,15 @@ authors = [
 dependencies = [
     "pywebview>=5.1",
     "loguru==0.7.2",
-    "transformers==4.42.4",
     "pydantic-settings==2.3.4",
-    "scikit-image==0.24.0",
-    "torch==2.2.2",
-    "torchvision==0.17.2",
     "pyinstaller==6.9.0",
     "numpy==1.26.4",
     "tinify==1.6.0",
     "psd-tools>=1.10.0",
+    "onnxruntime==1.16.3",
+    "opencv-python>=4.10.0.84",
 ]
-requires-python = "==3.12.*"
+requires-python = "==3.11.*"
 readme = "README.md"
 license = {text = "MIT"}
 

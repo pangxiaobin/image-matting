@@ -3,7 +3,7 @@
 ## 运行
 
 - 开发环境
-  - python 3.12.4
+  - python 3.11.9
   - node v20.11.0
 
 - 安装依赖
@@ -27,26 +27,11 @@
 
   - 下载模型
   
-    - mac
-
-      ```shell
-      # 激活虚拟环境
-      cd backend
-      source .venv/bin/activate
-      HF_ENDPOINT=https://hf-mirror.com python hub_model/download.py
-      ```
-
-    - windows
-
-      ```shell
-      # windows
-      # 激活虚拟环境
-      cd backend
-      .venv\Scripts\activate
-      # 下载模型
-      $env:HF_ENDPOINT = "https://hf-mirror.com"
-      python .\hub_model\download.py
-      ```
+  ```shell
+    # 激活虚拟环境
+    cd backend
+    pdm run python hub_model/download.py
+    ```
 
   - 启动服务
 
