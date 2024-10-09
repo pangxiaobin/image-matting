@@ -1,27 +1,13 @@
-from transformers import AutoModelForImageSegmentation
-from torchvision.transforms.functional import normalize
-from torch import (
-    device,
-    tensor,
-    cuda,
-    Tensor,
-    float32,
-    unsqueeze,
-    divide,
-    squeeze,
-    max,
-    min,
-)
-import torch.nn.functional as F
-import numpy as np
-from skimage import io
-from PIL import Image
-from io import BytesIO
-from pathlib import Path
+import base64
 import sys
 import time
+from io import BytesIO
+from pathlib import Path
+
+import numpy as np
+import onnxruntime as ort
 import requests
-import base64
+from PIL import Image
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,35 +25,65 @@ except ImportError:
 
 
 class ImageSegmentation:
-    def __init__(self, model_name=str(BASE_DIR / "hub_model" / "briaai" / "RMBG-1.4")):
-        logger.info("Loading model...")
-        star_time = time.time()
-        self.model = AutoModelForImageSegmentation.from_pretrained(
-            model_name, trust_remote_code=True, local_files_only=True
-        )
-        logger.info(f"Model loaded, time cost: {time.time() - star_time:.2f}s")
-        self.device = device("cuda:0" if cuda.is_available() else "cpu")
-        self.model.to(self.device)
+    def __init__(
+        self,
+        model_path=str(BASE_DIR / "hub_model" / "briaai" / "RMBG-1.4" / "model.onnx"),
+        model_input_size=[1024, 1024],
+    ):
+        if not isinstance(model_path, str) or not model_path.endswith(".onnx"):
+            raise ValueError("model_path must be a valid ONNX model file path")
+        if not isinstance(model_input_size, list) or len(model_input_size) != 2:
+            raise ValueError("model_input_size must be a list with two elements")
+        if any(not isinstance(size, int) or size <= 0 for size in model_input_size):
+            raise ValueError("model_input_size elements must be positive integers")
 
-    def preprocess_image(self, im: np.ndarray, model_input_size: list) -> Tensor:
+        # Initialize model path and input size
+        self.model_path = model_path
+        self.model_input_size = model_input_size
+        try:
+            logger.info("Loading model...")
+            star_time = time.time()
+            self.ort_session = ort.InferenceSession(model_path)
+            logger.info(f"Model loaded in {time.time() - star_time:.2f} seconds")
+        except Exception as e:
+            raise RuntimeError(f"Failed to load ONNX model: {e}")
+
+    def preprocess_image(self, im: np.ndarray) -> np.ndarray:
+        # If the image is grayscale, add a dimension to make it a color image
         if len(im.shape) < 3:
             im = im[:, :, np.newaxis]
-        im_tensor = tensor(im, dtype=float32).permute(2, 0, 1)
-        im_tensor = F.interpolate(
-            unsqueeze(im_tensor, 0), size=model_input_size, mode="bilinear"
-        )
-        image = divide(im_tensor, 255.0)
-        image = normalize(image, [0.5, 0.5, 0.5], [1.0, 1.0, 1.0])
-        return image
+        # Resize the image to match the model input size
+        try:
+            im_resized = np.array(
+                Image.fromarray(im).resize(self.model_input_size, Image.BILINEAR)
+            )
+        except Exception as e:
+            raise RuntimeError(f"Error resizing image: {e}")
+        # Normalize image pixel values to the [0, 1] range
+        image = im_resized.astype(np.float32) / 255.0
+        # Further normalize image data
+        mean = np.array([0.5, 0.5, 0.5], dtype=np.float32)
+        std = np.array([1.0, 1.0, 1.0], dtype=np.float32)
+        image = (image - mean) / std
+        # Convert the image to the required shape
+        image = image.transpose(
+            2, 0, 1
+        )  # Change dimension order (channels, height, width)
+        return np.expand_dims(image, axis=0)  # Add batch dimension
 
-    def postprocess_image(self, result: Tensor, im_size: list) -> np.ndarray:
-        # 使用双线性插值法调整结果张量的尺寸到目标图像尺寸
-        result = squeeze(F.interpolate(result, size=im_size, mode="bilinear"), 0)
-        ma = max(result)
-        mi = min(result)
+    def postprocess_image(self, result: np.ndarray, im_size: list) -> np.ndarray:
+        # Resize the result image to match the original image size
+        result = np.squeeze(result)
+        try:
+            result = np.array(Image.fromarray(result).resize(im_size, Image.BILINEAR))
+        except Exception as e:
+            raise RuntimeError(f"Error resizing result image: {e}")
+        # Normalize the result image data
+        ma = result.max()
+        mi = result.min()
         result = (result - mi) / (ma - mi)
-        im_array = (result * 255).permute(1, 2, 0).cpu().data.numpy().astype(np.uint8)
-        im_array = np.squeeze(im_array)
+        # Convert to uint8 image
+        im_array = (result * 255).astype(np.uint8)
         return im_array
 
     def read_image(self, img: str) -> Image.Image:
@@ -89,19 +105,25 @@ class ImageSegmentation:
         # 去除alpha通道
         input_image = orig_image.convert("RGB")
         image_array = np.array(input_image)
-        image_size = (input_image.size[1], input_image.size[0])
-        model_input_size = [1024, 1024]
+        image_size = (input_image.size[0], input_image.size[1])
 
-        image = self.preprocess_image(image_array, model_input_size).to(self.device)
+        image_preprocessed = self.preprocess_image(image_array)
 
-        # 推理
-        result = self.model(image)
-
+        ort_inputs = {self.ort_session.get_inputs()[0].name: image_preprocessed}
+        try:
+            ort_outs = self.ort_session.run(None, ort_inputs)
+        except Exception as e:
+            raise RuntimeError(f"ONNX inference failed: {e}")
+        result = ort_outs[0]
         # 后处理
         result_image = self.postprocess_image(result[0][0], image_size)
 
-        # 保存结果
-        pil_im = Image.fromarray(result_image)
+        try:
+            pil_im = Image.fromarray(result_image)
+            # pil_im = pil_im.resize(image_size)
+        except Exception as e:
+            raise RuntimeError(f"Error processing images: {e}")
+
         no_bg_image = Image.new("RGBA", pil_im.size, (0, 0, 0, 0))
         no_bg_image.paste(orig_image, mask=pil_im)
 
@@ -113,18 +135,13 @@ if __name__ == "__main__":
     segmentation = ImageSegmentation()
     base_path = BASE_DIR / "hub_model" / "test_images"
     test_imgs = [
-        # "test.jpg",
-        # "car.jpg",
+        "test.jpg",
+        "car.jpg",
         "input.jpg",
     ]
     for img_name in test_imgs:
-        print(img_to_base64(str(base_path / img_name)))
-        with open("demo.txt", "w+") as f:
-            f.write(img_to_base64(str(base_path / img_name)))
-            break
-
-        # img_path = str(base_path / img_name)
-        # file_name = img_name.split(".")[0]
-        # no_bg_image = segmentation.segment_image(img_path)
-        # no_bg_image.save(str(base_path / f"no_bg_{file_name}.png"))
-        # logger.info(f"Image {img_name} has been processed successfully.")
+        img_path = str(base_path / img_name)
+        file_name = img_name.split(".")[0]
+        no_bg_image = segmentation.segment_image(img_path)
+        no_bg_image.save(str(base_path / f"no_bg_{file_name}.png"))
+        logger.info(f"Image {img_name} has been processed successfully.")
