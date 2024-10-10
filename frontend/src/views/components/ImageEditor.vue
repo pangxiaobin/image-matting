@@ -1,12 +1,13 @@
 <template>
   <div class="image-editor" @mousemove="updateCursor">
     <div class="canvas-container m-14" @mouseleave="handleMouseLeave">
-      <canvas ref="canvas" @mousedown="startErasing" @mouseup="stopErasing" @mousemove="throttledErase" />
-      <!-- 自定义光标显示 -->
+      <canvas ref="displayCanvas" @mousedown="startErasing" @mouseup="stopErasing" @mousemove="throttledErase" />
+      <!-- Hidden full-resolution canvas -->
+      <canvas ref="fullResCanvas" style="display: none;" />
+      <!-- Custom cursor display -->
       <div v-if="showCursor" class="eraser-cursor" :style="cursorStyle"></div>
     </div>
     <div class="toolbar flex mt-4 flex-wrap justify-center">
-
       <button class="toolbar__button" @click="undo" title="Undo">
         <i class="fa-solid fa-rotate-left"></i>
       </button>
@@ -19,7 +20,6 @@
       <span class="toolbar__text">
         <input type="range" min="5" max="100" v-model="eraserSize" class="mr-2" /> {{ eraserSize }}
       </span>
-
     </div>
   </div>
 </template>
@@ -40,8 +40,10 @@ const throttle = (func, limit) => {
   };
 };
 
-const canvas = ref(null);
-const ctx = ref(null);
+const displayCanvas = ref(null);
+const fullResCanvas = ref(null);
+const displayCtx = ref(null);
+const fullResCtx = ref(null);
 const isErasing = ref(false);
 const baseImage = ref(null);
 const eraserSize = ref(10);
@@ -64,6 +66,7 @@ const props = defineProps({
 
 const emit = defineEmits(['exportImage']);
 
+const scale = ref(1);
 
 watch(() => props.initialBase64, (newVal) => {
   if (newVal) {
@@ -82,10 +85,9 @@ function loadImage(base64) {
   };
 }
 
-// 鼠标移出时停止擦除
 function handleMouseLeave() {
-  stopErasing();  // 停止擦除
-  hideCursor();  // 隐藏光标
+  stopErasing();
+  hideCursor();
 }
 
 function adjustCanvasSize(img) {
@@ -94,26 +96,29 @@ function adjustCanvasSize(img) {
 
   const { width, height } = img;
 
-  let canvasWidth = width;
-  let canvasHeight = height;
+  // Set full resolution canvas size
+  fullResCanvas.value.width = width;
+  fullResCanvas.value.height = height;
 
-  if (width > maxCanvasWidth || height > maxCanvasHeight) {
-    const widthRatio = maxCanvasWidth / width;
-    const heightRatio = maxCanvasHeight / height;
-    const scale = Math.min(widthRatio, heightRatio);
+  // Calculate scale for display canvas
+  const widthRatio = maxCanvasWidth / width;
+  const heightRatio = maxCanvasHeight / height;
+  scale.value = Math.min(widthRatio, heightRatio, 1);
 
-    canvasWidth = width * scale;
-    canvasHeight = height * scale;
-  }
-
-  canvas.value.width = canvasWidth;
-  canvas.value.height = canvasHeight;
+  // Set display canvas size
+  displayCanvas.value.width = width * scale.value;
+  displayCanvas.value.height = height * scale.value;
 }
 
 function drawImage() {
-  if (canvas.value && baseImage.value) {
-    ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
-    ctx.value.drawImage(baseImage.value, 0, 0, canvas.value.width, canvas.value.height);
+  if (displayCanvas.value && fullResCanvas.value && baseImage.value) {
+    // Draw on full resolution canvas
+    fullResCtx.value.clearRect(0, 0, fullResCanvas.value.width, fullResCanvas.value.height);
+    fullResCtx.value.drawImage(baseImage.value, 0, 0, fullResCanvas.value.width, fullResCanvas.value.height);
+
+    // Draw scaled version on display canvas
+    displayCtx.value.clearRect(0, 0, displayCanvas.value.width, displayCanvas.value.height);
+    displayCtx.value.drawImage(fullResCanvas.value, 0, 0, displayCanvas.value.width, displayCanvas.value.height);
   }
 }
 
@@ -123,28 +128,30 @@ function startErasing(e) {
 }
 
 function erase(e) {
-  if (isErasing.value && ctx.value) {
-    const rect = canvas.value.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+  if (isErasing.value && displayCtx.value && fullResCtx.value) {
+    const rect = displayCanvas.value.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / scale.value;
+    const y = (e.clientY - rect.top) / scale.value;
 
-
-    if (cursorX.value < 0 || cursorY.value < 0 || cursorX.value > canvas.value.width || cursorY.value > canvas.value.height) {
+    if (x < 0 || y < 0 || x > fullResCanvas.value.width || y > fullResCanvas.value.height) {
       showCursor.value = false;
     } else {
       showCursor.value = true;
     }
 
-    // 设置合成操作为擦除
-    ctx.value.globalCompositeOperation = 'destination-out';
+    // Erase on full resolution canvas
+    fullResCtx.value.globalCompositeOperation = 'destination-out';
+    fullResCtx.value.beginPath();
+    fullResCtx.value.arc(x, y, eraserSize.value / 2, 0, Math.PI * 2, false);
+    fullResCtx.value.fill();
+    fullResCtx.value.globalCompositeOperation = 'source-over';
 
-    // 使用圆形路径擦除
-    ctx.value.beginPath();
-    ctx.value.arc(x, y, eraserSize.value / 2, 0, Math.PI * 2, false);
-    ctx.value.fill();
-
-    // 还原为默认的绘图操作
-    ctx.value.globalCompositeOperation = 'source-over';
+    // Erase on display canvas
+    displayCtx.value.globalCompositeOperation = 'destination-out';
+    displayCtx.value.beginPath();
+    displayCtx.value.arc(x * scale.value, y * scale.value, eraserSize.value * scale.value / 2, 0, Math.PI * 2, false);
+    displayCtx.value.fill();
+    displayCtx.value.globalCompositeOperation = 'source-over';
   }
 }
 
@@ -157,13 +164,12 @@ function stopErasing() {
   }
 }
 
-
 function updateCursor(e) {
-  const rect = canvas.value.getBoundingClientRect();
+  const rect = displayCanvas.value.getBoundingClientRect();
   cursorX.value = e.clientX - rect.left;
   cursorY.value = e.clientY - rect.top;
 
-  if (cursorX.value < 0 || cursorY.value < 0 || cursorX.value > canvas.value.width || cursorY.value > canvas.value.height) {
+  if (cursorX.value < 0 || cursorY.value < 0 || cursorX.value > displayCanvas.value.width || cursorY.value > displayCanvas.value.height) {
     showCursor.value = false;
   } else {
     showCursor.value = true;
@@ -175,7 +181,7 @@ function hideCursor() {
 }
 
 function saveState() {
-  const canvasData = canvas.value.toDataURL();
+  const canvasData = fullResCanvas.value.toDataURL();
   if (history.currentIndex < history.states.length - 1) {
     history.states.splice(history.currentIndex + 1);
   }
@@ -183,7 +189,7 @@ function saveState() {
   history.currentIndex++;
 
   if (history.states.length > 20) {
-    history.states.shift(); // 限制历史记录的长度为 20
+    history.states.shift();
     history.currentIndex--;
   }
 }
@@ -202,39 +208,42 @@ function redo() {
   }
 }
 
-
-
 function restoreCanvas(base64) {
   const img = new Image();
   img.src = base64;
   img.onload = () => {
-    ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
-    ctx.value.drawImage(img, 0, 0, canvas.value.width, canvas.value.height);
+    fullResCtx.value.clearRect(0, 0, fullResCanvas.value.width, fullResCanvas.value.height);
+    fullResCtx.value.drawImage(img, 0, 0, fullResCanvas.value.width, fullResCanvas.value.height);
+    
+    displayCtx.value.clearRect(0, 0, displayCanvas.value.width, displayCanvas.value.height);
+    displayCtx.value.drawImage(fullResCanvas.value, 0, 0, displayCanvas.value.width, displayCanvas.value.height);
   };
 }
 
 function clearCanvas() {
-  ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+  fullResCtx.value.clearRect(0, 0, fullResCanvas.value.width, fullResCanvas.value.height);
+  displayCtx.value.clearRect(0, 0, displayCanvas.value.width, displayCanvas.value.height);
   saveState();
 }
 
 function exportImage() {
-  const base64Data = canvas.value.toDataURL('image/png');
+  const base64Data = fullResCanvas.value.toDataURL('image/png');
   emit('export-image', base64Data);
 }
 
 onMounted(() => {
-  ctx.value = canvas.value.getContext('2d');
+  displayCtx.value = displayCanvas.value.getContext('2d');
+  fullResCtx.value = fullResCanvas.value.getContext('2d');
   if (props.initialBase64) {
     loadImage(props.initialBase64);
   }
 });
 
 const cursorStyle = computed(() => ({
-  top: `${cursorY.value - eraserSize.value / 2}px`,
-  left: `${cursorX.value - eraserSize.value / 2}px`,
-  width: `${eraserSize.value}px`,
-  height: `${eraserSize.value}px`,
+  top: `${cursorY.value - eraserSize.value * scale.value / 2}px`,
+  left: `${cursorX.value - eraserSize.value * scale.value / 2}px`,
+  width: `${eraserSize.value * scale.value}px`,
+  height: `${eraserSize.value * scale.value}px`,
   borderRadius: '50%',
   border: '1px solid red',
   position: 'absolute',
