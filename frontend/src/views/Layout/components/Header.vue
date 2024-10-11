@@ -1,5 +1,8 @@
 <template>
     <header class="p-4 flex justify-end items-center">
+        <div class="mr-4">
+            <button class="btn btn-sm" @click="showPopup = true">{{ t('basicHeader.check_update') }}</button>
+        </div>
         <label class="flex cursor-pointer gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -20,6 +23,12 @@
             <i v-else class="fa-solid fa-arrow-down" @click="toggleWindowPin"></i>
         </div>
 
+    <!-- 调用弹窗组件，并传递 showModal 属性和标题 -->
+    <ModalPopup  v-model="showPopup" title="Version Info" :showCancelButton="false" :showConfirmButton="false">
+      <!-- 在弹窗插槽中放入图片编辑器内容 -->
+       <iframe src="https://matting.20133075.xyz/version"  style="width: 600px; height: 400px; border: none;" frameborder="0"></iframe>
+    </ModalPopup>
+
     </header>
 </template>
 
@@ -27,11 +36,16 @@
 import { ref, onMounted } from 'vue'
 import { settingAPI } from '@/api/user';
 import { useI18n } from 'vue-i18n';
+import ModalPopup from '@/views/components/ModalPopup.vue';
+
 const { t } = useI18n();
 
 const isDarkTheme = ref(false)
 
 const theme = ref('light')
+
+const showPopup = ref(false)
+
 
 const windowPinned = ref(false)
 const toggleWindowPin = async () => {

@@ -66,6 +66,7 @@ export default {
     mult_matting: {
       title: 'Batch Matting',
       finish: 'Finish Processing',
+      check_up: 'Check Update',
     }
   },
   ai_photo: {
