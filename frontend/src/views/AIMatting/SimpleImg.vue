@@ -212,21 +212,17 @@ onMounted(async () => {
 
 <style scoped>
 .img-container {
-  max-width: 80%;
+  max-width: 100%;
+  max-height: 70vh; /* 限制最大高度为视口高度的70% */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.img-transparent-bg {
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
-  background-image: linear-gradient(45deg,
-      #eee 25%,
-      transparent 0,
-      transparent 75%,
-      #eee 0,
-      #eee), linear-gradient(45deg, #eee 25%, #fff 0, #fff 75%, #eee 0, #eee);
+.img-container >>> img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* 保持图片比例 */
 }
 
 .stacked-linear {
