@@ -126,14 +126,6 @@
 
 [bilibili](https://www.bilibili.com/video/BV1PksZeoEQR/)
 
-<iframe
-    height=450
-    width=800
-    src='https://www.bilibili.com/video/BV1PksZeoEQR/'
-    frameborder=0
-    'allowfullscreen' >
-</iframe>
-
 ### 运行截图
 
 ![运行截图](./imgs/1.png)
