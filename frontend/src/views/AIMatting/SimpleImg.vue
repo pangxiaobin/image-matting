@@ -225,6 +225,17 @@ onMounted(async () => {
   object-fit: contain; /* 保持图片比例 */
 }
 
+.img-transparent-bg {
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  background-image: linear-gradient(45deg,
+      #eee 25%,
+      transparent 0,
+      transparent 75%,
+      #eee 0,
+      #eee), linear-gradient(45deg, #eee 25%, #fff 0, #fff 75%, #eee 0, #eee);
+}
+
 .stacked-linear {
   background: linear-gradient(217deg,
       rgba(255, 0, 0, 0.8),
