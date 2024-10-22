@@ -1,5 +1,10 @@
 from utilities.response import res500, res200, res400
-from utilities.utils import convert_image_format, can_convert_file, img_to_base64
+from utilities.utils import (
+    convert_image_format,
+    can_convert_file,
+    img_to_base64,
+    gif_to_image,
+)
 from utilities.log import logger
 from conf.setting import settings
 from webview import SAVE_DIALOG, OPEN_DIALOG
@@ -17,14 +22,25 @@ class ConvertImageAPI:
             output_format = playload["output_format"]
         except KeyError:
             return res500("Invalid input")
-        filename = f"[{settings.TOOL_NAME}]-{int(time.time()*1000)}-output.{output_format.lower()}"
+        if input_path.lower().endswith(".gif"):
+            filename = f"[{settings.TOOL_NAME}]-{int(time.time()*1000)}-GIF"
+        else:
+            filename = f"[{settings.TOOL_NAME}]-{int(time.time()*1000)}-output.{output_format.lower()}"
         result = self.open_save_dialog(
             filename,
         )
         if not result:
             return res200(msg="Cancel")
-        flag = convert_image_format(input_path, output_format, result)
+        try:
+            if input_path.lower().endswith(".gif"):
+                flag = gif_to_image(input_path, output_format, result)
+            else:
+                flag = convert_image_format(input_path, output_format, result)
+        except Exception as e:
+            flag = False
+            logger.error(f"convert image {input_path} to {result} failed: {e}")
         if flag:
+            logger.info(f"convert image {input_path} to {result} success")
             return res200(msg="Success")
         else:
             return res400(msg="Cancel")
@@ -68,11 +84,24 @@ class ConvertImageAPI:
             save_folder = os.path.join(folder_path, f"[{settings.TOOL_NAME}]-output")
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder, exist_ok=True)
-            filename = f"[{settings.TOOL_NAME}]-{img_name}-{int(time.time()*1000)}.{output_format.lower()}"
+            if image_path.lower().endswith(".gif") and output_format.lower() != "gif":
+                filename = f"[{settings.TOOL_NAME}]-{img_name}-GIF"
+            else:
+                filename = f"[{settings.TOOL_NAME}]-{img_name}-{int(time.time()*1000)}.{output_format.lower()}"
             save_path = os.path.join(save_folder, filename)
-            flag = convert_image_format(image_path, output_format, save_path)
-            logger.info(f"convert image {image_path} to {save_path} success")
+            try:
+                if (
+                    image_path.lower().endswith(".gif")
+                    and output_format.lower() != "gif"
+                ):
+                    flag = gif_to_image(image_path, output_format, save_path)
+                else:
+                    flag = convert_image_format(image_path, output_format, save_path)
+            except Exception as e:
+                flag = False
+                logger.error(f"convert image {image_path} to {save_path} failed: {e}")
             if flag:
+                logger.info(f"convert image {image_path} to {save_path} success")
                 return res200(data={"convert_result": save_path})
             else:
                 return res500(msg="convert image failed")
