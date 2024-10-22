@@ -117,38 +117,53 @@ def save_bs64_image_add_bg(base64_data, hex_color, save_path):
 
 
 def convert_image_format(input_path, output_format, output_path=None):
-    try:
-        # 打开原始图片
-        image = Image.open(input_path)
-
-        # 确保输出格式合法并转换格式
-        if output_format.lower() == "jpg" or output_format.lower() == "jpeg":
-            image = image.convert("RGB")  # 转换为RGB格式
-            image.save(output_path, "JPEG")
-        elif output_format.lower() == "png":
-            image.save(output_path, "PNG")
-        elif output_format.lower() == "gif":
-            image.save(output_path, "GIF")
-        elif output_format.lower() == "bmp":
-            image.save(output_path, "BMP")
-        elif output_format.lower() == "ico":
-            image.save(output_path, "ICO")
-        elif output_format.lower() == "icns":
-            image.save(output_path, "ICNS")
-        elif output_format.lower() == "webp":
-            image.save(output_path, "WEBP")
-        elif output_format.lower() == "pdf":
-            image.save(output_path, "PDF")
-        elif output_format.lower() == "tiff":
-            image.save(output_path, "TIFF")
-        else:
-            return False
-        return True
-    except Exception as e:
-        import traceback
-
-        print(traceback.format_exc())
+    # 打开原始图片
+    image = Image.open(input_path)
+    # 确保输出格式合法并转换格式
+    if output_format.lower() == "jpg" or output_format.lower() == "jpeg":
+        image = image.convert("RGB")  # 转换为RGB格式
+        image.save(output_path, "JPEG")
+    elif output_format.lower() == "png":
+        image.save(output_path, "PNG")
+    elif output_format.lower() == "gif":
+        image.save(output_path, "GIF")
+    elif output_format.lower() == "bmp":
+        image.save(output_path, "BMP")
+    elif output_format.lower() == "ico":
+        image.save(output_path, "ICO")
+    elif output_format.lower() == "icns":
+        image.save(output_path, "ICNS")
+    elif output_format.lower() == "webp":
+        image.save(output_path, "WEBP")
+    elif output_format.lower() == "pdf":
+        image.save(output_path, "PDF")
+    elif output_format.lower() == "tiff":
+        image.save(output_path, "TIFF")
+    else:
         return False
+    return True
+
+
+def gif_to_image(gif_path, output_format, output_path):
+    if os.path.isfile(output_path):
+        output_path = os.path.dirname(output_path)
+    if not os.path.exists(output_path):
+        os.makedirs(output_path, exist_ok=True)
+    with Image.open(gif_path) as gif:
+        # 获取文件名（不包括扩展名）和目录
+        base_name = os.path.basename(output_path)
+        for frame in range(gif.n_frames):
+            gif.seek(frame)
+            # 创建新的文件名，包含帧序号
+            frame_filename = f"{base_name}_frame_{frame:03d}.{output_format.lower()}"
+            frame_path = os.path.join(output_path, frame_filename)
+
+            # 如果输出格式是JPEG，需要转换为RGB模式
+            if output_format.lower() in ["jpg", "jpeg"]:
+                gif.convert("RGB").save(frame_path, output_format.upper())
+            else:
+                gif.save(frame_path, output_format.upper())
+    return True
 
 
 def get_img_info(img_path):
