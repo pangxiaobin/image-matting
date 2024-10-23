@@ -133,14 +133,28 @@ def main():
     for api_class in api_class_list:
         api.add_apis(api_class)
     try:
+        x = config.get("window.x", 0)
+        y = config.get("window.y", 0)
+        width = config.get("window.width", 1000)
+        height = config.get("window.height", 800)
+        if x < 0 or y < 0:
+            x = 265
+            y = 25
+            width = 1037
+            height = 800
+            config.save("window.x", x)
+            config.save("window.y", y)
+            config.save("window.width", width)
+            config.save("window.height", height)
+
         window = webview.create_window(
             f"{settings.TOOL_NAME} - {VERSION}",
             url=url,
             js_api=api,
-            width=config.get("window.width", 1000),
-            height=config.get("window.height", 800),
-            x=config.get("window.x", 0),
-            y=config.get("window.y", 0),
+            width=width,
+            height=height,
+            x=x,
+            y=y,
             on_top=config.get("window.on_top", False),
             confirm_close=True,
         )
