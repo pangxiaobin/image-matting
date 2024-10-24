@@ -1,5 +1,5 @@
 import time
-from utilities.utils import is_image, image_obj_to_base64, image_to_psd
+from utilities.utils import is_image, image_obj_to_base64, image_to_psd, read_image
 from hub_model import segmentation
 from utilities.log import logger
 from utilities.response import res200, res400, res500
@@ -85,7 +85,8 @@ class AIMattingAPI:
             save_path = os.path.join(save_folder, new_image_name)
 
             if export_format == "psd":
-                image_to_psd(no_bg_image, save_path)
+                origin_image = read_image(image_path)
+                image_to_psd(no_bg_image, save_path, origin_image=origin_image)
             elif export_format == "jpg":
                 no_bg_image.convert("RGB").save(save_path, "JPEG")
             else:

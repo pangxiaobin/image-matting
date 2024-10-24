@@ -95,7 +95,7 @@ const selectColor = (color) => {
 };
 
 // 颜色选项
-const colors = ['transparent', '#FFFFFF', '#000000', '#FF0000', '#00FF00', '#FFFF00', '#0000FF', '#FF00FF', '#00FFFF', '#C0C0C0' ];
+const colors = ['transparent', '#FFFFFF', '#000000', '#FF0000', '#00FF00', '#FFFF00', '#0000FF', '#FF00FF', '#00FFFF', '#C0C0C0'];
 
 // Toggles the color picker modal
 const toggleColorPicker = () => {
@@ -192,7 +192,7 @@ async function copyImage() {
 
 // 下载图像
 async function downloadImage() {
-  const response = await baseAPI('save_png_dialog', img2.value)
+  const response = await baseAPI('save_png_dialog', { png_data: img2.value, origin_data: img1.value })
   if (response.code === 200) {
     message.info(t('common.download_success'));
   } else {
@@ -213,16 +213,18 @@ onMounted(async () => {
 <style scoped>
 .img-container {
   max-width: 100%;
-  max-height: 70vh; /* 限制最大高度为视口高度的70% */
+  max-height: 70vh;
+  /* 限制最大高度为视口高度的70% */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.img-container >>> img {
+.img-container>>>img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* 保持图片比例 */
+  object-fit: contain;
+  /* 保持图片比例 */
 }
 
 .img-transparent-bg {
