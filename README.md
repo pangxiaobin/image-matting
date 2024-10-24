@@ -9,6 +9,7 @@
 
 - 本地模型算法进行抠图，支持单张和批量抠图
 - 支持单张抠图和批量抠图
+- 支持AI抠图结果导出png/psd/jpg格式
 - 支持二次编辑
 - 支持拖拽和粘贴
 - AI证件照抠图功能
@@ -30,12 +31,6 @@
 
 > 制作证件照时，可以灵活使用缩小、放大功能和移动选框来调整人物位置和需要的部位。
 > 抠gif图时，可以先转为png或jpg格式，会生成一个文件夹，然后在使用批量抠图功能进行批量抠图。
-
-## 打包后的运行文件
-
-- 百度网盘: <https://pan.baidu.com/s/1XM37FOKZkLwafbsl5Y9xvw?pwd=hukj>
-- 夸克网盘: <https://pan.quark.cn/s/6b9ac495349c>
-- UC网盘： <https://drive.uc.cn/s/7bbd0011e9f24?public=1>
 
 ## 常见问题
 
@@ -144,6 +139,7 @@
 ![运行截图](./imgs/13.png)
 ![运行截图](./imgs/14.png)
 ![运行截图](./imgs/15.png)
+![运行截图](./imgs/16.png)
 ![运行截图](./imgs/7.gif)
 
 ## Star History
