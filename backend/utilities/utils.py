@@ -5,7 +5,8 @@ import os
 import traceback
 from psd_tools import PSDImage
 from psd_tools.api.layers import PixelLayer
-
+import requests
+from pathlib import Path
 import numpy as np
 
 
@@ -231,16 +232,22 @@ def can_compress_image(file_name):
     return False
 
 
-def base64_to_psd(base64_data, save_path):
+def base64_to_psd(base64_data, save_path, origin_image=None):
     image_data = base64.b64decode(base64_data.split(",")[1])
     image_obj = Image.open(BytesIO(image_data)).convert("RGBA")
-    image_to_psd(image_obj, save_path)
+    image_to_psd(image_obj, save_path, origin_image=origin_image)
 
 
-def image_to_psd(image_obj: Image, save_path):
+def image_to_psd(image_obj: Image, save_path, origin_image=None):
     if image_obj.mode != "RGBA":
         image_obj = image_obj.convert("RGBA")
+
     psd = PSDImage.frompil(image_obj)
+    if origin_image:
+        pixel_layer_origin = PixelLayer.frompil(
+            origin_image, psd, layer_name="Origin Image"
+        )
+        psd.append(pixel_layer_origin)
     # Create a new layer for the image
     pixel_layer = PixelLayer.frompil(image_obj, psd)
     # Set the pixel layer to be visible
@@ -249,3 +256,17 @@ def image_to_psd(image_obj: Image, save_path):
     psd.append(pixel_layer)
 
     psd.save(save_path)
+
+
+def read_image(img: str) -> Image.Image:
+    if img.startswith("http"):
+        response = requests.get(img)
+        return Image.open(BytesIO(response.content))
+    elif ";base64," in img:
+        base64_string = img.split(";base64,")[-1]
+        image_data = base64.b64decode(base64_string)
+        return Image.open(BytesIO(image_data))
+    elif Path(img).exists():
+        return Image.open(fp=img, mode="r")
+    else:
+        raise FileNotFoundError(f"File {img} not found.")

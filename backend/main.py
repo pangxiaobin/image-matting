@@ -1,7 +1,12 @@
 import webview
 from utilities.log import logger, init_logging
 from utilities.response import res200, res500
-from utilities.utils import base64_to_image, save_bs64_image_add_bg, base64_to_psd
+from utilities.utils import (
+    base64_to_image,
+    save_bs64_image_add_bg,
+    base64_to_psd,
+    read_image,
+)
 from conf.setting import settings
 from conf.config import config
 import os
@@ -54,9 +59,11 @@ def main():
 
     def save_png_dialog(
         self,
-        png_data,
+        playload,
         initial_directory="",
     ):
+        png_data = playload.get("png_data")
+        origin_data = playload.get("origin_data")
         export_format = config.get("export_format", "png")
         filename = f"[{settings.TOOL_NAME}]-{int(time.time()*1000)}.{export_format}"
         result = window.create_file_dialog(
@@ -66,7 +73,8 @@ def main():
             return
         try:
             if export_format == "psd":
-                base64_to_psd(png_data, result)
+                origin_image = read_image(origin_data)
+                base64_to_psd(png_data, result, origin_image=origin_image)
             else:
                 base64_to_image(png_data, result)
         except Exception as e:
