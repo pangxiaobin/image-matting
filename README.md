@@ -26,11 +26,17 @@
 - [ ] ~~图片转换支持 AVIF 格式， 参考[issues/10](https://github.com/pangxiaobin/image-matting/issues/10)~~
 - [x] 增加图片导出格式配置，支持psd、png、jpg等格式
 - [x] 优化图片格式转换，gif图转为其他格式，支持保存gif的每一帧
+- [ ] 编辑功能中增加涂抹恢复功能
 
 ## tips
 
 > 制作证件照时，可以灵活使用缩小、放大功能和移动选框来调整人物位置和需要的部位。
 > 抠gif图时，可以先转为png或jpg格式，会生成一个文件夹，然后在使用批量抠图功能进行批量抠图。
+>
+
+## License
+
+使用 [CC BY-NC 4.0](./LICENSE) 协议并依据[https://huggingface.co/briaai/RMBG-1.4](https://huggingface.co/briaai/RMBG-1.4)要求的许可证，本项目不可用于商业用途。本项目的打包的软件中，除非另有说明，否则不得隐匿作者相关信息。
 
 ## 常见问题
 
