@@ -45,7 +45,7 @@
         <!-- 调用弹窗组件，并传递 showModal 属性和标题 -->
         <ModalPopup v-model="showPopup" :title="t('common.btn_edit')" :showCancelButton="true" :showConfirmButton="false">
             <!-- 在弹窗插槽中放入图片编辑器内容 -->
-            <ImageEditor :initialBase64="imageSrc" @exportImage="handleExportImage" />
+            <ImageEditor :initialBase64="imageSrc" :originBase64="originImgUrl" @exportImage="handleExportImage" />
         </ModalPopup>
     </div>
 </template>
@@ -66,6 +66,7 @@ const showPopup = ref(false)
 const { t } = useI18n()
 const route = useRoute();
 const imageSrc = ref(route.query.imgUrl);
+const originImgUrl = ref(route.query.originImgUrl);
 const backgroundColor = ref('transparent');
 const selectedColor = ref('transparent');
 

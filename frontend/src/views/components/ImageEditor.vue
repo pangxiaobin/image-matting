@@ -1,7 +1,7 @@
 <template>
   <div class="image-editor" @mousemove="updateCursor" @wheel="handleZoom">
     <div class="canvas-container m-14" 
-         :class="[{ 'move': mode === 'move', 'erase': mode === 'erase' }, backgroundClass]"
+         :class="[{ 'move': mode === 'move', 'erase': mode === 'erase', 'restore': mode === 'restore' }, backgroundClass]"
          :style="{ backgroundColor: backgroundColor }"
          @mouseleave="handleMouseLeave"
          @mousedown="startInteraction"
@@ -9,7 +9,8 @@
          @mousemove="handleInteraction">
       <canvas ref="displayCanvas" />
       <canvas ref="fullResCanvas" style="display: none;" />
-      <div v-if="showCursor && mode === 'erase'" class="eraser-cursor" :style="cursorStyle"></div>
+      <canvas ref="originCanvas" style="display: none;" />
+      <div v-if="showCursor && (mode === 'erase' || mode === 'restore')" class="eraser-cursor" :style="cursorStyle"></div>
     </div>
     <div class="toolbar flex mt-4 flex-wrap justify-center">
       <button class="toolbar__button" @click="undo" title="Undo">
@@ -35,6 +36,9 @@
       </button>
       <button class="toolbar__button" @click="setMode('erase')" :class="{ 'active': mode === 'erase' }" title="Erase">
         <i class="fa-solid fa-eraser"></i>
+      </button>
+      <button class="toolbar__button" @click="setMode('restore')" :class="{ 'active': mode === 'restore' }" title="Restore">
+        <i class="fa-solid fa-window-restore"></i>
       </button>
       <button class="toolbar__button" @click="exportImage" title="Done">
         <i class="fa-solid fa-circle-check"></i>
@@ -88,6 +92,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  originBase64: {
+    type: String,
+    default: '',
+  },
 });
 
 const emit = defineEmits(['exportImage']);
@@ -111,13 +119,17 @@ const cursorStyle = computed(() => ({
   border: '1px solid red',
   position: 'absolute',
   pointerEvents: 'none',
-  display: mode.value === 'erase' && showCursor.value ? 'block' : 'none',
+  display: (mode.value === 'erase' || mode.value === 'restore') && showCursor.value ? 'block' : 'none',
 }));
 
 const backgroundColor = ref('');
 const backgroundClass = ref('checkerboard-background');
 const showBackgroundPicker = ref(false);
 const colors = ['checkerboard', '#FFFFFF', '#000000', '#FF0000', '#00FF00', '#FFFF00', '#0000FF', '#FF00FF', '#00FFFF', '#C0C0C0' ];
+
+const originCanvas = ref(null);
+const originCtx = ref(null);
+const originImage = ref(null);
 
 watch(() => props.initialBase64, (newVal) => {
   if (newVal) {
@@ -168,6 +180,12 @@ function adjustCanvasSize(img) {
   // Calculate offset to center the image
   offsetX.value = (canvasWidth - width * zoom.value) / 2;
   offsetY.value = (canvasHeight - height * zoom.value) / 2;
+
+  // Set origin canvas size
+  if (originCanvas.value) {
+    originCanvas.value.width = width;
+    originCanvas.value.height = height;
+  }
 }
 
 function drawImage() {
@@ -180,38 +198,6 @@ function drawImage() {
     updateCanvas();
   }
 }
-
-function erase(e) {
-  if (isErasing.value && displayCtx.value && fullResCtx.value) {
-    const rect = displayCanvas.value.getBoundingClientRect();
-    const x = (e.clientX - rect.left - offsetX.value) / zoom.value;
-    const y = (e.clientY - rect.top - offsetY.value) / zoom.value;
-
-    if (x < 0 || y < 0 || x > fullResCanvas.value.width || y > fullResCanvas.value.height) {
-      showCursor.value = false;
-    } else {
-      showCursor.value = true;
-    }
-
-    // Erase on full resolution canvas
-    fullResCtx.value.globalCompositeOperation = 'destination-out';
-    fullResCtx.value.beginPath();
-    fullResCtx.value.arc(x, y, eraserSize.value / 2, 0, Math.PI * 2, false);
-    fullResCtx.value.fill();
-    fullResCtx.value.globalCompositeOperation = 'source-over';
-
-    // Erase on display canvas
-    displayCtx.value.globalCompositeOperation = 'destination-out';
-    displayCtx.value.beginPath();
-    displayCtx.value.arc(x * scale.value, y * scale.value, eraserSize.value * scale.value / 2, 0, Math.PI * 2, false);
-    displayCtx.value.fill();
-    displayCtx.value.globalCompositeOperation = 'source-over';
-
-    // 更新显示画布
-    updateCanvas();
-  }
-}
-
 
 function stopErasing() {
   if (isErasing.value) {
@@ -305,9 +291,9 @@ function startInteraction(e) {
     isDragging.value = true;
     dragStartX.value = e.clientX - offsetX.value;
     dragStartY.value = e.clientY - offsetY.value;
-  } else if (mode.value === 'erase') {
+  } else if (mode.value === 'erase' || mode.value === 'restore') {
     isErasing.value = true;
-    erase(e);
+    handleBrush(e);
   }
 }
 
@@ -323,8 +309,8 @@ function handleInteraction(e) {
     offsetX.value = e.clientX - dragStartX.value;
     offsetY.value = e.clientY - dragStartY.value;
     updateCanvas();
-  } else if (mode.value === 'erase' && isErasing.value) {
-    erase(e);
+  } else if ((mode.value === 'erase' || mode.value === 'restore') && isErasing.value) {
+    handleBrush(e);
   }
 }
 
@@ -343,8 +329,12 @@ function updateCanvas() {
 onMounted(() => {
   displayCtx.value = displayCanvas.value.getContext('2d');
   fullResCtx.value = fullResCanvas.value.getContext('2d');
+  originCtx.value = originCanvas.value.getContext('2d');
   if (props.initialBase64) {
     loadImage(props.initialBase64);
+  }
+  if (props.originBase64) {
+    loadOriginImage(props.originBase64);
   }
 });
 
@@ -400,6 +390,84 @@ function setBackground(color) {
     backgroundClass.value = '';
   }
 }
+
+function loadOriginImage(base64) {
+  const img = new Image();
+  img.src = base64;
+  img.onload = () => {
+    originImage.value = img;
+    if (originCanvas.value) {
+      originCanvas.value.width = img.width;
+      originCanvas.value.height = img.height;
+      originCtx.value.drawImage(img, 0, 0);
+    }
+  };
+}
+
+function handleBrush(e) {
+  if (isErasing.value && displayCtx.value && fullResCtx.value) {
+    const rect = displayCanvas.value.getBoundingClientRect();
+    const x = (e.clientX - rect.left - offsetX.value) / zoom.value;
+    const y = (e.clientY - rect.top - offsetY.value) / zoom.value;
+
+    showCursor.value = true;
+
+    if (mode.value === 'erase') {
+      erase(x, y);
+    } else if (mode.value === 'restore') {
+      restore(x, y);
+    }
+
+    updateCanvas();
+  }
+}
+
+function erase(x, y) {
+  applyBrush(x, y, 'destination-out');
+}
+
+function restore(x, y) {
+  const ctx = fullResCtx.value;
+  const canvas = fullResCanvas.value;
+  const radius = eraserSize.value / 2;
+
+  ctx.save();
+  
+  // 创建一个裁剪区域，限制绘制范围在画布内
+  ctx.beginPath();
+  ctx.rect(0, 0, canvas.width, canvas.height);
+  ctx.clip();
+
+  // 绘制原始图像的一部分
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+  ctx.clip();
+  ctx.drawImage(originCanvas.value, 0, 0);
+
+  ctx.restore();
+}
+
+function applyBrush(x, y, operation) {
+  const ctx = fullResCtx.value;
+  const canvas = fullResCanvas.value;
+  const radius = eraserSize.value / 2;
+
+  ctx.save();
+  ctx.globalCompositeOperation = operation;
+
+  // 创建一个裁剪区域，限制绘制范围在画布内
+  ctx.beginPath();
+  ctx.rect(0, 0, canvas.width, canvas.height);
+  ctx.clip();
+
+  // 绘制圆形笔刷
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+  ctx.fill();
+
+  ctx.restore();
+}
 </script>
 
 <style scoped>
@@ -424,8 +492,9 @@ function setBackground(color) {
   cursor: move;
 }
 
-.canvas-container.erase {
-  cursor: crosshair;
+.canvas-container.erase,
+.canvas-container.restore {
+  cursor: none;
 }
 
 canvas {

@@ -46,7 +46,7 @@
     <!-- 调用弹窗组件，并传递 showModal 属性和标题 -->
     <ModalPopup v-model="showPopup" :title="t('common.btn_edit')" :showCancelButton="true" :showConfirmButton="false">
       <!-- 在弹窗插槽中放入图片编辑器内容 -->
-      <ImageEditor :initialBase64="img2" @exportImage="handleExportImage" />
+      <ImageEditor :initialBase64="img2" :originBase64="img1" @exportImage="handleExportImage" />
     </ModalPopup>
   </div>
 </template>
