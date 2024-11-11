@@ -29,7 +29,7 @@ class Settings(BaseSettings):
 
     BASE_DIR: Path = Field(default=BASE_DIR, description="项目基础路径")
 
-    VERSION: str = Field(default="0.2.2", description="版本号")
+    VERSION: str = Field(default="0.2.3", description="版本号")
     # 日志
     LOG: dict = {"max_log_size": "20MB", "backup_count": 20}
 
