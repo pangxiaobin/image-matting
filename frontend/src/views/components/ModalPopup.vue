@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" class="fixed left-0 top-0 w-full h-full p-8 inset-0 flex items-center justify-center z-50" >
+  <div v-if="visible" class="fixed left-0 top-0 w-screen h-screen p-8 inset-0 flex items-center justify-center z-50" >
     <!-- 暗色遮罩 -->
     <div class="fixed left-0 top-0 inset-0 bg-black opacity-50 w-screen h-screen" @click="close"></div>
     <!-- 弹窗内容 -->

@@ -12,7 +12,8 @@ import numpy as np
 
 def is_image(filename):
     return any(
-        filename.lower().endswith(ext) for ext in [".jpg", ".jpeg", ".png", ".gif"]
+        filename.lower().endswith(ext)
+        for ext in [".jpg", ".jpeg", ".png", ".gif", ".webp"]
     )
 
 

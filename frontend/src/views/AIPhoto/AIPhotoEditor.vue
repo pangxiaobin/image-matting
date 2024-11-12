@@ -168,6 +168,7 @@ const onCropPlay = async () => {
         name: 'AIPhotoResult',
         query: {
           imgUrl: res.data.no_bg_image,
+          originImgUrl: croppedImage.value,
         },
       });
     } else {
