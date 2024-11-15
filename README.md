@@ -45,11 +45,7 @@
   
 >本项目使用pywebview开发，在windows系统下会查找edgechromium ，edgehtml， mshtml 的客户端引擎依次检索。如果本地电脑 edge 浏览器支持这些引擎，则客户端可以正常启动。否则，需要安装对应的 [EdgeWebView2Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH) 浏览器引擎。
 
-### 2. 问题反馈交流qq群
-
-> QQ群号：779191959
-
-### 3. windows系统如果运行时提示STATUS_ILLEGAL_INSTRUCTION，页面崩溃
+### 2.  windows系统如果运行时提示STATUS_ILLEGAL_INSTRUCTION，页面崩溃
 
 > 请尝试更新Microsoft Edge到最新版本
 
