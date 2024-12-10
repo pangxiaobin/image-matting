@@ -2,9 +2,9 @@
     <div class="mb-4 relative">
       <div
         @click="toggleDropdown"
-        class="select select-bordered w-full flex items-center justify-between cursor-pointe"
+        class="select select-sm select-bordered w-full flex items-center justify-between cursor-pointer"
       >
-        <div class="flex flex-wrap gap-1 darl:bg-gray-700">
+        <div class="flex flex-wrap gap-1 bg-white">
           <span v-for="item in modelValue" :key="item" class="px-2 bg-blue-100 text-blue-800 py-1 rounded text-sm ml-2">
             {{ item }}
             <button @click.stop="removeItem(item)" class="ml-1 text-blue-600 hover:text-blue-800">&times;</button>

@@ -50,3 +50,6 @@ backend/dist/
 backend/hub_model/briaai/
 
 backend/web/
+
+# pnpm-lock.yaml
+frontend/pnpm-lock.yaml

@@ -8,16 +8,17 @@ import numpy as np
 import onnxruntime as ort
 import requests
 from PIL import Image
+from conf.config import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 try:
     from utilities.log import logger
-    from utilities.utils import img_to_base64
+    from utilities.utils import refine_foreground
 except ImportError:
     sys.path.append(str(BASE_DIR))
     from utilities.log import logger
-    from utilities.utils import img_to_base64
+    from utilities.utils import refine_foreground
 
 
 # 下载模型
@@ -117,17 +118,19 @@ class ImageSegmentation:
         result = ort_outs[0]
         # 后处理
         result_image = self.postprocess_image(result[0][0], image_size)
-
-        try:
-            pil_im = Image.fromarray(result_image)
-            # pil_im = pil_im.resize(image_size)
-        except Exception as e:
-            raise RuntimeError(f"Error processing images: {e}")
-
-        no_bg_image = Image.new("RGBA", pil_im.size, (0, 0, 0, 0))
-        no_bg_image.paste(orig_image, mask=pil_im)
-
-        return no_bg_image
+        is_edge_optimization = config.get("edge_optimization.is_edge_optimization")
+        r = config.get("edge_optimization.r")
+        pil_im = Image.fromarray(result_image)
+        if is_edge_optimization:
+            try:
+                no_bg_image = refine_foreground(orig_image, pil_im, r=r)
+                return no_bg_image
+            except Exception as e:
+                logger.error(f"Error processing images: {e}")
+        else:
+            no_bg_image = Image.new("RGBA", pil_im.size, (0, 0, 0, 0))
+            no_bg_image.paste(orig_image, mask=pil_im)
+            return no_bg_image
 
 
 if __name__ == "__main__":

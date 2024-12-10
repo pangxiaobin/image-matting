@@ -41,7 +41,8 @@ export default {
     tinify_preserving: 'TINIFY 保存元数据',
     tinify_preserve_placeholder: '选择保留的元数据',
     export_format: '导出格式',
-    
+    edge_optimization: '边缘优化',
+    edge_r: '边缘优化度',
   },
   about: {
     title: '关于',

@@ -8,6 +8,7 @@ from psd_tools.api.layers import PixelLayer
 import requests
 from pathlib import Path
 import numpy as np
+from cv2 import blur
 
 
 def is_image(filename):
@@ -271,3 +272,39 @@ def read_image(img: str) -> Image.Image:
         return Image.open(fp=img, mode="r")
     else:
         raise FileNotFoundError(f"File {img} not found.")
+
+
+def refine_foreground(image: Image.Image, mask: Image.Image, r=90):
+    if mask.size != image.size:
+        mask = mask.resize(image.size)
+    image = image.convert("RGB")
+    image_array = np.array(image) / 255.0
+    alpha_array = np.array(mask) / 255.0
+    estimated_foreground = FB_blur_fusion_foreground_estimator_2(
+        image_array, alpha_array, r=r
+    )
+    image_masked = Image.fromarray((estimated_foreground * 255.0).astype(np.uint8))
+    image_masked.putalpha(mask.resize(image.size))
+    return image_masked
+
+
+def FB_blur_fusion_foreground_estimator_2(image: np.array, alpha: np.array, r=90):
+    # Thanks to the source: https://github.com/Photoroom/fast-foreground-estimation
+    alpha = alpha[:, :, None]
+    F, blur_B = FB_blur_fusion_foreground_estimator(image, image, image, alpha, r)
+    return FB_blur_fusion_foreground_estimator(image, F, blur_B, alpha, r=6)[0]
+
+
+def FB_blur_fusion_foreground_estimator(image, F, B, alpha, r=90):
+    if isinstance(image, Image.Image):
+        image = np.array(image) / 255.0
+    blurred_alpha = blur(alpha, (r, r))[:, :, None]
+
+    blurred_FA = blur(F * alpha, (r, r))
+    blurred_F = blurred_FA / (blurred_alpha + 1e-5)
+
+    blurred_B1A = blur(B * (1 - alpha), (r, r))
+    blurred_B = blurred_B1A / ((1 - blurred_alpha) + 1e-5)
+    F = blurred_F + alpha * (image - alpha * blurred_F - (1 - alpha) * blurred_B)
+    F = np.clip(F, 0, 1)
+    return F, blurred_B
