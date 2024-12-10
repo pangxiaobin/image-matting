@@ -19,6 +19,11 @@ DEFAULT_CONFIG = {
         "on_top": False,
     },
     "tinify": {"tinify_key": "", "preserve": [], "compression_count": 0},
+    # 边缘优化
+    "edge_optimization": {
+        "r": 90,
+        "is_edge_optimization": True,
+    },
 }
 
 

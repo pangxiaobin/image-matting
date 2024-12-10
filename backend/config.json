@@ -6,8 +6,8 @@
     "window": {
         "width": 1037,
         "height": 800,
-        "x": 236,
-        "y": 25,
+        "x": 116,
+        "y": 26,
         "fullscreen": false,
         "on_top": false
     },
@@ -15,5 +15,9 @@
         "tinify_key": "",
         "preserve": [],
         "compression_count": 0
+    },
+    "edge_optimization": {
+        "r": 90,
+        "is_edge_optimization": true
     }
 }
