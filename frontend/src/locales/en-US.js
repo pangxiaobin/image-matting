@@ -42,6 +42,8 @@ export default {
     tinify_preserving: 'TINIFY Preserving Metadata',
     tinify_preserve_placeholder: 'Select Preserving Metadata',
     export_format: 'Export Format',
+    edge_optimization: "Edge Optimization",
+    edge_r: "Edge R Value"
     
   },
   about: {
