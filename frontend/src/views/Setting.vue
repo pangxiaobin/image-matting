@@ -20,35 +20,40 @@
       </div>
 
       <div class="mb-2">
-        <label class="block text-md font-medium mb-2" for="api_key">{{ t('setting.tinify_key') }}          
-          <span class="cursor-pointer text-blue-500" @click="openLink('https://tinypng.com/developers')" target="_blank">GET KEY</span>
+        <label class="block text-md font-medium mb-2" for="api_key">{{ t('setting.tinify_key') }}
+          <span class="cursor-pointer text-blue-500" @click="openLink('https://tinypng.com/developers')"
+            target="_blank">GET KEY</span>
         </label>
-        <input ref="apiKeyInput" id="api_key" v-on:mouseenter="handleMouseEnter" v-on:mouseleave="handleMouseLeave" type="password"
-          v-model="settingInfo.tinify.tinify_key" class="input input-sm input-bordered w-full" />
+        <input ref="apiKeyInput" id="api_key" v-on:mouseenter="handleMouseEnter" v-on:mouseleave="handleMouseLeave"
+          type="password" v-model="settingInfo.tinify.tinify_key" class="input input-sm input-bordered w-full" />
       </div>
 
       <div class="mb-2">
-        <label class="block text-md font-medium mb-2" for="tinify_used_count">{{ t('setting.tinify_used_count') }}          
+        <label class="block text-md font-medium mb-2" for="tinify_used_count">{{ t('setting.tinify_used_count') }}
         </label>
-        <input id="tinify_used_count" disabled type="text" v-model="settingInfo.tinify.compression_count" class="input input-sm input-bordered w-full" />
+        <input id="tinify_used_count" disabled type="text" v-model="settingInfo.tinify.compression_count"
+          class="input input-sm input-bordered w-full" />
       </div>
 
       <div class="mb-2">
-        <label class="block text-md font-medium mb-2" for="preserve">{{ t('setting.tinify_preserving') }} 
+        <label class="block text-md font-medium mb-2" for="preserve">{{ t('setting.tinify_preserving') }}
         </label>
-        <MultiSelect id="preserve" v-model="settingInfo.tinify.preserve" :options="['copyright', 'creation', 'location']"
+        <MultiSelect id="preserve" v-model="settingInfo.tinify.preserve"
+          :options="['copyright', 'creation', 'location']"
           placeholder="{{ t('setting.tinify_preserve_placeholder') }}" />
       </div>
 
       <div class="mb-2">
-        <label class="block text-md font-medium mb-2 inline-flex items-center" for="edge_optimization">
+        <label class="text-md font-medium mb-2 inline-flex items-center" for="edge_optimization">
           {{ t('setting.edge_optimization') }}
-          <input type="checkbox" class="checkbox checkbox-sm ml-2" id="edge_optimization" v-model="settingInfo.edge_optimization.is_edge_optimization" />
+          <input type="checkbox" class="checkbox checkbox-sm ml-2" id="edge_optimization"
+            v-model="settingInfo.edge_optimization.is_edge_optimization" />
         </label>
       </div>
       <div class="mb-2" v-if="settingInfo.edge_optimization.is_edge_optimization">
         <label class="block text-md font-medium mb-2" for="edge_r">{{ t('setting.edge_r') }}</label>
-        <input type="number" id="edge_r" v-model="settingInfo.edge_optimization.r" class="input input-sm input-bordered w-full" />
+        <input type="number" id="edge_r" v-model="settingInfo.edge_optimization.r"
+          class="input input-sm input-bordered w-full" />
       </div>
 
       <button @click="saveSettings" class="btn btn-primary w-full">{{ t('setting.save_btn') }}</button>
@@ -91,7 +96,7 @@ const formData = ref({
 })
 
 const openLink = async (url) => {
-   await baseAPI('open_link', url)
+  await baseAPI('open_link', url)
 }
 
 const apiKeyInput = ref(null)
