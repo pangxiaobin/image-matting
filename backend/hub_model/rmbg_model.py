@@ -119,7 +119,6 @@ class ImageSegmentation:
         # 后处理
         result_image = self.postprocess_image(result[0][0], image_size)
         is_edge_optimization = config.get("edge_optimization.is_edge_optimization")
-        print(is_edge_optimization, type(is_edge_optimization))
         r = config.get("edge_optimization.r")
         pil_im = Image.fromarray(result_image)
         if is_edge_optimization:
