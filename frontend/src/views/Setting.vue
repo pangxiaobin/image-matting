@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 max-full flex flex-col items-center">
+  <div class="max-full flex flex-col items-center">
     <h2 class="text-2xl font-bold mb-3">{{ t('setting.title') }}</h2>
 
     <div class="w-full max-w-lg p-3 rounded-lg shadow-md mb-3">
@@ -56,6 +56,27 @@
           class="input input-sm input-bordered w-full" />
       </div>
 
+      <div class="mb-2">
+        <label class="text-md font-medium mb-2 inline-flex items-center" for="api_server">
+          {{ t('setting.api_server') }}
+          <input type="checkbox" class="checkbox checkbox-sm ml-2" id="api_server"
+            v-model="settingInfo.api_server.is_enable" />
+          <div v-if="settingInfo.api_server.is_enable" class="text-sm text-orange-500 ml-2">
+            {{ t('setting.restart_notice') }}
+          </div>
+        </label>
+      </div>
+      <div class="mb-2" v-if="settingInfo.api_server.is_enable">
+        <label class="block text-md font-medium mb-2" for="api_port">
+          {{ t('setting.api_server_port') }}
+          <span class="text-sm text-gray-500" @click="openLink(`http://localhost:${settingInfo.api_server.port}/api/docs`)">
+            (swagger docs at http://localhost:{{ settingInfo.api_server.port }}/api/docs)
+          </span>
+        </label>
+        <input type="number" id="api_port" v-model="settingInfo.api_server.port"
+          class="input input-sm input-bordered w-full" />
+      </div>
+
       <button @click="saveSettings" class="btn btn-primary w-full">{{ t('setting.save_btn') }}</button>
     </div>
   </div>
@@ -83,6 +104,10 @@ const settingInfo = ref({
   'edge_optimization': {
     'is_edge_optimization': true,
     'r': 90
+  },
+  'api_server': {
+    'is_enable': false,
+    'port': 11111,
   }
 })
 
@@ -92,7 +117,9 @@ const formData = ref({
   'tinify.tinify_key': '',
   'tinify.preserve': [],
   'edge_optimization.is_edge_optimization': true,
-  'edge_optimization.r': 90
+  'edge_optimization.r': 90,
+  'api_server.is_enable': false,
+  'api_server.port': 11111
 })
 
 const openLink = async (url) => {
@@ -131,6 +158,8 @@ const saveSettings = async () => {
   formData.value['tinify.preserve'] = settingInfo.value.tinify.preserve
   formData.value['edge_optimization.is_edge_optimization'] = settingInfo.value.edge_optimization.is_edge_optimization
   formData.value['edge_optimization.r'] = settingInfo.value.edge_optimization.r
+  formData.value['api_server.is_enable'] = settingInfo.value.api_server.is_enable
+  formData.value['api_server.port'] = settingInfo.value.api_server.port
   const res = await settingAPI('put', formData.value)
   if (res.code === 200) {
     message.info(res.msg);

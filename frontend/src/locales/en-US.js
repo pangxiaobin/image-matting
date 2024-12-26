@@ -43,8 +43,10 @@ export default {
     tinify_preserve_placeholder: 'Select Preserving Metadata',
     export_format: 'Export Format',
     edge_optimization: "Edge Optimization",
-    edge_r: "Edge R Value"
-    
+    edge_r: "Edge R Value",
+    api_server: "HTTP API Server",
+    api_server_port: "Server Port",
+    restart_notice: "Restart to take effect"
   },
   about: {
     title: 'About',

@@ -20,6 +20,8 @@ class SettingAPI:
                 tinify_client.update_key(value)
             if key.startswith("edge_optimization"):
                 config.save(key, value)
+            if key.startswith("api_server"):
+                config.save(key, value)
         return res200(dict(config))
 
     def update_window_setting(self, payload):
