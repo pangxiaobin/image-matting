@@ -39,10 +39,13 @@ export default {
     tinify_key: 'TINIFY 秘钥',
     tinify_used_count: '已使用次数/free 500次/月',
     tinify_preserving: 'TINIFY 保存元数据',
-    tinify_preserve_placeholder: '选择保留的元数据',
+    tinify_preserve_placeholder: '选择保留��元数据',
     export_format: '导出格式',
     edge_optimization: '边缘优化',
     edge_r: '边缘优化度',
+    api_server: 'HTTP API 服务',
+    api_server_port: '服务端口',
+    restart_notice: '重启后生效'
   },
   about: {
     title: '关于',

@@ -35,9 +35,11 @@ def main():
     else:
         url = "web/index.html"
     VERSION = settings.VERSION
-
-    api_server = APIServer(host="127.0.0.1", port=11111)
-    api_server.start()
+    api_server_port = config.get("api_server.port", 11111)
+    is_enable_api_server = config.get("api_server.is_enable", False)    
+    if is_enable_api_server:
+        api_server = APIServer(host="127.0.0.1", port=api_server_port)
+        api_server.start()
 
     def open_file_dialog(self, multiple=False):
         # jpg/png/gif/webp/bmp
@@ -181,7 +183,8 @@ def main():
     def on_close():
         logger.info("process closed")
         config.close()
-        api_server.stop()
+        if is_enable_api_server:
+            api_server.stop()
         window.destroy()
 
     def on_moved(x, y):

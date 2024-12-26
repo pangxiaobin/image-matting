@@ -24,6 +24,11 @@ DEFAULT_CONFIG = {
         "r": 90,
         "is_edge_optimization": True,
     },
+    # http server
+    "api_server": {
+        "is_enable": False,
+        "port": 11111,
+    },
 }
 
 
