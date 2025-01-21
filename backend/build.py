@@ -17,15 +17,50 @@ def run_cmd(cmd: str, split=False):
     return subprocess.run(cmd, shell=True)
 
 
-def build_production(version):
-    run_cmd("pyinstaller main.spec --noconfirm", split=False)
-    # Create a version file in ./dist/img-matting/
-    version_txt_path = Path("./dist/img-matting/version.txt")
-    if not version_txt_path.parent.exists():
-        version_txt_path.parent.mkdir(parents=True, exist_ok=True)
-    with open("./dist/img-matting/version.txt", "w") as f:
-        f.write(version)
+def build_zip(version):
+    system_name = platform.system().lower()
+    if system_name == "darwin":
+        platform_name = "mac"
+        root_dir = Path("./dist/mac-release")
+        base_dir = "小宾AI抠图.app"
+    elif system_name == "windows":
+        platform_name = "windows"
+        root_dir = Path("./dist/release")
+        base_dir = "小宾AI抠图"
+    else:
+        raise ValueError("Unsupported platform")
 
+    zip_filename = f"小宾AI抠图-{platform_name}-v{version}.zip"
+    zip_filepath = Path(f"./dist/{zip_filename}")
+
+    # 删除已存在的 zip 文件
+    if zip_filepath.exists():
+        os.remove(zip_filepath)
+    if platform_name == 'mac':
+        # 使用命令行 zip 进行压缩，-r 表示递归，-9 表示最高压缩级别
+        current_dir = os.getcwd()
+        print(f"current_dir: {current_dir}")
+        os.chdir(root_dir)  # 切换到源目录
+        try:
+            print(os.getcwd())
+            run_cmd(f"zip -ry -9 {zip_filename} {base_dir}")
+            print(f"Created {zip_filename} at {zip_filepath}")
+
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            os.chdir(current_dir)  # 切换回原目录
+    else:
+        shutil.make_archive(
+        base_name=zip_filepath.with_suffix(""),
+        format="zip",
+        root_dir=root_dir,
+        base_dir=base_dir,
+    )
+    
+
+
+def build_production(version):
     system_name = platform.system().lower()
     if system_name == "darwin":
         platform_name = "mac"
@@ -33,21 +68,13 @@ def build_production(version):
         platform_name = "windows"
     else:
         platform_name = "linux"
-
+    if platform_name == "mac":
+        run_cmd("pyinstaller --noconfirm --clean mac_main.spec --distpath dist/mac-release", split=False)
+    else:
+        run_cmd("pyinstaller --noconfirm --clean main.spec --distpath dist/release", split=False)
     # Create the ZIP file
-    zip_filename = f"img-matting-{platform_name}-v{version}.zip"
-    zip_filepath = Path(f"./dist/{zip_filename}")
-
-    # Compress the directory
-    shutil.make_archive(
-        base_name=zip_filepath.with_suffix(""),
-        format="zip",
-        root_dir="./dist",
-        base_dir="img-matting",
-    )
-
-    print(f"Created {zip_filename} at {zip_filepath}")
-
+    build_zip(version)
+    
 
 def build_development(version):
     run_cmd("pyinstaller debug.spec --noconfirm", split=False)
@@ -106,3 +133,5 @@ elif args.type == "d" or args.type == "development":
     build_development(args.version)
 elif args.type == "f" or args.type == "frontend":
     build_frontend()
+elif args.type == "z" or args.type == "zip":
+    build_zip(args.version)

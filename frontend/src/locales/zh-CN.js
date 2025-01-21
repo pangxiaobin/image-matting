@@ -16,6 +16,7 @@ export default {
     btn_confirm: '确定',
     btn_cancel: '取消',
     btn_edit: '编辑',
+    processing_success: '处理成功',
 
   },
   basicHeader: {
@@ -30,6 +31,7 @@ export default {
     ai_photo_name: '证件照',
     convert_name: "图片转换",
     compress_name: "图片压缩",
+    ai_inpainting_name: '智能擦除',
   },
   setting: {
     title: '系统设置',
@@ -39,7 +41,7 @@ export default {
     tinify_key: 'TINIFY 秘钥',
     tinify_used_count: '已使用次数/free 500次/月',
     tinify_preserving: 'TINIFY 保存元数据',
-    tinify_preserve_placeholder: '选择保留��元数据',
+    tinify_preserve_placeholder: '选择保留元数据',
     export_format: '导出格式',
     edge_optimization: '边缘优化',
     edge_r: '边缘优化度',
@@ -155,6 +157,20 @@ export default {
       retry_btn:'失败重试',
       finish: '结束处理', 
     }
+  },
+  ai_inpainting: {
+    inpainting_home: {
+      title: '智能擦除',
+      desc: '基于AI技术的图像智能修复工具，可以智能去除图片中不需要的内容，实现图像修复。',
+      tips: '支持拖拽、粘贴上传',
+      upload_btn: '上传图片',
+    },
+    editor: {
+      brush_size: '画笔大小',
+      undo: '撤销',
+      redo: '重做',
+      clear: '清除',
+      process: '处理'
+    }
   }
-
 };
