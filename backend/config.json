@@ -6,7 +6,7 @@
     "window": {
         "width": 1047,
         "height": 800,
-        "x": 174,
+        "x": 187,
         "y": 23,
         "fullscreen": false,
         "on_top": false
@@ -21,7 +21,7 @@
         "is_edge_optimization": true
     },
     "api_server": {
-        "is_enable": true,
+        "is_enable": false,
         "port": 11111
     }
 }
