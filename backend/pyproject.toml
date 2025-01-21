@@ -29,6 +29,8 @@ distribution = false
 [tool.pdm.scripts]
 dev = { cmd = "python main.py", env = {DEBUG = "True"} }
 build-front = "python build.py -t f"
+production-mac = "python build.py -t p"
+zip = "python build.py -t z"
 start = "python main.py"
 build-debug = "pyinstaller --noconfirm --clean main.spec --distpath dist/debug -- --debug"
 build-release = "pyinstaller --noconfirm --clean main.spec --distpath dist/release"

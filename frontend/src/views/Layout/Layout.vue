@@ -6,11 +6,11 @@
             <Nav />
 
             <!-- Main Content -->
-            <div class="flex-1 flex flex-col p-4">
+            <div class="flex-1 flex flex-col p-2">
                 <!-- 主题切换按钮 -->
                 <Header />
                 <!-- 页面内容 -->
-                <main class="flex-1 p-4">
+                <main class="flex-1">
                     <router-view></router-view>
                 </main>
             </div>

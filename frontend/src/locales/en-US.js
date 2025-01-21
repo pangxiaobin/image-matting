@@ -16,6 +16,7 @@ export default {
     btn_confirm: 'Confirm',
     btn_cancel: 'Cancel',
     btn_edit: 'Edit',
+    processing_success: 'Processing Success',
 
 
   },
@@ -31,6 +32,7 @@ export default {
     ai_photo_name: 'ID Photo',
     convert_name: 'Image Conversion',
     compress_name: 'Image Compress',
+    ai_inpainting_name: 'Inpainting',
   },
   setting: {
     title: 'System Settings',
@@ -156,6 +158,20 @@ export default {
       retry_btn:'Retry Compress',
       finish: 'Finish Processing',
     }
+  },
+  ai_inpainting: {
+    inpainting_home: {
+      title: 'Inpainting',
+      desc: 'AI-powered image inpainting tool that can intelligently remove unwanted content from images.',
+      tips: 'Support drag & drop, paste to upload',
+      upload_btn: 'Upload Image',
+    },
+    editor: {
+      brush_size: 'Brush Size',
+      undo: 'Undo',
+      redo: 'Redo', 
+      clear: 'Clear',
+      process: 'Process'
+    }
   }
-  
 };

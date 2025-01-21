@@ -4,9 +4,9 @@
     "theme": "light",
     "export_format": "png",
     "window": {
-        "width": 1037,
+        "width": 1047,
         "height": 800,
-        "x": 64,
+        "x": 174,
         "y": 23,
         "fullscreen": false,
         "on_top": false

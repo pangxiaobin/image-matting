@@ -89,6 +89,10 @@ def base64_to_image(base64_data, save_path: str):
         image_obj.save(save_path, extension[1:].upper())
     return save_path
 
+def base64_to_image_obj(base64_data):
+    image_data = base64.b64decode(base64_data.split(",")[1])
+    return Image.open(BytesIO(image_data))
+
 
 def hex_to_rgb(hex_color):
     # 移除前缀 '#'

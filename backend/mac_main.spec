@@ -52,7 +52,7 @@ coll = BUNDLE(
     strip=False,
     upx=False,
     upx_exclude=[],
-    name='MacImageMatting.app',
+    name='小宾AI抠图.app',
     icon='assets/icon.icns',
     bundle_identifier="com.example.image-matting", 
 )

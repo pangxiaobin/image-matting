@@ -61,5 +61,5 @@ coll = COLLECT(
     strip=False,
     upx=not options.debug,  # 非调试模式时使用 UPX 压缩
     upx_exclude=[],
-    name="image-matting_debug" if options.debug else "image-matting",
+    name="小宾AI抠图_debug" if options.debug else "小宾AI抠图",
 )

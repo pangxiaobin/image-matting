@@ -79,6 +79,16 @@ const routes = [{
         path: 'about',
         name: 'About',
         component: () => import('@/views/About.vue')
+      },
+      {
+        path: '/ai-inpainting',
+        name: 'AIInpaintingHome',
+        component: () => import('@/views/AIInpainting/AIInpaintingHome.vue')
+      },
+      {
+        path: '/ai-inpainting/editor',
+        name: 'AIInpaintingEditor', 
+        component: () => import('@/views/AIInpainting/AIInpaintingEditor.vue')
       }
 
     ]
