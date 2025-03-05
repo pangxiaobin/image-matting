@@ -23,6 +23,8 @@ export default {
   basicHeader: {
     'pin_window': 'Keep Window Always on Top',
     'unpin_window': 'Unpin Window',
+    check_update: 'Check Update',
+    ad_btn: 'Lingxiang Tool',
 
   },
   menu: {
