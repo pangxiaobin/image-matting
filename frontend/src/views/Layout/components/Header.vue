@@ -1,6 +1,9 @@
 <template>
     <header class="p-4 flex justify-end items-center">
         <div class="mr-4">
+            <button class="btn btn-sm" @click="openLink('https://lingxiangtools.top/')">{{ t('basicHeader.ad_btn') }}</button>
+        </div>
+        <div class="mr-4">
             <button class="btn btn-sm" @click="showPopup = true">{{ t('basicHeader.check_update') }}</button>
         </div>
         <label class="flex cursor-pointer gap-2">
@@ -37,6 +40,7 @@ import { ref, onMounted } from 'vue'
 import { settingAPI } from '@/api/user';
 import { useI18n } from 'vue-i18n';
 import ModalPopup from '@/views/components/ModalPopup.vue';
+import baseAPI from '@/api/base';
 
 const { t } = useI18n();
 
@@ -54,6 +58,10 @@ const toggleWindowPin = async () => {
   if (resp.code !== 200) {
     windowPinned.value = !windowPinned.value
   }
+}
+
+const openLink = async (url) => {
+  await baseAPI('open_link', url)
 }
 
 // 获取设置信息

@@ -23,6 +23,7 @@ export default {
     pin_window: '窗口始终置顶',
     unpin_window: '取消窗口置顶',
     check_update: '检查更新',
+    ad_btn: '灵象工具',
   },
   menu: {
     setting: '设置',
