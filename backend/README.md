@@ -39,7 +39,7 @@
     # 运行前端
     cd frontend && npm run dev
     # 运行后端
-    cd backend && pmd dev
+    cd backend && pdm dev
     ```
 
 ### 打包
