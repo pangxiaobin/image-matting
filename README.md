@@ -62,8 +62,6 @@
 
 感谢[nzls1795724370](https://github.com/nzls1795724370) 提供的图标设计
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
-
 ### 安装打包
 
 [文档](./backend/README.md)
