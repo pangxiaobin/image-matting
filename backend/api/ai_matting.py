@@ -76,12 +76,12 @@ class AIMattingAPI:
             image_path = playload.get("image_path")
             folder_path = playload.get("folder_path")
             no_bg_image = segmentation.segment_image(image_path)
-            img_name = os.path.basename(image_path)
+            filename, _ = os.path.splitext(image_path)
             save_folder = os.path.join(folder_path, f"[{settings.TOOL_NAME}]抠图结果")
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder, exist_ok=True)
             export_format = config.get("export_format", "png")
-            new_image_name = f"[{settings.TOOL_NAME}]-{img_name.split('.')[0]}_{int(time.time() * 1000)}.{export_format}"
+            new_image_name = f"[{settings.TOOL_NAME}]-{filename}_{int(time.time() * 1000)}.{export_format}"
             save_path = os.path.join(save_folder, new_image_name)
 
             if export_format == "psd":
