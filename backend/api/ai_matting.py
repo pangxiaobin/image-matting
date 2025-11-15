@@ -6,6 +6,7 @@ from utilities.response import res200, res400, res500
 import os
 from conf.setting import settings
 from conf.config import config
+from PIL import Image
 
 
 class AIMattingAPI:
@@ -76,7 +77,7 @@ class AIMattingAPI:
             image_path = playload.get("image_path")
             folder_path = playload.get("folder_path")
             no_bg_image = segmentation.segment_image(image_path)
-            filename, _ = os.path.splitext(image_path)
+            filename = os.path.splitext(os.path.basename(image_path))[0]
             save_folder = os.path.join(folder_path, f"[{settings.TOOL_NAME}]抠图结果")
             if not os.path.exists(save_folder):
                 os.makedirs(save_folder, exist_ok=True)
@@ -88,7 +89,9 @@ class AIMattingAPI:
                 origin_image = read_image(image_path)
                 image_to_psd(no_bg_image, save_path, origin_image=origin_image)
             elif export_format == "jpg":
-                no_bg_image.convert("RGB").save(save_path, "JPEG")
+                background = Image.new("RGB", no_bg_image.size, (255, 255, 255))
+                background.paste(no_bg_image, (0, 0), no_bg_image)
+                background.save(save_path, "JPEG", quality=95)
             else:
                 no_bg_image.save(save_path)
             return res200(data={"no_bg_image": save_path})

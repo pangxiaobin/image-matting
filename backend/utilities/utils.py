@@ -83,8 +83,9 @@ def base64_to_image(base64_data, save_path: str):
     image_obj = Image.open(BytesIO(image_data))
     _, extension = os.path.splitext(save_path)
     if extension.lower() == ".jpg" or extension.lower() == ".jpeg":
-        image_obj = image_obj.convert("RGB")
-        image_obj.save(save_path, "JPEG")
+        background = Image.new("RGB", image_obj.size, (255, 255, 255))
+        background.paste(image_obj, (0, 0), image_obj)
+        background.save(save_path, "JPEG", quality=95)
     else:
         image_obj.save(save_path, extension[1:].upper())
     return save_path
