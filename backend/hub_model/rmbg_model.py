@@ -44,10 +44,19 @@ class ImageSegmentation:
         try:
             logger.info("Loading model...")
             star_time = time.time()
-            self.ort_session = ort.InferenceSession(model_path)
+            self.ort_session = ort.InferenceSession(model_path, providers=self.get_available_providers())
             logger.info(f"Model loaded in {time.time() - star_time:.2f} seconds")
         except Exception as e:
             raise RuntimeError(f"Failed to load ONNX model: {e}")
+
+    def get_available_providers(self):
+        """获取可用的执行设备"""
+        available_providers = onnxruntime.get_available_providers()
+        if "CUDAExecutionProvider" in available_providers:
+            return ["CUDAExecutionProvider", "CPUExecutionProvider"]
+        if "DmlExecutionProvider" in available_providers:
+            return ["DmlExecutionProvider", "CPUExecutionProvider"]
+        return ["CPUExecutionProvider"]
 
     def preprocess_image(self, im: np.ndarray) -> np.ndarray:
         # If the image is grayscale, add a dimension to make it a color image
