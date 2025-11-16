@@ -44,14 +44,21 @@ class ImageSegmentation:
         try:
             logger.info("Loading model...")
             star_time = time.time()
-            self.ort_session = ort.InferenceSession(model_path, providers=self.get_available_providers())
+            providers = self.get_available_providers()
+            if 'DmlExecutionProvider' in providers:
+                so = ort.SessionOptions()
+                so.enable_mem_pattern = False
+                so.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
+                self.ort_session = ort.InferenceSession(model_path, providers=providers, sess_options=so)
+            else:
+                self.ort_session = ort.InferenceSession(model_path, providers=providers)
             logger.info(f"Model loaded in {time.time() - star_time:.2f} seconds")
         except Exception as e:
             raise RuntimeError(f"Failed to load ONNX model: {e}")
 
     def get_available_providers(self):
         """获取可用的执行设备"""
-        available_providers = onnxruntime.get_available_providers()
+        available_providers = ort.get_available_providers()
         if "CUDAExecutionProvider" in available_providers:
             return ["CUDAExecutionProvider", "CPUExecutionProvider"]
         if "DmlExecutionProvider" in available_providers:
