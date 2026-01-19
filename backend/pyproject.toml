@@ -23,6 +23,10 @@ readme = "README.md"
 license = {text = "MIT"}
 
 
+[project.optional-dependencies]
+mac = [
+    "dmgbuild>=1.6.7",
+]
 [tool.pdm]
 distribution = false
 

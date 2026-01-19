@@ -2,10 +2,10 @@
 # It is not intended for manual editing.
 
 [metadata]
-groups = ["default"]
+groups = ["default", "mac"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:d2c8fb765cc6bcb37a3571747d8f0b507f28f093243f858ecab4f6fbe260be06"
+content_hash = "sha256:d3483f6f8478974db447b6c41202148c42b7daab15282076f26d701b1de7d987"
 
 [[metadata.targets]]
 requires_python = "==3.11.*"
@@ -210,12 +210,41 @@ files = [
 ]
 
 [[package]]
+name = "dmgbuild"
+version = "1.6.7"
+requires_python = ">=3.10"
+summary = "macOS command line utility to build disk images"
+groups = ["mac"]
+dependencies = [
+    "ds-store>=1.1.0",
+    "mac-alias>=2.0.1",
+]
+files = [
+    {file = "dmgbuild-1.6.7-py3-none-any.whl", hash = "sha256:37ee5771c377beb3203d9164aae8046ffed8531c06edf9227f5788b3c599b1bf"},
+    {file = "dmgbuild-1.6.7.tar.gz", hash = "sha256:676b17acd448899f6d4a83b2184e0657480444ecb6ac9c4922889efad9e5dbfb"},
+]
+
+[[package]]
 name = "docopt"
 version = "0.6.2"
 summary = "Pythonic argument parser, that will make you smile"
 groups = ["default"]
 files = [
     {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
+]
+
+[[package]]
+name = "ds-store"
+version = "1.3.2"
+requires_python = ">=3.10"
+summary = "Manipulate Finder .DS_Store files from Python"
+groups = ["mac"]
+dependencies = [
+    "mac-alias>=2.2.2",
+]
+files = [
+    {file = "ds_store-1.3.2-py3-none-any.whl", hash = "sha256:3b37332d9f8c18ff04c385d2933b66a1d84950071364f94bfc5f5a3ab1fb361e"},
+    {file = "ds_store-1.3.2.tar.gz", hash = "sha256:e4da49df901123481a85b9250945f2aac054a0f0c29352cd2cc858c536cdd364"},
 ]
 
 [[package]]
@@ -329,6 +358,17 @@ dependencies = [
 files = [
     {file = "loguru-0.7.2-py3-none-any.whl", hash = "sha256:003d71e3d3ed35f0f8984898359d65b79e5b21943f78af86aa5491210429b8eb"},
     {file = "loguru-0.7.2.tar.gz", hash = "sha256:e671a53522515f34fd406340ee968cb9ecafbc4b36c679da03c18fd8d0bd51ac"},
+]
+
+[[package]]
+name = "mac-alias"
+version = "2.2.3"
+requires_python = ">=3.10"
+summary = "Generate/parse macOS Alias records from Python"
+groups = ["mac"]
+files = [
+    {file = "mac_alias-2.2.3-py3-none-any.whl", hash = "sha256:7362b521d2132ef92f606a37abfed5fcd849ceb2f28b6f9743e014b02af92f0d"},
+    {file = "mac_alias-2.2.3.tar.gz", hash = "sha256:1c7fa367687d66979f2ce4d1a8b2716cf1c9fb811741cab3cf3ca356555c2beb"},
 ]
 
 [[package]]
@@ -730,7 +770,7 @@ version = "3.5.4"
 requires_python = ">=3.8"
 summary = "A python implementation of GNU readline."
 groups = ["default"]
-marker = "sys_platform == \"win32\""
+marker = "sys_platform == \"win32\" and python_version >= \"3.8\""
 files = [
     {file = "pyreadline3-3.5.4-py3-none-any.whl", hash = "sha256:eaf8e6cc3c49bcccf145fc6067ba8643d1df34d604a1ec0eccbf7a18e6d3fae6"},
     {file = "pyreadline3-3.5.4.tar.gz", hash = "sha256:8d57d53039a1c75adba8e50dd3d992b28143480816187ea5efbd5c78e6c885b7"},

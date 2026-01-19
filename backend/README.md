@@ -62,4 +62,8 @@ pdm build-release
 
 # 构建mac 应用
 pdm build-mac-release
+
+# 构建mac dmg安装包, 更新版本时修改命令行中的版本号
+pdm run dmgbuild -s mac_dmg.py  "小宾AI抠图  v0.2.5" "[mac]-小宾AI抠图-V0.2.5.dmg"
+
 ```
