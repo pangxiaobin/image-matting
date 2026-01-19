@@ -53,3 +53,5 @@ backend/web/
 
 # pnpm-lock.yaml
 frontend/pnpm-lock.yaml
+
+*.dmg
