@@ -168,4 +168,4 @@
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=pangxiaobin/image-matting&type=Date)](https://star-history.com/#pangxiaobin/image-matting&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=pangxiaobin/image-matting&type=Date)](https://star-history.dera.page/#pangxiaobin/image-matting&Date)
